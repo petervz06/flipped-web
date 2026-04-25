@@ -1,0 +1,406 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Flipped marketing site — Windows 95 dialog aesthetic.
+   Chunky beveled buttons.  Chunky beveled panels.  Orange title bars.
+   Pixel fonts.  No rounded corners.  No gradients.  No BS.
+   ───────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap");
+
+:root {
+    /* Flipped palette — snow / sand / ash / stone / gravel / dirt / mud.
+       No bright colors.  The whole thing lives in dull earth + greyscale so
+       the brand feels heavy and serious, not SaaS-cheerful. */
+    --chrome:       #c8c4bc;   /* page grey (ash + dust) */
+    --chrome-light: #dfdbd2;   /* bevel top-left */
+    --chrome-dark:  #7a7670;   /* bevel bottom-right mid */
+    --chrome-deep:  #2a2825;   /* outer shadow */
+    --chrome-text:  #151210;   /* pixel black */
+
+    --titlebar:     #a8a39a;   /* dull ash — the title bar band */
+    --titlebar-alt: #8a8680;   /* inactive / subtitle */
+    --titlebar-text:#151210;
+
+    /* Primary button uses a darker stone so it stands out against chrome
+       without screaming in brand color.  Hover is a touch lighter. */
+    --dirt:         #9a948a;
+    --dirt-hover:   #aba59a;
+
+    --sand:         #c8b89a;   /* sparing use — step numbers, subtle highlights */
+    --mud:          #6a6560;   /* dark mud-brown body accent */
+
+    --content-bg:   #100f0d;   /* dark content panel */
+    --content-text: #e2ddd6;
+    --content-dim:  #6a6560;
+
+    --speech:       #e8e3d8;   /* dull cream — speech bubble fill */
+    --speech-alt:   #d8d4c8;   /* faint grey alternate */
+
+    --max-w: 960px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+}
+
+body {
+    background: var(--chrome);
+    color: var(--chrome-text);
+    font-family: "VT323", "Courier New", monospace;
+    font-size: 19px;
+    line-height: 1.45;
+    min-height: 100vh;
+    padding: 30px 20px 60px 20px;
+}
+
+a { color: var(--chrome-text); }
+a:hover { background: var(--chrome-light); }
+
+.pixel { font-family: "Silkscreen", monospace; letter-spacing: 2px; }
+
+/* ── Win95 window chrome ───────────────────────────────────────────────── */
+
+.win {
+    background: var(--chrome);
+    max-width: var(--max-w);
+    margin: 0 auto 24px auto;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-deep),
+        inset 2px 2px 0 var(--chrome-light),
+        inset -2px -2px 0 var(--chrome-dark);
+}
+
+.titlebar {
+    background: var(--titlebar);
+    color: var(--titlebar-text);
+    font-family: "Silkscreen", monospace;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--chrome-deep);
+}
+.titlebar.inactive { background: var(--titlebar-alt); }
+
+.window-controls { display: flex; gap: 4px; }
+.window-controls span {
+    background: var(--chrome);
+    font-family: "Silkscreen", monospace;
+    font-size: 10px;
+    width: 22px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+
+.win-body { padding: 20px 24px; }
+
+.dark-panel {
+    background: var(--content-bg);
+    color: var(--content-text);
+    padding: 28px 28px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-dark),
+        inset -1px -1px 0 var(--chrome-light);
+}
+.dark-panel .pixel { color: #fff; }
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--chrome);
+    color: var(--chrome-text);
+    font-family: "Silkscreen", monospace;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 14px 22px;
+    border: none;
+    cursor: pointer;
+    min-height: 48px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-deep),
+        inset 2px 2px 0 var(--chrome-light),
+        inset -2px -2px 0 var(--chrome-dark);
+}
+.btn:hover { text-decoration: none; background: var(--chrome-light); }
+.btn:active {
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-deep),
+        inset -1px -1px 0 var(--chrome-light),
+        inset 2px 2px 0 var(--chrome-dark),
+        inset -2px -2px 0 var(--chrome-light);
+}
+.btn.primary { background: var(--dirt); color: #fff; }
+.btn.primary:hover { background: var(--dirt-hover); color: #fff; }
+.btn.big { font-size: 18px; padding: 18px 32px; min-height: 60px; }
+
+/* ── Speech bubble ─────────────────────────────────────────────────────── */
+
+/* Speech bubbles — dull cream fill, thick pixel-black border.  No bright
+   yellow/green.  Success/warn distinguished by a left stripe, not fill color. */
+.speech {
+    background: var(--speech);
+    color: var(--chrome-text);
+    padding: 14px 18px;
+    border: 2px solid var(--chrome-text);
+    font-size: 18px;
+    max-width: 560px;
+    margin: 14px auto;
+    border-left-width: 6px;
+}
+.speech.success { border-left-color: var(--mud); }
+.speech.warn    { border-left-color: var(--chrome-dark); background: var(--speech-alt); }
+
+/* ── Nav ───────────────────────────────────────────────────────────────── */
+
+.nav {
+    max-width: var(--max-w);
+    margin: 0 auto 24px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Silkscreen", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    background: var(--chrome);
+    padding: 10px 14px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+.nav .brand { font-size: 14px; font-weight: 700; letter-spacing: 4px; }
+.nav .links { display: flex; gap: 18px; }
+.nav .links a { text-decoration: none; padding: 4px 8px; }
+.nav .links a:hover { background: var(--chrome-light); }
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+
+.hero-h1 {
+    font-family: "Silkscreen", monospace;
+    font-weight: 700;
+    color: #fff;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.15;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+.hero-lede {
+    font-size: 22px;
+    color: #c8bfb2;
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 24px auto;
+}
+.hero-ctas {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.hero-micro {
+    text-align: center;
+    color: #6a6560;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+/* Pixel phone illustration in hero */
+.phone-pixel {
+    width: 120px;
+    height: 200px;
+    background: var(--titlebar);   /* dull ash — phone body */
+    margin: 0 auto 24px auto;
+    position: relative;
+    box-shadow:
+        inset 3px 3px 0 var(--chrome-light),
+        inset -3px -3px 0 var(--chrome-deep);
+}
+.phone-pixel::before {
+    content: "";
+    position: absolute;
+    top: 14px; left: 12px; right: 12px; bottom: 30px;
+    background: #100f0d;
+    box-shadow: inset 2px 2px 0 #000;
+}
+.phone-pixel::after {
+    content: "FLIPPED";
+    position: absolute;
+    top: 80px; left: 0; right: 0;
+    text-align: center;
+    font-family: "Silkscreen", monospace;
+    font-size: 12px;
+    color: var(--sand);
+    letter-spacing: 2px;
+}
+
+/* ── Feature grid ──────────────────────────────────────────────────────── */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+}
+.feature {
+    background: var(--chrome);
+    padding: 16px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+.feature h3 {
+    font-family: "Silkscreen", monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.feature p { font-size: 17px; }
+
+/* ── How it works ──────────────────────────────────────────────────────── */
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+.step {
+    background: var(--chrome);
+    padding: 16px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+.step-num {
+    font-family: "Silkscreen", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mud);
+    margin-bottom: 8px;
+}
+.step h3 {
+    font-family: "Silkscreen", monospace;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.step p { font-size: 17px; }
+
+/* ── Section title helper ──────────────────────────────────────────────── */
+
+.section-title {
+    font-family: "Silkscreen", monospace;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--chrome-text);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+
+/* ── FAQ ───────────────────────────────────────────────────────────────── */
+
+details {
+    background: var(--chrome);
+    margin-bottom: 6px;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+summary {
+    cursor: pointer;
+    padding: 12px 16px;
+    font-family: "Silkscreen", monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▶  "; color: var(--mud); }
+details[open] summary::before { content: "▼  "; color: var(--mud); }
+details p { padding: 0 16px 14px 40px; font-size: 17px; }
+
+/* ── Download + pricing cards ──────────────────────────────────────────── */
+
+.download-grid, .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+}
+.download-card, .pricing-card {
+    background: var(--chrome);
+    padding: 20px;
+    text-align: center;
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+}
+.download-card h3, .pricing-card h3 {
+    font-family: "Silkscreen", monospace;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+.download-card p, .pricing-card p { font-size: 17px; margin-bottom: 12px; }
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+
+footer {
+    max-width: var(--max-w);
+    margin: 40px auto 0 auto;
+    padding: 18px;
+    background: var(--chrome);
+    box-shadow:
+        inset 1px 1px 0 var(--chrome-light),
+        inset -1px -1px 0 var(--chrome-dark);
+    font-size: 15px;
+    text-align: center;
+}
+footer .links {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+footer .copyright { color: var(--chrome-dark); font-size: 14px; }
+
+.center { text-align: center; }
+.mt-lg { margin-top: 24px; }
+.mt-xl { margin-top: 40px; }
+
+/* ── Legal page typography (privacy.html / terms.html) ─────────────────── */
+
+.win-body h1, .win-body h2, .win-body h3 {
+    font-family: "Silkscreen", monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: var(--chrome-text);
+}
+.win-body h2 { font-size: 15px; letter-spacing: 2px; }
+.win-body h3 { font-size: 13px; letter-spacing: 2px; }
+.win-body p  { margin-bottom: 12px; }
+.win-body ul, .win-body ol { margin: 8px 0 12px 24px; }
+.win-body li { margin-bottom: 4px; }

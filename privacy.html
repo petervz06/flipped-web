@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — Flipped</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <nav class="nav">
+        <div class="brand">▣ FLIPPED</div>
+        <div class="links">
+            <a href="/">HOME</a>
+            <a href="/#features">FEATURES</a>
+            <a href="/#download">DOWNLOAD</a>
+            <a href="privacy.html">PRIVACY</a>
+            <a href="terms.html">TERMS</a>
+        </div>
+    </nav>
+
+    <div class="win">
+        <div class="titlebar">
+            <span>PRIVACY</span>
+            
+        </div>
+        <div class="win-body">
+        <h1 class="section-title" style="font-size: 20px;">PRIVACY POLICY</h1>
+        <p style="color: var(--chrome-dark); font-size: 15px;">Last updated: April 21, 2026</p>
+
+        <p>
+            Flipped is a Mac desktop application that helps you reduce phone
+            distraction by temporarily hiding apps and blocking distracting
+            websites on your iPhone. To do this, the Mac app supervises your
+            iPhone via USB and our server sends restriction profiles to your
+            iPhone over Apple's Push Notification service.
+        </p>
+        <p>
+            By installing Flipped you agree to this privacy policy and to
+            having your iPhone managed (a standard iOS feature called Mobile
+            Device Management) while Flipped is active. You can remove this
+            management at any time — see the Device Management Disclosure
+            section below.
+        </p>
+
+        <h2>What we collect</h2>
+
+        <h3>From your Flipped account</h3>
+        <ul>
+            <li><strong>Email address</strong> — to identify you and send account-related emails.</li>
+            <li><strong>Password</strong> — stored only as a bcrypt hash; we never see your plain password.</li>
+            <li><strong>Account timestamps</strong> — when you created your account, logged in, and triggered sessions.</li>
+        </ul>
+
+        <h3>From your iPhone (via MDM)</h3>
+        <ul>
+            <li><strong>Unique Device Identifier (UDID)</strong> — Apple's iPhone-unique ID, required by iOS for MDM enrollment.</li>
+            <li><strong>Device serial, model, iOS version</strong> — for compatibility.</li>
+            <li><strong>APNs push token + push magic</strong> — tokens Apple issues that let us send MDM commands. These can only be used to deliver MDM commands, not to read your personal data.</li>
+            <li><strong>App classifications you choose</strong> — which apps you've decided to block, allow, or toggle per session.</li>
+            <li><strong>Session history</strong> — which focus modes you've started, when, and when they ended.</li>
+        </ul>
+
+        <h3>What we do NOT collect</h3>
+        <ul>
+            <li>Contents of anything on your iPhone (photos, messages, files, browsing history, location). MDM restricts apps and URLs — it cannot read their contents.</li>
+            <li>Keystrokes, screen contents, microphone or camera data.</li>
+            <li>Any data from apps on your iPhone.</li>
+        </ul>
+
+        <h2>How we use your data</h2>
+        <ul>
+            <li><strong>To provide the service</strong> — MDM data is used to push restriction profiles to your iPhone when you start a session and remove them when you end.</li>
+            <li><strong>Account management</strong> — email + password for login, password reset, device management.</li>
+            <li><strong>Analytics</strong> — we use Sentry to capture application errors so we can fix bugs. Sentry receives error stack traces and minimal request context (user ID, timestamps). We do NOT send Sentry your iPhone contents, APNs tokens, or any sensitive identifiers.</li>
+            <li><strong>Email</strong> — transactional emails only (password reset, security notices). No marketing unless you opt in.</li>
+        </ul>
+
+        <h2>Who we share with</h2>
+        <ul>
+            <li><strong>Apple</strong> — Apple's Push Notification service relays MDM commands to your iPhone. Apple sees that a command is being sent but not its contents.</li>
+            <li><strong>Hosting provider (Railway)</strong> — runs our backend; has access to our database under their own privacy commitments.</li>
+            <li><strong>Sentry</strong> (if enabled) — error reports for engineering debugging.</li>
+            <li><strong>Payment processor</strong> (Stripe, when we monetize) — payment details per their privacy policy; we never store full card numbers.</li>
+        </ul>
+        <p>We do not sell your data, share it with advertisers, or use it for marketing profiles.</p>
+
+        <h2>Device Management Disclosure</h2>
+        <p>
+            When you supervise your iPhone with Flipped, your iPhone enters
+            a state called "Supervised" with Flipped as the organization.
+            This allows Flipped to:
+        </p>
+        <ul>
+            <li>Hide and un-hide apps from your home screen</li>
+            <li>Filter URLs in Safari and other browsers</li>
+            <li>Enable Apple's built-in adult-content filter during sessions</li>
+        </ul>
+        <p>Flipped cannot:</p>
+        <ul>
+            <li>Read your messages, photos, emails, browsing history, or files</li>
+            <li>Track your location</li>
+            <li>Listen to your microphone or camera</li>
+            <li>Install or remove apps beyond hiding them</li>
+            <li>Modify system settings beyond the restrictions above</li>
+        </ul>
+
+        <h3>Removing Flipped's management</h3>
+        <p>You can remove Flipped's management at any time:</p>
+        <ol>
+            <li>Run the Mac app's "Remove Management" command, OR</li>
+            <li>On your iPhone, open Settings → General → VPN &amp; Device Management, tap the Flipped profile, and tap "Remove Management."</li>
+        </ol>
+
+        <h2>Data retention</h2>
+        <ul>
+            <li><strong>Account data</strong> — kept as long as your account exists. Delete your account to remove it.</li>
+            <li><strong>MDM enrollment data</strong> — kept while your iPhone is enrolled. Automatically cleared when you remove management.</li>
+            <li><strong>Session history</strong> — kept for the lifetime of your account.</li>
+            <li><strong>Error logs / analytics</strong> — 30 days in Sentry.</li>
+        </ul>
+
+        <h2>Your rights</h2>
+        <ul>
+            <li><strong>Access</strong> — see your account data by logging in.</li>
+            <li><strong>Deletion</strong> — email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>. We complete deletions within 30 days.</li>
+            <li><strong>Export</strong> — on request, we'll provide your data in machine-readable form.</li>
+            <li><strong>Correction</strong> — update email and password from the app.</li>
+        </ul>
+
+        <h2>Security</h2>
+        <ul>
+            <li>All traffic is HTTPS (TLS 1.2+).</li>
+            <li>Passwords are bcrypt-hashed.</li>
+            <li>Refresh tokens are stored only as SHA-256 hashes.</li>
+            <li>Login is rate-limited; accounts lock after 10 failed attempts.</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p><a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">© 2026 FLIPPED — ALL RIGHTS RESERVED</div>
+    </footer>
+</body>
+</html>
