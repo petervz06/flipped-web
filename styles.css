@@ -1,13 +1,15 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   FLIPPED — marketing site styles
-   Matched to the Mac app's dark/pixel/sand palette.  No SaaS gradients.
-   No rounded corners.  No card shadows.  Hairlines, whitespace, pixel type.
+   FLIPPED — marketing site
+   Visual language matched to the Mac app:
+     • dark earth-tone bg with bordered cards (FlippedTheme.bg + .bg2 + .border)
+     • // section labels in dim sand (FlippedTheme.sand)
+     • cream "▶ FLIP"-style button (FlippedTheme.white on FlippedTheme.bg)
+     • Silkscreen pixel font for everything; VT323 mono for body lines
    ───────────────────────────────────────────────────────────────────── */
 
 @import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap");
 
 :root {
-    /* Mac app palette — earth tones, no bright colors */
     --bg:       #100f0d;
     --bg2:      #161412;
     --bg3:      #1c1a17;
@@ -34,20 +36,14 @@ html, body {
     -webkit-font-smoothing: none;
 }
 
-body {
-    min-height: 100vh;
-    padding: 0 24px;
-}
+body { min-height: 100vh; padding: 0 24px; }
 
-a {
-    color: var(--accent);
-    text-decoration: none;
-}
+a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--white); }
 
 .pixel { font-family: "Silkscreen", monospace; letter-spacing: 2px; }
 
-/* ── Top brand strip ──────────────────────────────────────────────────── */
+/* ── Brand bar ────────────────────────────────────────────────────────── */
 
 .brand {
     max-width: var(--max-w);
@@ -59,51 +55,98 @@ a:hover { color: var(--white); }
     letter-spacing: 6px;
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/* ── Page wrap (mirrors a Mac-app content pane) ───────────────────────── */
 
-.hero {
+main {
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 80px 0 80px 0;
+    padding: 12px 0 60px 0;
 }
 
-.hero .stat {
+/* ── // section label — exactly like the Mac app's SectionLabel ──────── */
+
+.section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Silkscreen", monospace;
+    color: var(--sand);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: lowercase;
+    margin: 36px 0 12px 0;
+}
+.section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ── Dark card with thin border — like the status panels in HomeView ── */
+
+.card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+}
+.card.tight { padding: 18px 24px; }
+
+/* ── Hero stat (fits inside a card) ───────────────────────────────────── */
+
+.stat {
     font-family: "Silkscreen", monospace;
     font-weight: 700;
     color: var(--white);
-    font-size: clamp(40px, 8vw, 84px);
-    line-height: 1.05;
+    font-size: clamp(36px, 7vw, 72px);
+    line-height: 1.1;
     letter-spacing: 1px;
-    margin-bottom: 14px;
+    text-align: center;
+    padding: 20px 0;
 }
-.hero .stat .accent { color: var(--accent); }
+.stat .accent { color: var(--accent); }
 
-.hero .lede {
+.stat-sub {
+    color: var(--stone);
+    font-family: "Silkscreen", monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.lede {
     color: var(--ash);
-    font-size: 24px;
-    margin: 36px 0 36px 0;
-    max-width: 540px;
+    font-size: 22px;
+    text-align: center;
+    margin: 8px 0 0 0;
 }
 
-/* ── Big buttons ──────────────────────────────────────────────────────── */
+/* ── Cream "▶ FLIP" button — matches the Mac app's primary BigButton ── */
 
 .btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
     background: var(--white);
     color: var(--bg);
     font-family: "Silkscreen", monospace;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
     letter-spacing: 4px;
-    padding: 22px 36px;
+    padding: 22px 24px;
     border: none;
     cursor: pointer;
     text-transform: uppercase;
     text-decoration: none;
 }
 .btn:hover { background: var(--accent); color: var(--bg); }
+.btn:active { background: var(--snow); }
+.btn .arrow { font-size: 18px; }
 
 .btn.ghost {
     background: transparent;
@@ -115,51 +158,24 @@ a:hover { color: var(--white); }
 .micro {
     font-family: "Silkscreen", monospace;
     color: var(--stone);
-    font-size: 10px;
-    letter-spacing: 2px;
-    margin-top: 18px;
+    font-size: 9px;
+    letter-spacing: 3px;
     text-transform: uppercase;
+    text-align: center;
+    margin-top: 14px;
 }
 
-/* ── Section ──────────────────────────────────────────────────────────── */
+/* ── How it works — mirrors a sidebar-row pattern ─────────────────────── */
 
-section {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 80px 0;
-    border-top: 1px solid var(--border);
-}
-
-.section-label {
-    font-family: "Silkscreen", monospace;
-    color: var(--sand);
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-.section-label::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-}
-
-/* ── How it works ─────────────────────────────────────────────────────── */
-
-.steps {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-}
+.steps { display: flex; flex-direction: column; }
 .step {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    align-items: baseline;
+    grid-template-columns: 56px 1fr;
+    align-items: center;
+    padding: 18px 24px;
+    border-top: 1px solid var(--border);
 }
+.step:first-child { border-top: none; }
 .step-num {
     font-family: "Silkscreen", monospace;
     color: var(--accent);
@@ -168,21 +184,24 @@ section {
 }
 .step-text {
     color: var(--snow);
-    font-size: 24px;
+    font-family: "Silkscreen", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 /* ── FAQ ──────────────────────────────────────────────────────────────── */
 
 details {
     border-top: 1px solid var(--border);
-    padding: 18px 0;
+    padding: 16px 24px;
 }
-details:last-of-type { border-bottom: 1px solid var(--border); }
+details:first-child { border-top: none; }
 summary {
     cursor: pointer;
     font-family: "Silkscreen", monospace;
-    font-size: 12px;
-    letter-spacing: 1px;
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--snow);
     list-style: none;
@@ -194,12 +213,12 @@ summary::-webkit-details-marker { display: none; }
 summary::after {
     content: "+";
     color: var(--accent);
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 300;
 }
 details[open] summary::after { content: "−"; }
 details p {
-    margin-top: 14px;
+    margin-top: 12px;
     color: var(--ash);
     font-size: 18px;
 }
@@ -208,18 +227,18 @@ details p {
 
 footer {
     max-width: var(--max-w);
-    margin: 60px auto 40px auto;
-    padding: 24px 0;
+    margin: 40px auto 32px auto;
+    padding: 18px 0 0 0;
     border-top: 1px solid var(--border);
     font-family: "Silkscreen", monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
+    font-size: 9px;
+    letter-spacing: 3px;
     color: var(--stone);
     text-transform: uppercase;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 14px;
 }
 footer a { color: var(--stone); }
 footer a:hover { color: var(--accent); }
@@ -229,14 +248,14 @@ footer a:hover { color: var(--accent); }
 .legal {
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 60px 0 80px 0;
+    padding: 36px 0 80px 0;
 }
 .legal h1 {
     font-family: "Silkscreen", monospace;
     color: var(--white);
-    font-size: 32px;
+    font-size: 28px;
     letter-spacing: 2px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     text-transform: uppercase;
 }
 .legal .updated {
@@ -244,29 +263,29 @@ footer a:hover { color: var(--accent); }
     font-family: "Silkscreen", monospace;
     font-size: 10px;
     letter-spacing: 2px;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
     text-transform: uppercase;
 }
 .legal h2 {
     font-family: "Silkscreen", monospace;
     color: var(--accent);
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 2px;
-    margin: 36px 0 12px 0;
+    margin: 32px 0 12px 0;
     text-transform: uppercase;
 }
 .legal h3 {
     font-family: "Silkscreen", monospace;
     color: var(--snow);
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 2px;
-    margin: 24px 0 8px 0;
+    margin: 20px 0 8px 0;
     text-transform: uppercase;
 }
 .legal p, .legal li {
     color: var(--ash);
     font-size: 18px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .legal ul, .legal ol { padding-left: 24px; }
 .legal strong { color: var(--snow); }
@@ -274,11 +293,10 @@ footer a:hover { color: var(--accent); }
 /* ── Responsive ───────────────────────────────────────────────────────── */
 
 @media (max-width: 540px) {
-    body { padding: 0 18px; }
-    .hero { padding: 48px 0 56px 0; }
-    .hero .lede { font-size: 20px; }
-    .step { grid-template-columns: 48px 1fr; }
-    .step-text { font-size: 20px; }
-    .btn { padding: 18px 28px; font-size: 14px; }
-    section { padding: 60px 0; }
+    body { padding: 0 16px; }
+    .card { padding: 22px 18px; }
+    .stat { font-size: 36px; padding: 12px 0; }
+    .lede { font-size: 19px; }
+    .btn { font-size: 15px; padding: 18px 16px; letter-spacing: 3px; }
+    .step { padding: 14px 16px; grid-template-columns: 44px 1fr; }
 }
