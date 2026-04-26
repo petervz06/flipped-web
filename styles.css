@@ -126,6 +126,7 @@ main {
     height: 280px;
     margin: 80px auto 0 auto;
     image-rendering: pixelated;
+    text-align: left; /* override parent center so absolute children position correctly */
 }
 
 .phone {
@@ -233,6 +234,81 @@ main {
     60%, 61%  { left: 232px; top: 132px; transform: scale(0.85); }
     63%       { left: 230px; top: 130px; transform: scale(1); }
     85%, 100% { left: 50px; top: 220px; transform: scale(1); }
+}
+
+/* ── Section divider (thin hairline between blocks) ──────────────────── */
+
+.divider {
+    max-width: var(--max-w);
+    margin: 80px auto 0 auto;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ── Centered content blocks (// why, // how it works) ───────────────── */
+
+.block {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 60px 0 0 0;
+    text-align: center;
+}
+
+.block-label {
+    font-family: "Silkscreen", monospace;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: lowercase;
+    margin-bottom: 24px;
+}
+
+.block-body {
+    color: var(--ash);
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 480px;
+    margin: 0 auto 14px auto;
+}
+
+/* Steps list — numbered, centered */
+.steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 460px;
+    text-align: left;
+}
+.steps li {
+    color: var(--snow);
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+.steps li:last-child { border-bottom: none; }
+
+.step-num {
+    font-family: "Silkscreen", monospace;
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.kbd {
+    font-family: "Silkscreen", monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--white);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    margin: 0 2px;
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
