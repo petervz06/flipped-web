@@ -255,11 +255,195 @@ main {
     85%, 100% { left: 65px; top: 170px; transform: scale(1); }
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+   FULL SITE SECTIONS (Shift-style depth, Flipped theme)
+   ─────────────────────────────────────────────────────────────────── */
+
+/* ── Demo caption ────────────────────────────────────────────────────── */
+.demo-caption {
+    color: var(--stone);
+    font-family: "Silkscreen", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 24px;
+}
+
+/* ── 2. Stat cascade ─────────────────────────────────────────────────── */
+.stat-cascade {
+    max-width: var(--max-w);
+    margin: 100px auto 0 auto;
+    text-align: center;
+}
+.stat-line {
+    font-family: "Silkscreen", monospace;
+    color: var(--snow);
+    line-height: 1.2;
+    margin: 6px 0;
+}
+.stat-line.size-1 { font-size: clamp(16px, 3.6vw, 24px); }
+.stat-line.size-2 { font-size: clamp(18px, 4.2vw, 30px); }
+.stat-line.size-3 { font-size: clamp(22px, 5.2vw, 38px); }
+.stat-line.size-4 { font-size: clamp(28px, 6.4vw, 52px); color: var(--accent); }
+.stat-eq {
+    color: var(--stone);
+    font-family: "Silkscreen", monospace;
+    font-size: 14px;
+    margin: 4px 0;
+}
+.stat-tag {
+    color: var(--ash);
+    font-size: 18px;
+    margin-top: 28px;
+}
+
+/* ── Section label colored variants (for // red, // green) ───────────── */
+.section-label.red    { color: #b08070; }
+.section-label.green  { color: #8aa890; }
+
+/* ── 4. How it works ─────────────────────────────────────────────────── */
+.how {
+    max-width: var(--max-w);
+    margin: 100px auto 0 auto;
+    text-align: left;
+}
+.how .section-label {
+    font-family: "Silkscreen", monospace;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: lowercase;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.step-card {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    align-items: start;
+}
+.step-card:last-child { border-bottom: 1px solid var(--border); }
+
+.step-num {
+    font-family: "Silkscreen", monospace;
+    color: var(--accent);
+    font-size: 28px;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+.step-content h3 {
+    font-family: "Silkscreen", monospace;
+    color: var(--white);
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+.step-content p {
+    color: var(--ash);
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+/* ── 5. What it blocks (two columns) ─────────────────────────────────── */
+.blocks {
+    max-width: var(--max-w);
+    margin: 100px auto 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    text-align: left;
+}
+.block-col .section-label {
+    font-family: "Silkscreen", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: lowercase;
+    margin-bottom: 18px;
+    text-align: left;
+}
+.app-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+}
+.app-list li {
+    color: var(--snow);
+    font-size: 16px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.app-list li::before {
+    content: "▣";
+    color: var(--stone);
+    font-family: "Silkscreen", monospace;
+    font-size: 12px;
+}
+.block-col:first-child .app-list li::before { color: #b08070; }
+.block-col:last-child .app-list li::before { color: #8aa890; }
+.block-note {
+    color: var(--stone);
+    font-size: 14px;
+    font-style: italic;
+}
+
+@media (max-width: 540px) {
+    .blocks { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── 6. Why Flipped ──────────────────────────────────────────────────── */
+.why {
+    max-width: var(--max-w);
+    margin: 100px auto 0 auto;
+    text-align: left;
+}
+.why-claim {
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+}
+.why-claim:last-child { border-bottom: 1px solid var(--border); }
+.why-claim .section-label {
+    font-family: "Silkscreen", monospace;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: lowercase;
+    margin-bottom: 12px;
+}
+.why-claim p {
+    color: var(--snow);
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+/* ── 8. Last-call CTA ────────────────────────────────────────────────── */
+.last-cta {
+    max-width: var(--max-w);
+    margin: 100px auto 0 auto;
+    padding: 60px 0 40px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+.last-cta h2 {
+    font-family: "Silkscreen", monospace;
+    color: var(--white);
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+}
+.last-cta .btn { margin-top: 0; }
+
 /* ── Dropdowns (more info, on demand) ────────────────────────────────── */
 
 .dropdowns {
     max-width: var(--max-w);
-    margin: 80px auto 0 auto;
+    margin: 100px auto 0 auto;
     text-align: left;
 }
 
