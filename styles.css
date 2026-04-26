@@ -290,6 +290,193 @@ footer a:hover { color: var(--accent); }
 .legal ul, .legal ol { padding-left: 24px; }
 .legal strong { color: var(--snow); }
 
+/* ─────────────────────────────────────────────────────────────────────
+   PIXELATED FLIP DEMO
+   Pure CSS animation. No images.
+   - Pixel phone with 6 colored apps in a grid
+   - Cream "▶ FLIP" button to its right
+   - Pixel cursor that loops: idle → click button → apps vanish →
+     click again → apps return → idle.  6-second loop.
+   ──────────────────────────────────────────────────────────────────── */
+
+.demo-stage {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    height: 320px;
+    margin: 0 auto;
+    image-rendering: pixelated;
+}
+
+/* ── Phone body ──────────────────────────────────────────────────────── */
+
+.phone {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    width: 160px;
+    height: 260px;
+    background: #2a2825;
+    border: 4px solid #4a4641;
+    border-radius: 14px;
+    box-shadow: inset 2px 2px 0 rgba(255,255,255,0.05),
+                inset -2px -2px 0 rgba(0,0,0,0.4);
+    padding: 14px 10px 18px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.phone-speaker {
+    width: 36px;
+    height: 4px;
+    background: #100f0d;
+    border-radius: 2px;
+}
+
+.phone-screen {
+    width: 100%;
+    flex: 1;
+    background: #100f0d;
+    padding: 12px 8px;
+    border: 1px solid #1c1a17;
+    box-shadow: inset 0 0 0 1px #050403;
+}
+
+.apps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    height: 100%;
+}
+
+.app {
+    border-radius: 4px;
+    transform-origin: center center;
+    animation: app-flip 6s ease-in-out infinite;
+}
+
+/* Each app gets its own sandy/earth color so it's still on-palette */
+.a1 { background: #d96b50; }                 /* warm rust */
+.a2 { background: #8aa8c0; }                 /* dusty blue */
+.a3 { background: #c8b86a; }                 /* mustard */
+.a4 { background: #6ab07a; }                 /* sage green */
+.a5 { background: #c898a8; }                 /* dusty pink */
+.a6 { background: #b08a50; }                 /* sand brown */
+
+@keyframes app-flip {
+    /* visible at start */
+    0%, 25%   { opacity: 1; transform: scale(1); }
+    /* clicked at 25% (1.5s) — apps shrink + vanish over 100ms */
+    26.5%     { opacity: 0; transform: scale(0); }
+    /* stays gone */
+    60%       { opacity: 0; transform: scale(0); }
+    /* second click at 60% (3.6s) — apps reappear */
+    61.5%     { opacity: 1; transform: scale(1); }
+    /* stays visible until loop */
+    100%      { opacity: 1; transform: scale(1); }
+}
+
+.phone-home {
+    width: 22px;
+    height: 22px;
+    background: #4a4641;
+    border-radius: 50%;
+    border: 2px solid #2a2825;
+}
+
+/* ── Mock FLIP button ────────────────────────────────────────────────── */
+
+.mock-btn {
+    position: absolute;
+    right: 0;
+    top: 130px;
+    width: 200px;
+    background: #f2ede6;
+    color: #100f0d;
+    font-family: "Silkscreen", monospace;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 4px;
+    padding: 18px 0;
+    text-align: center;
+    user-select: none;
+    animation: btn-press 6s ease-in-out infinite;
+}
+
+@keyframes btn-press {
+    /* idle */
+    0%, 24%   { background: #f2ede6; transform: scale(1); }
+    /* first press at 25% */
+    25%, 26%  { background: #c8b89a; transform: scale(0.97); }
+    /* released */
+    27%, 59%  { background: #f2ede6; transform: scale(1); }
+    /* second press at 60% */
+    60%, 61%  { background: #c8b89a; transform: scale(0.97); }
+    /* released, idle till loop */
+    62%, 100% { background: #f2ede6; transform: scale(1); }
+}
+
+/* ── Pixel cursor ────────────────────────────────────────────────────── */
+
+.cursor {
+    position: absolute;
+    width: 22px;
+    height: 28px;
+    /* drawn as a triangle with a tail using clip-path */
+    background: #f2ede6;
+    clip-path: polygon(
+        0% 0%,
+        0% 70%,
+        25% 55%,
+        45% 95%,
+        62% 87%,
+        42% 50%,
+        70% 40%
+    );
+    filter: drop-shadow(1px 1px 0 #100f0d) drop-shadow(-1px 0 0 #100f0d);
+    animation: cursor-move 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes cursor-move {
+    /* rest near phone */
+    0%        { left: 60px; top: 240px; }
+    /* glide toward the button */
+    18%       { left: 250px; top: 145px; }
+    /* hover at button */
+    24%       { left: 250px; top: 145px; transform: scale(1); }
+    /* press */
+    25%, 26%  { left: 252px; top: 147px; transform: scale(0.85); }
+    /* release */
+    28%, 58%  { left: 250px; top: 145px; transform: scale(1); }
+    /* second press */
+    60%, 61%  { left: 252px; top: 147px; transform: scale(0.85); }
+    /* release */
+    63%       { left: 250px; top: 145px; transform: scale(1); }
+    /* glide back to rest */
+    85%, 100% { left: 60px; top: 240px; transform: scale(1); }
+}
+
+/* Mobile: shrink the stage so it fits */
+@media (max-width: 540px) {
+    .demo-stage { height: 280px; max-width: 360px; }
+    .phone { width: 130px; height: 220px; top: 30px; left: 8px; }
+    .mock-btn { width: 160px; top: 120px; right: 8px; font-size: 14px; padding: 14px 0; }
+    .cursor { width: 18px; height: 24px; }
+    @keyframes cursor-move {
+        0%        { left: 40px; top: 200px; }
+        18%       { left: 200px; top: 130px; }
+        24%       { left: 200px; top: 130px; transform: scale(1); }
+        25%, 26%  { left: 202px; top: 132px; transform: scale(0.85); }
+        28%, 58%  { left: 200px; top: 130px; transform: scale(1); }
+        60%, 61%  { left: 202px; top: 132px; transform: scale(0.85); }
+        63%       { left: 200px; top: 130px; transform: scale(1); }
+        85%, 100% { left: 40px; top: 200px; transform: scale(1); }
+    }
+}
+
 /* ── Responsive ───────────────────────────────────────────────────────── */
 
 @media (max-width: 540px) {
