@@ -236,79 +236,48 @@ main {
     85%, 100% { left: 50px; top: 220px; transform: scale(1); }
 }
 
-/* ── Section divider (thin hairline between blocks) ──────────────────── */
+/* ── Dropdowns (more info, on demand) ────────────────────────────────── */
 
-.divider {
+.dropdowns {
     max-width: var(--max-w);
     margin: 80px auto 0 auto;
-    height: 1px;
-    background: var(--border);
-}
-
-/* ── Centered content blocks (// why, // how it works) ───────────────── */
-
-.block {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 60px 0 0 0;
-    text-align: center;
-}
-
-.block-label {
-    font-family: "Silkscreen", monospace;
-    color: var(--accent);
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: lowercase;
-    margin-bottom: 24px;
-}
-
-.block-body {
-    color: var(--ash);
-    font-size: 18px;
-    line-height: 1.55;
-    max-width: 480px;
-    margin: 0 auto 14px auto;
-}
-
-/* Steps list — numbered, centered */
-.steps {
-    list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    max-width: 460px;
     text-align: left;
 }
-.steps li {
-    color: var(--snow);
-    font-size: 18px;
-    line-height: 1.5;
-    padding: 14px 0;
+
+.dropdowns details {
+    border-top: 1px solid var(--border);
+    padding: 20px 4px;
+}
+.dropdowns details:last-child {
     border-bottom: 1px solid var(--border);
+}
+
+.dropdowns summary {
+    cursor: pointer;
+    list-style: none;
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--snow);
+    font-size: 17px;
+    font-weight: 500;
 }
-.steps li:last-child { border-bottom: none; }
-
-.step-num {
-    font-family: "Silkscreen", monospace;
+.dropdowns summary::-webkit-details-marker { display: none; }
+.dropdowns summary::after {
+    content: "+";
     color: var(--accent);
-    font-size: 14px;
-    letter-spacing: 1px;
-    flex-shrink: 0;
-    padding-top: 2px;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
 }
+.dropdowns details[open] summary::after { content: "−"; }
 
-.kbd {
-    font-family: "Silkscreen", monospace;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--white);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 2px 8px;
-    margin: 0 2px;
+.dropdowns details p {
+    color: var(--ash);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 14px;
+    max-width: 560px;
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */
