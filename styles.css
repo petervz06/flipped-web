@@ -59,19 +59,18 @@ main {
     margin-bottom: 80px;
 }
 
-/* ── Headline (single line, fits at all sizes) ────────────────────────── */
+/* ── Headline (single line on most screens, wraps if needed) ──────────── */
 
 .headline {
     font-family: "Silkscreen", monospace;
     font-weight: 700;
     color: var(--white);
-    font-size: clamp(22px, 4.6vw, 44px);
+    font-size: clamp(20px, 4.2vw, 38px);
     line-height: 1.15;
     letter-spacing: 0;
     margin-bottom: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip;
+    /* Let it stay on one line up to the natural fit, no clipping */
+    word-spacing: 0;
 }
 
 .headline .slash {
@@ -118,22 +117,18 @@ main {
     margin-top: 14px;
 }
 
-/* ── Demo (compact phone + button side-by-side, centered) ─────────────── */
+/* ── Demo (flex layout, self-centering) ──────────────────────────────── */
 
 .demo-stage {
-    position: relative;
-    width: 320px;
-    height: 240px;
-    margin: 80px auto 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin: 64px auto 0 auto;
     image-rendering: pixelated;
-    text-align: left;  /* override main's center so absolute positions are honored */
 }
 
-/* Phone — left side of stage */
 .phone {
-    position: absolute;
-    left: 8px;
-    top: 8px;
     width: 110px;
     height: 200px;
     background: var(--bg2);
@@ -143,6 +138,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 6px;
+    flex-shrink: 0;
 }
 
 .phone-speaker {
@@ -195,12 +191,19 @@ main {
     background: var(--border);
 }
 
-/* Button — sits immediately to the right of the phone, vertically centered */
+/* Control column — holds the button + cursor as a unit, sits beside phone */
+.control {
+    position: relative;
+    width: 150px;
+    height: 200px;     /* matches phone for vertical centering */
+    flex-shrink: 0;
+}
+
 .mock-btn {
     position: absolute;
-    left: 150px;
-    top: 88px;
-    width: 150px;
+    left: 0;
+    right: 0;
+    top: 78px;          /* vertically centered against phone */
     background: var(--white);
     color: var(--bg);
     font-family: "Silkscreen", monospace;
@@ -221,7 +224,7 @@ main {
     62%, 100% { background: var(--white); transform: scale(1); }
 }
 
-/* Cursor — rests below the button at idle, glides up to click it */
+/* Cursor — animates within the control column, rests below button */
 .cursor {
     position: absolute;
     width: 16px;
@@ -237,19 +240,19 @@ main {
 }
 
 @keyframes cursor-move {
-    /* idle below the button */
-    0%        { left: 175px; top: 170px; }
-    /* glide up to button */
-    18%       { left: 215px; top: 100px; }
-    24%       { left: 215px; top: 100px; transform: scale(1); }
+    /* idle: below the button */
+    0%        { left: 65px; top: 170px; }
+    /* glide up onto button */
+    18%       { left: 95px; top: 92px; }
+    24%       { left: 95px; top: 92px; transform: scale(1); }
     /* click 1 */
-    25%, 26%  { left: 217px; top: 102px; transform: scale(0.85); }
-    28%, 58%  { left: 215px; top: 100px; transform: scale(1); }
+    25%, 26%  { left: 97px; top: 94px; transform: scale(0.85); }
+    28%, 58%  { left: 95px; top: 92px; transform: scale(1); }
     /* click 2 */
-    60%, 61%  { left: 217px; top: 102px; transform: scale(0.85); }
-    63%       { left: 215px; top: 100px; transform: scale(1); }
-    /* return to idle */
-    85%, 100% { left: 175px; top: 170px; transform: scale(1); }
+    60%, 61%  { left: 97px; top: 94px; transform: scale(0.85); }
+    63%       { left: 95px; top: 92px; transform: scale(1); }
+    /* return */
+    85%, 100% { left: 65px; top: 170px; transform: scale(1); }
 }
 
 /* ── Dropdowns (more info, on demand) ────────────────────────────────── */
