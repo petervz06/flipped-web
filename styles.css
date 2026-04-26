@@ -52,23 +52,30 @@ main {
 
 .brand {
     font-family: "Silkscreen", monospace;
-    font-size: 13px;
+    font-size: 26px;
     color: var(--accent);
-    letter-spacing: 6px;
+    letter-spacing: 10px;
     text-align: center;
     margin-bottom: 80px;
 }
 
-/* ── Headline ─────────────────────────────────────────────────────────── */
+/* ── Headline (single line with slash separators) ─────────────────────── */
 
 .headline {
     font-family: "Silkscreen", monospace;
     font-weight: 700;
     color: var(--white);
-    font-size: clamp(56px, 14vw, 116px);
-    line-height: 0.95;
+    font-size: clamp(28px, 7vw, 64px);
+    line-height: 1.1;
     letter-spacing: 1px;
     margin-bottom: 28px;
+    /* keep on a single line on wide screens; wrap naturally on narrow */
+    word-spacing: 0;
+}
+
+.headline .slash {
+    color: var(--accent);
+    margin: 0 4px;
 }
 
 /* ── Subline ──────────────────────────────────────────────────────────── */
