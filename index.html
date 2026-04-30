@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FLIPPED — zero workarounds.</title>
     <meta name="description" content="The screen-time blocker you can't cheat. Currently in beta." />
-    <link rel="stylesheet" href="styles.css?v=13" />
+    <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
 
@@ -22,10 +22,24 @@
         Currently in open beta — free for testers.
     </p>
 
-    <a href="/downloads/Flipped-1.0.0.dmg" class="btn">
-        <span class="arrow">▶</span> DOWNLOAD FOR MAC
-    </a>
-    <p class="micro">macOS 13+ · iPhone iOS 17+</p>
+    <!-- ── Primary CTA: signup form ────────────────────────────
+         POSTs to /api/license/request-key on Railway.  Server
+         always 204s (no enumeration leak), then emails the key
+         out via Resend.  On success the form swaps to a
+         download CTA. -->
+    <form class="signup-form" id="signup-form" novalidate>
+        <input id="signup-email" type="email" name="email"
+               placeholder="you@example.com" autocomplete="email" required />
+        <button type="submit" class="btn" id="signup-submit">
+            <span class="arrow">▶</span> EMAIL ME MY KEY
+        </button>
+    </form>
+    <p class="micro" id="signup-status">macOS 13+ · iPhone iOS 17+ · free while in beta</p>
+
+    <p class="hero-secondary">
+        Already have a key?
+        <a href="/downloads/Flipped-latest.dmg">▼ Download Mac app</a>
+    </p>
 
     <section class="how">
         <div class="section-label">// how it works</div>
@@ -65,6 +79,95 @@
         <a href="mailto:support@useflipped.com">SUPPORT</a>
     </div>
 </footer>
+
+<!-- ── Signup-form behaviour ──────────────────────────────────────────────
+     POSTs the email to the Railway-hosted Flipped API.  Server always
+     returns 204 (no enumeration leak) so any non-error response is
+     "success — check your inbox."  Network failures show a generic
+     retry message; we don't surface 4xx detail because rate-limit and
+     validation paths share the same friendly "try again" copy.
+
+     If the API host changes (e.g. off Railway), update API_BASE here
+     and the CORS allow-list in flipped-mac/backend/app/main.py.
+─────────────────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+    var API_BASE = "https://flipped-production-79b3.up.railway.app";
+    var DOWNLOAD_URL = "/downloads/Flipped-latest.dmg";
+
+    var form     = document.getElementById("signup-form");
+    var input    = document.getElementById("signup-email");
+    var status   = document.getElementById("signup-status");
+    var submit   = document.getElementById("signup-submit");
+
+    if (!form) return;  // page version-mismatch guard
+
+    function setStatus(text, kind) {
+        status.textContent = text;
+        status.classList.remove("ok", "warn");
+        if (kind) status.classList.add(kind);
+    }
+
+    function showSuccess(email) {
+        // Replace the form with a success block + prominent download CTA.
+        // Friend's eyes land on "your key is on the way" then on the
+        // download button — exactly the next action they need to take.
+        form.innerHTML =
+            "<div class='signup-success'>" +
+              "<div class='signup-success-line'>✓ KEY ON ITS WAY TO " + escapeHtml(email.toUpperCase()) + "</div>" +
+              "<a href='" + DOWNLOAD_URL + "' class='btn' style='margin-top:18px;'>" +
+                "<span class='arrow'>▼</span> DOWNLOAD MAC APP" +
+              "</a>" +
+              "<p class='signup-success-help'>Open the Mac app, paste the key from your email, and Flipped walks you through setting up your iPhone.</p>" +
+            "</div>";
+        setStatus("Didn't get the email? Check spam, then submit again — you'll get the same key.", null);
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+            return { "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c];
+        });
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var email = (input.value || "").trim();
+        if (!email || email.indexOf("@") < 0) {
+            setStatus("Enter a valid email address.", "warn");
+            input.focus();
+            return;
+        }
+
+        submit.disabled = true;
+        submit.innerHTML = "SENDING…";
+        setStatus("", null);
+
+        fetch(API_BASE + "/api/license/request-key", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email })
+        })
+        .then(function (resp) {
+            if (resp.status === 204 || (resp.status >= 200 && resp.status < 300)) {
+                showSuccess(email);
+            } else if (resp.status === 429) {
+                setStatus("Too many requests. Wait a minute and try again.", "warn");
+                submit.disabled = false;
+                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+            } else {
+                setStatus("Something went wrong. Try again, or email support@useflipped.com.", "warn");
+                submit.disabled = false;
+                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+            }
+        })
+        .catch(function () {
+            setStatus("Network error. Check your connection and retry.", "warn");
+            submit.disabled = false;
+            submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+        });
+    });
+})();
+</script>
 
 </body>
 </html>
