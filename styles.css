@@ -1,125 +1,103 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   FLIPPED — minimal site
-   - System sans-serif for body (readable)
-   - Silkscreen pixel only for: brand, big headline, button text
-   - No chunky bevels.  Hairline borders.  Lots of whitespace.
+   FLIPPED — useflipped.com
+   2026-04-30 redesign — Variant A from `ui-previews-website.html`:
+   mega-text hero, single-column scroll, signup form + visible download.
+   Pure black background, hairline borders, white-on-black, Inter system
+   fallback.  No chrome, no bevels, no brand colour beyond the metallic
+   wordmark gradient.
    ───────────────────────────────────────────────────────────────────── */
-
-@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap");
-
-:root {
-    --bg:      #100f0d;
-    --bg2:     #161412;
-    --bg3:     #1c1a17;
-    --border:  #2a2825;
-    --stone:   #6a6560;
-    --ash:     #b0aba4;
-    --sand:    #c8bfb2;
-    --snow:    #e2ddd6;
-    --white:   #f2ede6;
-    --accent:  #c8b89a;
-
-    --max-w: 640px;
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-    background: var(--bg);
-    color: var(--snow);
+    background: #000;
+    color: #f0f0f0;
     font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text",
                  "Helvetica Neue", system-ui, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
 
 body {
     min-height: 100vh;
-    padding: 28px 24px 48px 24px;
+    padding-bottom: 48px;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { color: var(--white); }
+a { color: rgba(255,255,255,0.85); text-decoration: none; }
+a:hover { color: #fff; }
 
-main {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    text-align: center;
-}
 
-/* ── Brand ────────────────────────────────────────────────────────────── */
+/* ── Top nav ───────────────────────────────────────────────────────────── */
 
-.brand {
-    font-family: "Silkscreen", monospace;
-    font-size: 26px;
-    color: var(--accent);
-    letter-spacing: 10px;
-    text-align: center;
-    margin-bottom: 80px;
-}
-
-/* ── Headline (single line on most screens, wraps if needed) ──────────── */
-
-.headline {
-    font-family: "Silkscreen", monospace;
-    font-weight: 700;
-    color: var(--white);
-    font-size: clamp(20px, 4.2vw, 38px);
-    line-height: 1.15;
-    letter-spacing: 0;
-    margin-bottom: 32px;
-    /* Let it stay on one line up to the natural fit, no clipping */
-    word-spacing: 0;
-}
-
-.headline .slash {
-    color: var(--accent);
-    margin: 0 2px;
-}
-
-/* ── Subline ──────────────────────────────────────────────────────────── */
-
-.hero-sub {
-    color: var(--ash);
-    font-size: 19px;
-    line-height: 1.5;
-    max-width: 480px;
-    margin: 0 auto 36px auto;
-}
-
-/* ── Primary button ───────────────────────────────────────────────────── */
-
-.btn {
-    display: inline-flex;
+.topnav {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: var(--white);
-    color: var(--bg);
-    font-family: "Silkscreen", monospace;
-    font-weight: 700;
-    font-size: 15px;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 28px;
+}
+
+.brand-mini {
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 4px;
+    background: linear-gradient(180deg, #fff 0%, #c8c8c8 50%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.topnav-links {
+    display: flex;
+    gap: 22px;
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+}
+.topnav-links a:hover { color: #fff; }
+
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+
+.hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 28px 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lbl {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 10px;
     letter-spacing: 3px;
-    padding: 18px 32px;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    text-decoration: none;
-    min-width: 280px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 18px;
 }
-.btn:hover { background: var(--accent); }
-.btn .arrow { font-size: 14px; }
 
-.micro {
-    color: var(--stone);
-    font-size: 13px;
-    margin-top: 14px;
+.headline-mega {
+    font-size: clamp(40px, 8vw, 64px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 22px;
 }
-.micro.warn { color: #c08267; }   /* dull terracotta — error state */
-.micro.ok   { color: #98b59a; }   /* dull moss — success state */
 
-/* ── Signup form (email + submit, hairline border, dark) ────────────── */
+.lede {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 460px;
+    margin: 0 auto 32px;
+}
+
+
+/* ── Signup form ───────────────────────────────────────────────────────── */
 
 .signup-form {
     display: inline-flex;
@@ -131,496 +109,235 @@ main {
     max-width: 460px;
     margin: 0 auto;
 }
+
 .signup-form input[type="email"] {
-    flex: 1 1 220px;
-    min-width: 200px;
-    background: var(--bg2);
-    color: var(--snow);
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
-    font-size: 17px;
-    padding: 16px 18px;
-    border: 1px solid var(--border);
+    flex: 1 1 240px;
+    min-width: 220px;
+    background: rgba(255,255,255,0.04);
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255,255,255,0.08);
     outline: none;
+    border-radius: 12px;
     text-align: left;
 }
-.signup-form input[type="email"]::placeholder { color: var(--stone); }
+.signup-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
 .signup-form input[type="email"]:focus {
-    border-color: var(--sand);
-    background: var(--bg3);
-}
-.signup-form .btn {
-    min-width: 0;
-    padding: 16px 22px;
-    font-size: 13px;
-    letter-spacing: 2px;
+    border-color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.06);
 }
 
-@media (max-width: 480px) {
-    .signup-form { flex-direction: column; }
-    .signup-form input[type="email"] { width: 100%; }
-    .signup-form .btn { width: 100%; }
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    padding: 14px 22px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
 }
+.btn .arrow { font-size: 11px; }
+
+.btn.primary {
+    background: #fff;
+    color: #000;
+}
+.btn.primary:hover { background: #ddd; color: #000; }
+
+.btn.secondary {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.18);
+}
+.btn.secondary:hover { color: #fff; border-color: rgba(255,255,255,0.45); }
+
+
+/* ── Hero meta + secondary CTA ─────────────────────────────────────────── */
+
+.micro {
+    color: rgba(255,255,255,0.4);
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-top: 14px;
+}
+.micro.warn { color: #c08267; }
+.micro.ok   { color: #98b59a; }
 
 .hero-secondary {
-    margin-top: 18px;
-    color: var(--stone);
-    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
-.hero-secondary a {
-    color: var(--ash);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1px;
+.hero-secondary .muted {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
 }
-.hero-secondary a:hover { color: var(--white); border-color: var(--sand); }
+
+
+/* ── Signup success state (replaces the form) ──────────────────────────── */
 
 .signup-success {
-    text-align: center;
-    padding: 18px 16px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
     width: 100%;
+    text-align: center;
+    padding: 22px 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
 }
 .signup-success-line {
-    font-family: "Silkscreen", monospace;
-    font-size: 13px;
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 12px;
     letter-spacing: 2px;
-    color: var(--accent);
+    color: #fff;
+    font-weight: 600;
 }
 .signup-success-help {
-    color: var(--stone);
-    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
     margin-top: 14px;
     line-height: 1.5;
 }
 
-/* ── Demo (flex layout, self-centering) ──────────────────────────────── */
 
-.demo-stage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-    margin: 64px auto 0 auto;
-    image-rendering: pixelated;
+/* ── Sections (how / faq) ──────────────────────────────────────────────── */
+
+.section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 28px 0;
 }
 
-.phone {
-    width: 110px;
-    height: 200px;
-    background: var(--bg2);
-    border: 2px solid var(--border);
-    padding: 10px 6px 12px 6px;
+.section-label {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.36);
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+
+/* ── Features (How it works) ───────────────────────────────────────────── */
+
+.features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+@media (min-width: 720px) {
+    .features { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.feature {
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-}
-
-.phone-speaker {
-    width: 22px;
-    height: 3px;
-    background: var(--border);
-}
-
-.phone-screen {
-    width: 100%;
-    flex: 1;
-    background: #050403;
-    padding: 6px 4px;
-    border: 1px solid var(--border);
-}
-
-.apps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    height: 100%;
-}
-
-.app {
-    background: var(--sand);
-    aspect-ratio: 1;          /* always square — looks like an app icon */
-    position: relative;
-    transform-origin: center;
-    animation: app-flip 6s ease-in-out infinite;
-}
-/* Tiny inner pixel mark — gives each square a bit of icon-shape depth */
-.app::after {
-    content: "";
-    position: absolute;
-    inset: 30%;
-    background: var(--bg2);
-}
-
-@keyframes app-flip {
-    0%, 25%   { opacity: 1; transform: scale(1); }
-    26.5%     { opacity: 0; transform: scale(0); }
-    60%       { opacity: 0; transform: scale(0); }
-    61.5%     { opacity: 1; transform: scale(1); }
-    100%      { opacity: 1; transform: scale(1); }
-}
-
-.phone-home {
-    width: 16px;
-    height: 3px;
-    background: var(--border);
-}
-
-/* Control column — holds the button + cursor as a unit, sits beside phone */
-.control {
-    position: relative;
-    width: 150px;
-    height: 200px;     /* matches phone for vertical centering */
-    flex-shrink: 0;
-}
-
-.mock-btn {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 78px;          /* vertically centered against phone */
-    background: var(--white);
-    color: var(--bg);
-    font-family: "Silkscreen", monospace;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 3px;
-    padding: 14px 0;
-    text-align: center;
-    user-select: none;
-    animation: btn-press 6s ease-in-out infinite;
-}
-
-@keyframes btn-press {
-    0%, 24%   { background: var(--white); transform: scale(1); }
-    25%, 26%  { background: var(--accent); transform: scale(0.97); }
-    27%, 59%  { background: var(--white); transform: scale(1); }
-    60%, 61%  { background: var(--accent); transform: scale(0.97); }
-    62%, 100% { background: var(--white); transform: scale(1); }
-}
-
-/* Cursor — animates within the control column, rests below button */
-.cursor {
-    position: absolute;
-    width: 16px;
-    height: 22px;
-    background: var(--white);
-    clip-path: polygon(
-        0% 0%, 0% 70%, 25% 55%, 45% 95%,
-        62% 87%, 42% 50%, 70% 40%
-    );
-    filter: drop-shadow(1px 1px 0 var(--bg));
-    animation: cursor-move 6s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes cursor-move {
-    /* idle: below the button */
-    0%        { left: 65px; top: 170px; }
-    /* glide up onto button */
-    18%       { left: 95px; top: 92px; }
-    24%       { left: 95px; top: 92px; transform: scale(1); }
-    /* click 1 */
-    25%, 26%  { left: 97px; top: 94px; transform: scale(0.85); }
-    28%, 58%  { left: 95px; top: 92px; transform: scale(1); }
-    /* click 2 */
-    60%, 61%  { left: 97px; top: 94px; transform: scale(0.85); }
-    63%       { left: 95px; top: 92px; transform: scale(1); }
-    /* return */
-    85%, 100% { left: 65px; top: 170px; transform: scale(1); }
-}
-
-/* ─────────────────────────────────────────────────────────────────────
-   FULL SITE SECTIONS (Shift-style depth, Flipped theme)
-   ─────────────────────────────────────────────────────────────────── */
-
-/* ── Demo caption ────────────────────────────────────────────────────── */
-.demo-caption {
-    color: var(--stone);
-    font-family: "Silkscreen", monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-top: 24px;
-}
-
-/* ── 2. Stat cascade ─────────────────────────────────────────────────── */
-.stat-cascade {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    text-align: center;
-}
-.stat-line {
-    font-family: "Silkscreen", monospace;
-    color: var(--snow);
-    line-height: 1.2;
-    margin: 6px 0;
-}
-.stat-line.size-1 { font-size: clamp(16px, 3.6vw, 24px); }
-.stat-line.size-2 { font-size: clamp(18px, 4.2vw, 30px); }
-.stat-line.size-3 { font-size: clamp(22px, 5.2vw, 38px); }
-.stat-line.size-4 { font-size: clamp(28px, 6.4vw, 52px); color: var(--accent); }
-.stat-eq {
-    color: var(--stone);
-    font-family: "Silkscreen", monospace;
-    font-size: 14px;
-    margin: 4px 0;
-}
-.stat-tag {
-    color: var(--ash);
-    font-size: 18px;
-    margin-top: 28px;
-}
-
-/* ── Section label colored variants (for // red, // green) ───────────── */
-.section-label.red    { color: #b08070; }
-.section-label.green  { color: #8aa890; }
-
-/* ── 4. How it works ─────────────────────────────────────────────────── */
-.how {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    text-align: left;
-}
-.how .section-label {
-    font-family: "Silkscreen", monospace;
-    color: var(--accent);
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: lowercase;
-    margin-bottom: 32px;
-    text-align: center;
-}
-
-.step-card {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 20px;
-    padding: 24px 0;
-    border-top: 1px solid var(--border);
-    align-items: start;
-}
-.step-card:last-child { border-bottom: 1px solid var(--border); }
-
-.step-num {
-    font-family: "Silkscreen", monospace;
-    color: var(--accent);
-    font-size: 28px;
-    letter-spacing: 1px;
-    line-height: 1;
-}
-.step-content h3 {
-    font-family: "Silkscreen", monospace;
-    color: var(--white);
-    font-size: 16px;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-}
-.step-content p {
-    color: var(--ash);
-    font-size: 17px;
-    line-height: 1.5;
-}
-
-/* ── 5. What it blocks (two columns) ─────────────────────────────────── */
-.blocks {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    text-align: left;
-}
-.block-col .section-label {
-    font-family: "Silkscreen", monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: lowercase;
-    margin-bottom: 18px;
-    text-align: left;
-}
-.app-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 16px 0;
-}
-.app-list li {
-    color: var(--snow);
-    font-size: 16px;
-    padding: 8px 0;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
     gap: 10px;
 }
-.app-list li::before {
-    content: "▣";
-    color: var(--stone);
-    font-family: "Silkscreen", monospace;
-    font-size: 12px;
-}
-.block-col:first-child .app-list li::before { color: #b08070; }
-.block-col:last-child .app-list li::before { color: #8aa890; }
-.block-note {
-    color: var(--stone);
-    font-size: 14px;
-    font-style: italic;
-}
 
-@media (max-width: 540px) {
-    .blocks { grid-template-columns: 1fr; gap: 32px; }
-}
-
-/* ── 6. Why Flipped ──────────────────────────────────────────────────── */
-.why {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    text-align: left;
-}
-.why-claim {
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-}
-.why-claim:last-child { border-bottom: 1px solid var(--border); }
-.why-claim .section-label {
-    font-family: "Silkscreen", monospace;
-    color: var(--accent);
+.feature-num {
+    font-family: ui-monospace, "SF Mono", monospace;
     font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: lowercase;
-    margin-bottom: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
 }
-.why-claim p {
-    color: var(--snow);
-    font-size: 18px;
+
+.feature h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.feature p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
     line-height: 1.55;
 }
 
-/* ── 8. Last-call CTA ────────────────────────────────────────────────── */
-.last-cta {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    padding: 60px 0 40px 0;
-    border-top: 1px solid var(--border);
-    text-align: center;
-}
-.last-cta h2 {
-    font-family: "Silkscreen", monospace;
-    color: var(--white);
-    font-size: clamp(36px, 8vw, 64px);
-    letter-spacing: 2px;
-    margin-bottom: 32px;
-}
-.last-cta .btn { margin-top: 0; }
 
-/* ── Dropdowns (more info, on demand) ────────────────────────────────── */
+/* ── FAQ ───────────────────────────────────────────────────────────────── */
 
-.dropdowns {
-    max-width: var(--max-w);
-    margin: 100px auto 0 auto;
-    text-align: left;
+.faq {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background: rgba(255,255,255,0.02);
+    overflow: hidden;
 }
-
-.dropdowns details {
-    border-top: 1px solid var(--border);
-    padding: 20px 4px;
-}
-.dropdowns details:last-child {
-    border-bottom: 1px solid var(--border);
-}
-
-.dropdowns summary {
+.faq summary {
     cursor: pointer;
     list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--snow);
-    font-size: 17px;
+    padding: 16px 18px;
+    font-size: 14px;
     font-weight: 500;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.dropdowns summary::-webkit-details-marker { display: none; }
-.dropdowns summary::after {
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
     content: "+";
-    color: var(--accent);
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1;
-}
-.dropdowns details[open] summary::after { content: "−"; }
-
-.dropdowns details p {
-    color: var(--ash);
+    font-family: ui-monospace, monospace;
+    color: rgba(255,255,255,0.5);
     font-size: 16px;
-    line-height: 1.6;
-    margin-top: 14px;
-    max-width: 560px;
+}
+.faq[open] summary::after { content: "−"; }
+.faq[open] summary { border-bottom: 1px solid rgba(255,255,255,0.06); }
+.faq p {
+    padding: 16px 18px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    line-height: 1.55;
 }
 
-/* ── Footer ───────────────────────────────────────────────────────────── */
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
 
 footer {
-    max-width: var(--max-w);
-    margin: 80px auto 0 auto;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--stone);
+    max-width: 720px;
+    margin: 64px auto 0;
+    padding: 24px 28px;
+    border-top: 1px solid rgba(255,255,255,0.06);
     display: flex;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.36);
 }
-footer a { color: var(--stone); }
-footer a:hover { color: var(--accent); }
+footer a { color: rgba(255,255,255,0.5); }
+footer a:hover { color: #fff; }
 
-/* ── Legal pages ──────────────────────────────────────────────────────── */
 
-.legal {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 48px 0 64px 0;
-    text-align: left;
-}
-.legal h1 {
-    font-family: "Silkscreen", monospace;
-    color: var(--white);
-    font-size: 28px;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-.legal .updated {
-    color: var(--stone);
-    font-size: 13px;
-    margin-bottom: 32px;
-}
-.legal h2 {
-    color: var(--accent);
-    font-size: 17px;
-    margin: 32px 0 10px 0;
-    font-weight: 600;
-}
-.legal h3 {
-    color: var(--snow);
-    font-size: 15px;
-    margin: 20px 0 6px 0;
-    font-weight: 600;
-}
-.legal p, .legal li {
-    color: var(--ash);
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-.legal ul, .legal ol { padding-left: 22px; }
-.legal strong { color: var(--snow); }
-
-/* ── Responsive ───────────────────────────────────────────────────────── */
+/* ── Responsive ────────────────────────────────────────────────────────── */
 
 @media (max-width: 540px) {
-    body { padding: 22px 18px 32px 18px; }
-    .brand { margin-bottom: 56px; font-size: 22px; letter-spacing: 8px; }
-    .headline { font-size: clamp(20px, 6.5vw, 32px); }
-    .demo-stage { transform: scale(0.92); transform-origin: top center; }
+    .signup-form { flex-direction: column; }
+    .signup-form input[type="email"] { width: 100%; }
+    .signup-form .btn { width: 100%; }
+    .hero { padding: 48px 22px 40px; }
 }

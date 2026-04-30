@@ -3,73 +3,101 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FLIPPED — zero workarounds.</title>
-    <meta name="description" content="The screen-time blocker you can't cheat. Currently in beta." />
-    <link rel="stylesheet" href="styles.css?v=14" />
+    <title>FLIPPED — flip your phone. get your life back.</title>
+    <meta name="description" content="Hide distracting apps and filter distracting websites on your iPhone.  Zero workarounds." />
+    <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
 
-<div class="brand">FLIPPED</div>
+<!-- ── Top nav ──────────────────────────────────────────────────────── -->
+<nav class="topnav">
+    <div class="brand-mini">FLIPPED</div>
+    <div class="topnav-links">
+        <a href="#how">HOW</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:support@useflipped.com">SUPPORT</a>
+    </div>
+</nav>
 
-<main>
+<main class="hero">
 
-    <h1 class="headline">
-        ZERO<span class="slash">/</span>WORKAROUNDS
+    <div class="lbl">SCREEN-TIME BLOCKER · IOS</div>
+
+    <h1 class="headline-mega">
+        Flip your phone.<br>
+        Get your life back.
     </h1>
 
-    <p class="hero-sub">
-        The screen-time blocker you can't cheat.<br>
-        Currently in open beta — free for testers.
+    <p class="lede">
+        Hide distracting apps and filter distracting websites on your iPhone.
+        Zero workarounds.  Currently in open beta — free for testers.
     </p>
 
     <!-- ── Primary CTA: signup form ────────────────────────────
-         POSTs to /api/license/request-key on Railway.  Server
-         always 204s (no enumeration leak), then emails the key
-         out via Resend.  On success the form swaps to a
-         download CTA. -->
+         Friend submits email → Railway API generates a license
+         key → Resend emails it → friend pastes into the Mac app. -->
     <form class="signup-form" id="signup-form" novalidate>
         <input id="signup-email" type="email" name="email"
                placeholder="you@example.com" autocomplete="email" required />
-        <button type="submit" class="btn" id="signup-submit">
+        <button type="submit" class="btn primary" id="signup-submit">
             <span class="arrow">▶</span> EMAIL ME MY KEY
         </button>
     </form>
     <p class="micro" id="signup-status">macOS 13+ · iPhone iOS 17+ · free while in beta</p>
 
-    <p class="hero-secondary">
-        Already have a key?
-        <a href="/downloads/Flipped-latest.dmg">▼ Download Mac app</a>
-    </p>
-
-    <section class="how">
-        <div class="section-label">// how it works</div>
-
-        <div class="step-card">
-            <div class="step-num">01</div>
-            <div class="step-content">
-                <h3>PLUG IN</h3>
-                <p>Connect your iPhone via USB. Takes a couple of minutes.</p>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <div class="step-num">02</div>
-            <div class="step-content">
-                <h3>PICK YOUR DISTRACTIONS</h3>
-                <p>Tap any app to mark it red (blocked), grey (toggleable), or green (always allowed).</p>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <div class="step-num">03</div>
-            <div class="step-content">
-                <h3>TAP FLIP</h3>
-                <p>Apps disappear. Distracting sites get blocked in Safari. Tap UNFLIP and they come back.</p>
-            </div>
-        </div>
-    </section>
+    <!-- ── Secondary CTA: direct download ────────────────────────
+         For users who already have a key from a prior message. -->
+    <div class="hero-secondary">
+        <span class="muted">Already have a key?</span>
+        <a href="/downloads/Flipped-latest.dmg" class="btn secondary">
+            <span class="arrow">▼</span> DOWNLOAD MAC APP
+        </a>
+    </div>
 
 </main>
+
+<!-- ── How it works ──────────────────────────────────────────── -->
+<section class="section" id="how">
+    <div class="section-label">// how it works</div>
+    <div class="features">
+        <div class="feature">
+            <div class="feature-num">01</div>
+            <h3>SIGN UP</h3>
+            <p>Drop your email above.  We send you a license key.</p>
+        </div>
+        <div class="feature">
+            <div class="feature-num">02</div>
+            <h3>INSTALL + PLUG IN</h3>
+            <p>Download the Mac app, paste the key, plug your iPhone in via USB once.  Setup takes ~10 minutes.</p>
+        </div>
+        <div class="feature">
+            <div class="feature-num">03</div>
+            <h3>TAP FLIP</h3>
+            <p>Apps disappear from your iPhone.  Distracting sites get blocked in Safari.  Tap UNFLIP when done.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────── -->
+<section class="section" id="faq">
+    <div class="section-label">// common questions</div>
+    <details class="faq">
+        <summary>Will this let me look up porn / adult content?</summary>
+        <p>No.  Apple's built-in adult-content filter is active during every session and blocks adult sites automatically.  You can't turn it off during a flip.</p>
+    </details>
+    <details class="faq">
+        <summary>Can I unflip early in Focus mode?</summary>
+        <p>Focus sessions end automatically when the timer hits zero.  One emergency unflip per 30 days is allowed if something urgent comes up.  Unplug + Forever modes have no early-end option — that's the point.</p>
+    </details>
+    <details class="faq">
+        <summary>Does Flipped read my messages or photos?</summary>
+        <p>No.  Flipped can hide apps and filter URLs but never reads the contents of any app on your phone.</p>
+    </details>
+    <details class="faq">
+        <summary>What if I want to stop using Flipped?</summary>
+        <p>Remove it any time: Mac app → Settings → Remove Flipped, or from your iPhone's Settings → General → VPN &amp; Device Management.</p>
+    </details>
+</section>
 
 <footer>
     <div>© 2026 FLIPPED</div>
@@ -86,9 +114,6 @@
      "success — check your inbox."  Network failures show a generic
      retry message; we don't surface 4xx detail because rate-limit and
      validation paths share the same friendly "try again" copy.
-
-     If the API host changes (e.g. off Railway), update API_BASE here
-     and the CORS allow-list in flipped-mac/backend/app/main.py.
 ─────────────────────────────────────────────────────────────────────── -->
 <script>
 (function () {
@@ -100,7 +125,7 @@
     var status   = document.getElementById("signup-status");
     var submit   = document.getElementById("signup-submit");
 
-    if (!form) return;  // page version-mismatch guard
+    if (!form) return;
 
     function setStatus(text, kind) {
         status.textContent = text;
@@ -109,18 +134,15 @@
     }
 
     function showSuccess(email) {
-        // Replace the form with a success block + prominent download CTA.
-        // Friend's eyes land on "your key is on the way" then on the
-        // download button — exactly the next action they need to take.
         form.innerHTML =
             "<div class='signup-success'>" +
               "<div class='signup-success-line'>✓ KEY ON ITS WAY TO " + escapeHtml(email.toUpperCase()) + "</div>" +
-              "<a href='" + DOWNLOAD_URL + "' class='btn' style='margin-top:18px;'>" +
+              "<a href='" + DOWNLOAD_URL + "' class='btn primary' style='margin-top:18px;'>" +
                 "<span class='arrow'>▼</span> DOWNLOAD MAC APP" +
               "</a>" +
               "<p class='signup-success-help'>Open the Mac app, paste the key from your email, and Flipped walks you through setting up your iPhone.</p>" +
             "</div>";
-        setStatus("Didn't get the email? Check spam, then submit again — you'll get the same key.", null);
+        setStatus("Didn't get the email?  Check spam, then submit again — you'll get the same key.", null);
     }
 
     function escapeHtml(s) {
@@ -151,17 +173,17 @@
             if (resp.status === 204 || (resp.status >= 200 && resp.status < 300)) {
                 showSuccess(email);
             } else if (resp.status === 429) {
-                setStatus("Too many requests. Wait a minute and try again.", "warn");
+                setStatus("Too many requests.  Wait a minute and try again.", "warn");
                 submit.disabled = false;
                 submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
             } else {
-                setStatus("Something went wrong. Try again, or email support@useflipped.com.", "warn");
+                setStatus("Something went wrong.  Try again, or email support@useflipped.com.", "warn");
                 submit.disabled = false;
                 submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
             }
         })
         .catch(function () {
-            setStatus("Network error. Check your connection and retry.", "warn");
+            setStatus("Network error.  Check your connection and retry.", "warn");
             submit.disabled = false;
             submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
         });
