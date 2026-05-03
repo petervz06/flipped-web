@@ -1,0 +1,50 @@
+# Synthetic monitor for the Flipped backend.
+#
+# Runs every 10 minutes (the GitHub Actions cron minimum that's reliable);
+# pings /health and asserts:
+#   - HTTP 200
+#   - Response under 3 seconds
+#
+# When the job fails, GitHub auto-emails the repo owner.  No Slack/PagerDuty
+# integration yet — for a small team that's noisy enough.
+#
+# Future enhancement: add an /admin/summary check with the X-Admin-Key
+# stored as `secrets.ADMIN_API_KEY` so we also catch DB-level outages
+# (the /health endpoint just confirms the FastAPI process is up).
+name: synthetic-monitor
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"  # every 10 minutes
+  workflow_dispatch: {}      # allow manual runs from the Actions tab
+
+jobs:
+  ping-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: ping /health
+        run: |
+          set -euo pipefail
+          URL="https://flipped-production-79b3.up.railway.app/health"
+          # -m 5 caps the whole curl at 5 seconds (network + connection +
+          # response body).  -w outputs the timing breakdown so the job log
+          # is useful even on success.
+          OUT=$(curl -s -o /dev/null -m 5 \
+            -w "http=%{http_code} total=%{time_total}s connect=%{time_connect}s ttfb=%{time_starttransfer}s\n" \
+            "$URL")
+          echo "$OUT"
+          # Pull HTTP code out of the curl -w line.
+          STATUS=$(echo "$OUT" | grep -oE 'http=[0-9]+' | cut -d= -f2)
+          TOTAL=$(echo "$OUT" | grep -oE 'total=[0-9.]+' | cut -d= -f2)
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Backend /health returned HTTP $STATUS"
+            exit 1
+          fi
+          # Compare total seconds (float) against 3.0 — bash can't do
+          # float math directly, use awk.
+          SLOW=$(awk -v t="$TOTAL" 'BEGIN { print (t > 3.0) ? "1" : "0" }')
+          if [ "$SLOW" = "1" ]; then
+            echo "::warning::Backend /health responded but took ${TOTAL}s (>3s) — investigate"
+          fi
+          echo "Backend healthy: HTTP $STATUS in ${TOTAL}s"
