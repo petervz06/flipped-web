@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Press kit — Flipped</title>
+    <link rel="stylesheet" href="styles.css?v=15" />
+    <style>
+        .pk { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+        .pk h1 { font-size: 32px; margin: 0 0 8px; }
+        .pk h2 { font-size: 16px; margin: 28px 0 8px;
+                 letter-spacing: 1px; text-transform: uppercase;
+                 font-family: ui-monospace, monospace;
+                 color: rgba(255,255,255,0.55); }
+        .pk p, .pk li { line-height: 1.65;
+                        color: rgba(255,255,255,0.85); font-size: 14px; }
+        .pk code { font-family: ui-monospace, monospace;
+                   font-size: 12px; padding: 2px 6px;
+                   background: rgba(255,255,255,0.06);
+                   border-radius: 4px; }
+        .pk a { color: #fff; }
+        .top-link { color: rgba(255,255,255,0.5); font-size: 11px;
+                    text-decoration: none; letter-spacing: 1px;
+                    font-family: ui-monospace, monospace; }
+        .pk .quote { padding: 16px 18px;
+                     border-left: 3px solid rgba(255,255,255,0.4);
+                     background: rgba(255,255,255,0.02);
+                     border-radius: 0 6px 6px 0;
+                     font-style: italic; color: rgba(255,255,255,0.7); }
+        .pk .meta { font-family: ui-monospace, monospace;
+                    font-size: 11px; letter-spacing: 1px;
+                    color: rgba(255,255,255,0.45);
+                    text-transform: uppercase; }
+        .one-liner { font-size: 22px; line-height: 1.4;
+                     border-left: 3px solid #fff;
+                     padding: 8px 18px; background: rgba(255,255,255,0.03);
+                     margin: 24px 0; color: #fff; }
+    </style>
+</head>
+<body>
+<div class="pk">
+    <a href="/" class="top-link">← FLIPPED</a>
+    <h1 style="margin-top: 16px;">Press kit</h1>
+    <p class="meta">For journalists, podcasters, newsletter writers.  Last updated: May 3, 2026</p>
+
+    <h2>One-liner</h2>
+    <p class="one-liner">
+        Flipped is a Mac app that hides distracting apps on your iPhone for as long as you want them gone — no jailbreak, no Screen Time gymnastics, no workaround for you to discover later.
+    </p>
+
+    <h2>Two-paragraph version</h2>
+    <p>
+        Flipped uses the same iOS supervision mechanism Apple ships for
+        schools and enterprises — but applied to your own iPhone, by
+        you.  When you tap FLIP on the Mac app, your iPhone hides the
+        apps you've chosen to block (Instagram, TikTok, YouTube, etc.)
+        and filters their web equivalents in Safari.  When the timer
+        ends, or you tap UNFLIP, your apps reappear instantly.  No
+        on-device counter to ignore.  No "guilty pleasure" workaround
+        for the determined-enough version of you.
+    </p>
+    <p>
+        The product is intentionally one-way from your phone: web flip
+        page lets you start a session from anywhere, but ending one
+        requires the Mac app or the timer expiring.  That's the
+        commitment device this category was missing.  Built by Pete
+        Albertson, solo, in 2026.
+    </p>
+
+    <h2>Why it works when others don't</h2>
+    <ul>
+        <li><strong>Real iOS-level enforcement.</strong>  Most "screen time" apps run on the iPhone itself — which means they can be disabled on the iPhone itself, by the same person trying to focus.  Flipped runs on a Mac which signs and pushes restriction profiles via Apple's MDM channel.  The iPhone honors them at the OS level.</li>
+        <li><strong>Granular, customizable, transparent.</strong>  Pick a preset (Simple / Deep Work / Nomad), or build a custom blocklist app-by-app.  See exactly which apps will hide in the active session card.</li>
+        <li><strong>Zero ongoing maintenance.</strong>  One-time supervision setup (~3 min), then flipping is one tap forever.</li>
+        <li><strong>No data harvesting.</strong>  Flipped sees app classifications you choose + session timestamps.  Never your messages, photos, location, or anything inside any app.  <a href="/privacy.html">Full privacy policy →</a></li>
+    </ul>
+
+    <h2>Founder quote</h2>
+    <div class="quote">
+        "Every screen-time app I tried felt like a Snickers wrapper —
+        small, easy to tear off, no real friction.  Flipped uses the
+        same iOS hooks Apple gives schools.  When I flip my phone,
+        Instagram is just gone.  No 'one more minute' button.  That
+        gap between distraction and dopamine is where focus lives."
+        <br><br>— Pete Albertson, founder
+    </div>
+
+    <h2>Quick facts</h2>
+    <ul>
+        <li><strong>Founded:</strong> 2026</li>
+        <li><strong>Founder:</strong> Pete Albertson (<a href="mailto:pete@useflipped.com">pete@useflipped.com</a>)</li>
+        <li><strong>Team size:</strong> 1</li>
+        <li><strong>Current stage:</strong> Closed beta with friends, public launch May 2026</li>
+        <li><strong>Pricing:</strong> Free during beta; paid tier coming</li>
+        <li><strong>Compatible with:</strong> macOS 13+ and iOS 17+</li>
+        <li><strong>Stack:</strong> SwiftUI for the Mac app, FastAPI + Postgres on Railway, Apple's MDM channel for restriction delivery</li>
+    </ul>
+
+    <h2>Logo + screenshots</h2>
+    <p>
+        Hi-res assets coming soon — for now, screenshots and the
+        wordmark are visible on the <a href="/">homepage</a> and the
+        <a href="/getting-started.html">getting-started page</a>.  Email
+        <a href="mailto:press@useflipped.com">press@useflipped.com</a> for any
+        specific image requests.
+    </p>
+
+    <h2>Press contact</h2>
+    <p>
+        <a href="mailto:press@useflipped.com">press@useflipped.com</a> ·
+        Reply turnaround usually <24 hours
+    </p>
+
+    <p class="meta" style="margin-top: 40px;">
+        Want to embed Flipped's logo or screenshots?  Free use granted
+        for editorial coverage.  No alterations or recoloring.
+    </p>
+</div>
+</body>
+</html>
