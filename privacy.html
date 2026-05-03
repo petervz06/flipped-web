@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy — Flipped</title>
-    <link rel="stylesheet" href="styles.css?v=13" />
+    <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
     <div class="brand">FLIPPED</div>
 
     <div class="legal">
         <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: April 25, 2026</p>
+        <p class="updated">Last updated: May 3, 2026</p>
 
         <p>
             Flipped is a Mac desktop application that helps you reduce phone
@@ -32,8 +32,10 @@
 
         <h3>From your Flipped account</h3>
         <ul>
-            <li><strong>Email address</strong> — to identify you and send account-related emails.</li>
-            <li><strong>Password</strong> — stored only as a bcrypt hash; we never see your plain password.</li>
+            <li><strong>Email address</strong> — to identify you and send account-related emails (welcome email with your license key, password resets, security notices).</li>
+            <li><strong>License key</strong> — your primary credential.  When you sign up via useflipped.com, we mint a license key, email it to you, and use it to authenticate the Mac app and the web flip page (useflipped.com/flip).  We store it on our server and one Mac per user.</li>
+            <li><strong>Optional password</strong> — if you set one, it's stored only as a bcrypt hash; we never see your plain password.  The Mac app may also store it in your Mac's Keychain so it can silently re-mint expired session tokens — that copy stays on your machine and never leaves it.</li>
+            <li><strong>"Always allow" bundle list</strong> — bundle IDs you've added in Settings → Always Allow so apps like web clips (Pulse, etc.) survive every flip.  We store this list against your account so it follows you across Mac reinstalls.</li>
             <li><strong>Account timestamps</strong> — when you created your account, logged in, and triggered sessions.</li>
         </ul>
 
