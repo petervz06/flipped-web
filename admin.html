@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flipped — Admin</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="styles.css?v=15" />
+    <style>
+        body { padding: 0; margin: 0; }
+        .admin-shell { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+        .admin-header { display: flex; justify-content: space-between;
+                        align-items: baseline; margin-bottom: 24px; }
+        .admin-key-bar { display: flex; gap: 8px; align-items: center; }
+        .admin-key-bar input { padding: 8px 10px;
+                               background: rgba(255,255,255,0.05);
+                               border: 1px solid rgba(255,255,255,0.16);
+                               color: #fff; border-radius: 6px;
+                               font-family: ui-monospace, monospace;
+                               font-size: 12px; width: 280px; }
+        .admin-key-bar button { padding: 8px 14px;
+                                background: #fff; color: #000;
+                                border: none; border-radius: 6px;
+                                font-family: ui-monospace, monospace;
+                                font-weight: 600; font-size: 11px;
+                                letter-spacing: 2px; cursor: pointer; }
+        .summary-grid { display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                        gap: 12px; margin-bottom: 24px; }
+        .stat-card { padding: 16px;
+                     border: 1px solid rgba(255,255,255,0.08);
+                     border-radius: 8px;
+                     background: rgba(255,255,255,0.02); }
+        .stat-label { font-family: ui-monospace, monospace;
+                      font-size: 9px; letter-spacing: 2px; font-weight: 600;
+                      color: rgba(255,255,255,0.4); text-transform: uppercase; }
+        .stat-value { font-size: 28px; font-weight: 700;
+                      margin-top: 4px; color: #fff; }
+        .stat-warn { color: #ff8a8a; }
+        .tabs { display: flex; gap: 4px; margin: 20px 0 8px;
+                border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .tab { padding: 10px 14px; cursor: pointer;
+               font-family: ui-monospace, monospace; font-size: 11px;
+               letter-spacing: 2px; color: rgba(255,255,255,0.5);
+               border-bottom: 2px solid transparent; }
+        .tab.active { color: #fff; border-bottom-color: #fff; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        thead th { text-align: left; padding: 10px 12px;
+                   font-family: ui-monospace, monospace; font-size: 9px;
+                   letter-spacing: 2px; color: rgba(255,255,255,0.4);
+                   text-transform: uppercase;
+                   border-bottom: 1px solid rgba(255,255,255,0.08); }
+        tbody td { padding: 10px 12px; color: rgba(255,255,255,0.85);
+                   border-bottom: 1px solid rgba(255,255,255,0.04);
+                   font-family: ui-monospace, monospace; font-size: 11px; }
+        tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .toolbar { display: flex; gap: 8px; align-items: center;
+                   margin: 16px 0; flex-wrap: wrap; }
+        .toolbar button { padding: 6px 12px;
+                          background: transparent;
+                          border: 1px solid rgba(255,255,255,0.16);
+                          color: #fff; border-radius: 6px; cursor: pointer;
+                          font-family: ui-monospace, monospace;
+                          font-size: 10px; letter-spacing: 1px; }
+        .toolbar button:hover { background: rgba(255,255,255,0.05); }
+        .toolbar input { padding: 6px 10px;
+                         background: rgba(255,255,255,0.05);
+                         border: 1px solid rgba(255,255,255,0.16);
+                         color: #fff; border-radius: 6px;
+                         font-family: ui-monospace, monospace;
+                         font-size: 11px; }
+        .empty { padding: 40px; text-align: center;
+                 color: rgba(255,255,255,0.4); }
+        .truncate { max-width: 220px; overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap;
+                    display: inline-block; vertical-align: middle; }
+        pre.json { font-size: 10px; line-height: 1.5;
+                   color: rgba(255,255,255,0.7);
+                   white-space: pre-wrap; margin: 0; }
+        .pill { display: inline-block; padding: 2px 8px;
+                font-size: 10px; border-radius: 999px;
+                background: rgba(255,255,255,0.06);
+                color: rgba(255,255,255,0.7); }
+        .pill.active   { background: rgba(95,238,170,0.15); color: #5fe;}
+        .pill.error    { background: rgba(255,107,107,0.15); color: #ff8a8a; }
+    </style>
+</head>
+<body>
+<div class="admin-shell">
+    <div class="admin-header">
+        <h1 style="margin:0; font-size: 22px;">Flipped — Admin</h1>
+        <div class="admin-key-bar">
+            <input id="key-input" placeholder="X-Admin-Key" type="password" autocomplete="off" />
+            <button onclick="saveKey()">SAVE</button>
+            <button onclick="refresh()">↻</button>
+        </div>
+    </div>
+
+    <div id="error-bar" style="display:none; padding: 12px;
+        background: rgba(255,107,107,0.1);
+        border: 1px solid rgba(255,107,107,0.3);
+        border-radius: 6px; color: #ff8a8a; margin-bottom: 16px;
+        font-size: 13px;"></div>
+
+    <div class="summary-grid" id="summary-grid"></div>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="users"    onclick="switchTab('users')">USERS</div>
+        <div class="tab"        data-tab="sessions" onclick="switchTab('sessions')">SESSIONS</div>
+        <div class="tab"        data-tab="events"   onclick="switchTab('events')">EVENTS</div>
+    </div>
+
+    <div id="tab-users" class="tab-panel">
+        <div class="toolbar">
+            <span style="color: rgba(255,255,255,0.5); font-size: 11px;
+                  font-family: ui-monospace,monospace;">Recent signups</span>
+        </div>
+        <div id="users-table"></div>
+    </div>
+
+    <div id="tab-sessions" class="tab-panel" style="display:none;">
+        <div class="toolbar">
+            <span style="color: rgba(255,255,255,0.5); font-size: 11px;
+                  font-family: ui-monospace,monospace;">Recent sessions</span>
+        </div>
+        <div id="sessions-table"></div>
+    </div>
+
+    <div id="tab-events" class="tab-panel" style="display:none;">
+        <div class="toolbar">
+            <input id="event-type-filter" placeholder="event_type filter (e.g. session.start)"
+                   style="flex: 1;" onkeyup="if(event.key==='Enter')refresh()" />
+            <input id="event-user-filter" placeholder="user_id filter (uuid)"
+                   onkeyup="if(event.key==='Enter')refresh()" />
+            <button onclick="refresh()">FILTER</button>
+            <button onclick="clearEventFilter()">CLEAR</button>
+        </div>
+        <div id="events-table"></div>
+    </div>
+
+    <p style="margin-top: 32px; font-size: 10px; color: rgba(255,255,255,0.3);
+              font-family: ui-monospace, monospace; letter-spacing: 1px;">
+        Read-only.  All requests carry X-Admin-Key (saved to this browser's
+        localStorage).  Don't bookmark with the key in the URL — it's a
+        secret.
+    </p>
+</div>
+
+<script>
+const API = 'https://flipped-production-79b3.up.railway.app';
+const STORAGE_KEY = 'flipped.admin.key';
+
+let activeTab = 'users';
+
+function $(id) { return document.getElementById(id); }
+function getKey() { return localStorage.getItem(STORAGE_KEY) || ''; }
+function setError(msg) {
+    const bar = $('error-bar');
+    if (msg) { bar.style.display = ''; bar.textContent = msg; }
+    else     { bar.style.display = 'none'; }
+}
+
+function saveKey() {
+    const v = $('key-input').value.trim();
+    if (v) {
+        localStorage.setItem(STORAGE_KEY, v);
+        $('key-input').value = '';
+        $('key-input').placeholder = 'Saved (' + v.slice(0, 4) + '…)';
+        refresh();
+    }
+}
+
+async function fetchJSON(path) {
+    const key = getKey();
+    if (!key) throw new Error('No admin key set — paste it above and click SAVE.');
+    const r = await fetch(API + path, { headers: { 'X-Admin-Key': key } });
+    if (!r.ok) {
+        let detail = '';
+        try { detail = (await r.json()).detail || ''; } catch (e) {}
+        throw new Error(`HTTP ${r.status}${detail ? ': ' + detail : ''} on ${path}`);
+    }
+    return r.json();
+}
+
+function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, {
+        month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+    });
+}
+
+function ago(iso) {
+    if (!iso) return '';
+    const secs = Math.floor((Date.now() - new Date(iso)) / 1000);
+    if (secs < 60)    return secs + 's ago';
+    if (secs < 3600)  return Math.floor(secs / 60) + 'm ago';
+    if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+    return Math.floor(secs / 86400) + 'd ago';
+}
+
+async function loadSummary() {
+    try {
+        const s = await fetchJSON('/admin/summary');
+        const cards = [
+            ['USERS',       s.users_total,         `${s.users_today} today`],
+            ['LICENSE KEYS', `${s.license_keys_redeemed}/${s.license_keys_issued}`, 'redeemed/issued'],
+            ['DEVICES',     s.devices_enrolled,    'enrolled'],
+            ['ACTIVE SESSIONS', s.sessions_active, `${s.sessions_today} today`],
+            ['EVENTS TODAY', s.events_today,       `${s.errors_today} errors`, s.errors_today > 0 ? 'stat-warn' : ''],
+            ['MDM PENDING', s.mdm_commands_pending, 'queued'],
+        ];
+        $('summary-grid').innerHTML = cards.map(([label, value, sub, cls]) => `
+            <div class="stat-card">
+                <div class="stat-label">${label}</div>
+                <div class="stat-value ${cls || ''}">${value}</div>
+                <div class="stat-label" style="margin-top:4px; letter-spacing:1px;">${sub || ''}</div>
+            </div>`).join('');
+        setError('');
+    } catch (e) {
+        setError(e.message);
+    }
+}
+
+async function loadUsers() {
+    const tbl = $('users-table');
+    tbl.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+        const d = await fetchJSON('/admin/users?limit=100');
+        if (!d.users.length) { tbl.innerHTML = '<div class="empty">No users yet.</div>'; return; }
+        tbl.innerHTML = `
+            <table>
+                <thead><tr>
+                    <th>EMAIL</th><th>JOINED</th>
+                    <th>LICENSE</th><th>STATUS</th>
+                    <th>SESSIONS</th><th>LAST FLIP</th>
+                    <th>DEVICE</th>
+                </tr></thead>
+                <tbody>${d.users.map(u => `
+                    <tr>
+                        <td><span class="truncate" title="${u.email}">${u.email}</span></td>
+                        <td>${fmtDate(u.created_at)}</td>
+                        <td>${u.license_key ? u.license_key.slice(-9) : '—'}</td>
+                        <td><span class="pill ${u.license_status === 'active' ? 'active' : ''}">${u.license_status || '—'}</span></td>
+                        <td>${u.session_count}</td>
+                        <td>${u.last_session_at ? ago(u.last_session_at) : '—'}</td>
+                        <td>${u.device_serial ? u.device_serial.slice(-6) : '—'}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+    } catch (e) { tbl.innerHTML = `<div class="empty">${e.message}</div>`; }
+}
+
+async function loadSessions() {
+    const tbl = $('sessions-table');
+    tbl.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+        const d = await fetchJSON('/admin/sessions/recent?limit=50');
+        if (!d.sessions.length) { tbl.innerHTML = '<div class="empty">No sessions yet.</div>'; return; }
+        tbl.innerHTML = `
+            <table>
+                <thead><tr>
+                    <th>EMAIL</th><th>MODE</th><th>STATUS</th>
+                    <th>STARTED</th><th>EXPIRES</th><th>EMERGENCY</th>
+                </tr></thead>
+                <tbody>${d.sessions.map(s => `
+                    <tr>
+                        <td><span class="truncate" title="${s.email || ''}">${s.email || '—'}</span></td>
+                        <td>${s.mode}</td>
+                        <td><span class="pill ${s.status === 'active' ? 'active' : ''}">${s.status}</span></td>
+                        <td>${fmtDate(s.started_at)}</td>
+                        <td>${s.expires_at ? fmtDate(s.expires_at) : '—'}</td>
+                        <td>${s.emergency_end_used ? '✓' : '—'}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+    } catch (e) { tbl.innerHTML = `<div class="empty">${e.message}</div>`; }
+}
+
+async function loadEvents() {
+    const tbl = $('events-table');
+    tbl.innerHTML = '<div class="empty">Loading…</div>';
+    try {
+        const params = new URLSearchParams({ limit: '100' });
+        const eType = $('event-type-filter').value.trim();
+        const uId   = $('event-user-filter').value.trim();
+        if (eType) params.set('event_type', eType);
+        if (uId)   params.set('user_id', uId);
+        const d = await fetchJSON('/admin/events?' + params.toString());
+        if (!d.events.length) { tbl.innerHTML = '<div class="empty">No events match.</div>'; return; }
+        tbl.innerHTML = `
+            <table>
+                <thead><tr>
+                    <th>WHEN</th><th>TYPE</th><th>USER</th>
+                    <th style="width: 50%;">METADATA</th>
+                </tr></thead>
+                <tbody>${d.events.map(e => `
+                    <tr>
+                        <td>${fmtDate(e.created_at)}<br><span style="color: rgba(255,255,255,0.4);">${ago(e.created_at)}</span></td>
+                        <td><span class="pill ${e.event_type.endsWith('.error') ? 'error' : ''}">${e.event_type}</span></td>
+                        <td><span class="truncate" title="${e.user_id || ''}">${(e.user_id || '—').slice(-8)}</span></td>
+                        <td><pre class="json">${JSON.stringify(e.metadata, null, 2)}</pre></td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+    } catch (e) { tbl.innerHTML = `<div class="empty">${e.message}</div>`; }
+}
+
+function clearEventFilter() {
+    $('event-type-filter').value = '';
+    $('event-user-filter').value = '';
+    refresh();
+}
+
+function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab').forEach(el => {
+        el.classList.toggle('active', el.dataset.tab === tab);
+    });
+    document.querySelectorAll('.tab-panel').forEach(el => {
+        el.style.display = (el.id === 'tab-' + tab) ? '' : 'none';
+    });
+    refresh();
+}
+
+async function refresh() {
+    if (!getKey()) {
+        $('key-input').focus();
+        return;
+    }
+    await loadSummary();
+    if (activeTab === 'users')    loadUsers();
+    if (activeTab === 'sessions') loadSessions();
+    if (activeTab === 'events')   loadEvents();
+}
+
+// Boot — restore saved key + auto-refresh every 30s
+(function () {
+    const k = getKey();
+    if (k) $('key-input').placeholder = 'Saved (' + k.slice(0, 4) + '…)';
+    refresh();
+    setInterval(() => { if (getKey()) refresh(); }, 30000);
+})();
+</script>
+</body>
+</html>
