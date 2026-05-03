@@ -34,20 +34,21 @@ MOUNT=$(hdiutil attach "$DMG" -nobrowse | grep "/Volumes/" | awk '{$1=""; $2="";
 cp -R "$MOUNT/Flipped.app" /Applications/
 hdiutil detach "$MOUNT" >/dev/null 2>&1
 
-VERSION=$(defaults read /Applications/Flipped.app/Contents/Info.plist CFBundleShortVersionString)
-echo "   Installed version: $VERSION"
-
-if [ "$VERSION" != "1.0.2" ]; then
-    echo "⚠  Expected 1.0.2 but got $VERSION — try again or contact Pete"
+VERSION=$(defaults read /Applications/Flipped.app/Contents/Info.plist CFBundleShortVersionString 2>/dev/null)
+if [ -z "$VERSION" ]; then
+    echo "❌ Couldn't read version from /Applications/Flipped.app — install may have failed"
     exit 1
 fi
+echo "   Installed version: $VERSION ✓"
 
 echo ""
 echo "▶ Opening Flipped..."
 open /Applications/Flipped.app
 echo ""
-echo "✅ Done. Walk through onboarding from the start."
-echo "   When you reach 'Plug in your iPhone', it should detect within ~3 seconds."
-echo "   If it still hangs, paste this back to Pete:"
+echo "✅ Done.  Flipped $VERSION is installed and opening now."
 echo ""
-echo "   ~/Library/Application\\ Support/Flipped/imobiledevice/bin/ideviceinfo 2>&1 | head -5"
+echo "   From here on, future updates show up as a popup inside the app —"
+echo "   no more running this script.  Just click \"Install\" when prompted."
+echo ""
+echo "   If the app gets stuck on \"Plug in your iPhone\", open Settings →"
+echo "   Get Help → Copy Diagnostics, then paste that to Pete."
