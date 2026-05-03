@@ -13,9 +13,8 @@
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
-        length="7875702"
         type="application/octet-stream"
-        sparkle:edSignature="abJzflD7PkoRUS3EyZ5xWW7UZ0gXdbLdQVu6+3azKApAP2cw424x1RI9rdP2lqG3wmH3WjVKsP2XEjq5n1xzBA==" length="7875702" />
+        sparkle:edSignature="abJzflD7PkoRUS3EyZ5xWW7UZ0gXdbLdQVu6+3azKApAP2cw424x1RI9rdP2lqG3wmH3WjVKsP2XEjq5n1xzBA==" />
     </item>
   </channel>
 </rss>
