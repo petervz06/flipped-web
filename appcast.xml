@@ -6,15 +6,18 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.14</title>
-      <pubDate>Sun, 03 May 2026 22:51:12 +0000</pubDate>
-      <sparkle:version>1.0.14</sparkle:version>
-      <sparkle:shortVersionString>1.0.14</sparkle:shortVersionString>
+      <title>Version 1.0.15</title>
+      <pubDate>Sun, 03 May 2026 23:04:36 +0000</pubDate>
+      <sparkle:version>1.0.15</sparkle:version>
+      <sparkle:shortVersionString>1.0.15</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Bug fix: Sparkle update prompt was throwing "An error occurred while parsing the update feed" because the appcast XML had a duplicate length= attribute.  Cleaned up the build script so future appcasts come out valid.
+
+New: in-app update banner.  When a new version of Flipped is available, you'll see a yellow strip at the top of the window with the version number, "what's new" expandable section, and an UPDATE NOW button.  No more relying on the Check for Updates… menu — you can't miss it now.</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="abJzflD7PkoRUS3EyZ5xWW7UZ0gXdbLdQVu6+3azKApAP2cw424x1RI9rdP2lqG3wmH3WjVKsP2XEjq5n1xzBA==" />
+        sparkle:edSignature="mdwJPGXV1odx89fEsVXE3TzKx3LklInLYXLh9ViC5KQxbiLzGHQoJJASB7+6Q19B0lyRJ62uTWIQqrGXgSwbCg==" length="7902965" />
     </item>
   </channel>
 </rss>
