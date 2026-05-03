@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>FLIPPED — flip from anywhere</title>
+    <meta name="description" content="Tap flip from your phone, your iPad, anywhere — your iPhone gets supervised the same way as the Mac app." />
+    <link rel="stylesheet" href="styles.css?v=15" />
+    <style>
+        /* Page-specific tweaks for the mobile flip flow.  Everything
+           else inherits from the marketing-site stylesheet so visual
+           identity stays consistent. */
+        .flip-shell { max-width: 480px; margin: 0 auto; padding: 32px 20px; }
+        .flip-card  { padding: 24px; border: 1px solid rgba(255,255,255,0.12);
+                      border-radius: 12px; background: rgba(255,255,255,0.02); }
+        .flip-card + .flip-card { margin-top: 16px; }
+        .label-mono { font-family: ui-monospace, "SF Mono", monospace;
+                      font-size: 10px; letter-spacing: 2px; font-weight: 600;
+                      text-transform: uppercase; color: rgba(255,255,255,0.4); }
+        .key-input  { width: 100%; padding: 14px; border: 1px solid rgba(255,255,255,0.16);
+                      border-radius: 8px; background: rgba(255,255,255,0.04);
+                      color: #fff; font-family: ui-monospace, "SF Mono", monospace;
+                      font-size: 14px; letter-spacing: 1px; }
+        .key-input:focus { outline: none; border-color: rgba(255,255,255,0.5); }
+        .btn-primary { width: 100%; padding: 14px; background: #fff; color: #000;
+                       font-family: ui-monospace, "SF Mono", monospace;
+                       font-weight: 600; letter-spacing: 3px; font-size: 13px;
+                       text-transform: uppercase; border: none; border-radius: 8px;
+                       cursor: pointer; margin-top: 16px; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-warn { background: transparent; color: #ff6b6b;
+                    border: 1px solid rgba(255,107,107,0.4); }
+        .status-good { color: #5fe;  margin-top: 12px; font-size: 13px; }
+        .status-warn { color: #ff6b6b; margin-top: 12px; font-size: 13px; }
+        .profile-list { list-style: none; padding: 0; margin: 16px 0 0; }
+        .profile-list li { padding: 10px 12px; border: 1px solid rgba(255,255,255,0.08);
+                           border-radius: 6px; margin-bottom: 6px; cursor: pointer;
+                           display: flex; justify-content: space-between; align-items: center; }
+        .profile-list li.active { border-color: rgba(255,255,255,0.4);
+                                  background: rgba(255,255,255,0.04); }
+        .profile-name { font-weight: 600; }
+        .profile-meta { font-size: 11px; color: rgba(255,255,255,0.5);
+                        font-family: ui-monospace, "SF Mono", monospace; }
+        .session-active { padding: 24px; text-align: center; }
+        .session-big { font-size: 28px; font-weight: 700; letter-spacing: 1px;
+                       margin: 0 0 8px; }
+        .session-meta { font-size: 12px; letter-spacing: 2px;
+                        color: rgba(255,255,255,0.5);
+                        font-family: ui-monospace, "SF Mono", monospace;
+                        text-transform: uppercase; }
+        .header-link { color: rgba(255,255,255,0.5); font-size: 11px;
+                       text-decoration: none; letter-spacing: 1px; }
+        .header-link:hover { color: #fff; }
+        .footer-note { font-size: 11px; color: rgba(255,255,255,0.35);
+                       margin-top: 24px; text-align: center; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="flip-shell">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 24px;">
+        <a href="/" class="header-link">← FLIPPED</a>
+        <span class="label-mono">FLIP FROM ANYWHERE</span>
+    </div>
+
+    <!-- Pre-redeem card: paste your license key -->
+    <div id="card-redeem" class="flip-card">
+        <div class="label-mono">STEP 1 · YOUR KEY</div>
+        <h2 style="margin: 12px 0 8px; font-size: 22px;">Paste your license key</h2>
+        <p style="color: rgba(255,255,255,0.6); font-size: 13px; margin: 0 0 16px;">
+            Same key from your Flipped welcome email.  Saved on this device only —
+            we don't store it on a server.
+        </p>
+        <input id="key-input" class="key-input"
+               placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"
+               autocomplete="off"
+               autocapitalize="characters"
+               spellcheck="false" />
+        <button id="redeem-btn" class="btn-primary" onclick="redeem()">CONNECT →</button>
+        <div id="redeem-status"></div>
+    </div>
+
+    <!-- Active flow: pick profile + duration + start session -->
+    <div id="card-active" class="flip-card" style="display:none;">
+        <div class="label-mono" id="status-label">STATUS</div>
+        <div id="status-content"></div>
+        <div id="picker-area">
+            <div class="label-mono" style="margin-top: 18px;">CHOOSE PROFILE</div>
+            <ul id="profile-list" class="profile-list"></ul>
+            <div class="label-mono" style="margin-top: 18px;">COMMITMENT DURATION</div>
+            <ul id="duration-list" class="profile-list"></ul>
+        </div>
+        <button id="action-btn" class="btn-primary" onclick="startFlip()">▶ FLIP</button>
+        <div id="action-status"></div>
+        <button class="btn-primary btn-warn" onclick="logout()" style="margin-top: 8px;">DISCONNECT KEY</button>
+    </div>
+
+    <p class="footer-note">
+        Web flip is intentionally one-way — you can <strong>start</strong> a session
+        from anywhere, but ending one requires the Mac app (or just letting the
+        timer run out).  That's the whole point: you can't rage-quit your own
+        commitment from your phone.
+    </p>
+    <p class="footer-note">
+        Add this page to your home screen (Share → Add to Home Screen) so the
+        next flip is one tap.
+    </p>
+</div>
+
+<script>
+const API = 'https://flipped-production-79b3.up.railway.app';
+const STORAGE_KEY = 'flipped.web.token';
+const STORAGE_DEVICE_KEY = 'flipped.web.deviceId';
+const STORAGE_PROFILE_KEY = 'flipped.web.activeProfile';
+
+// ─── Block profiles (mirrors Flipped/Models/BlockProfile.swift) ──────────
+// Hardcoded so the page works without a profiles API.  Keep in sync.
+const PROFILES = [
+    {
+        id: 'preset-simple', name: 'Simple', mode: 'social',
+        bundleIds: [
+            'com.burbn.instagram', 'com.zhiliaoapp.musically', 'com.atebits.Tweetie2',
+            'com.toyopagroup.picaboo', 'com.facebook.Facebook', 'com.reddit.Reddit',
+            'com.pinterest', 'com.burbn.barcelona', 'xyz.blueskyweb.app',
+            'com.alphaexploration.chrono', 'com.tumblr', 'org.joinmastodon.app',
+            'com.linkedin.LinkedIn', 'com.google.ios.youtube',
+            'com.google.ios.youtubeunplugged', 'com.google.ios.ytcreator',
+            'com.netflix.Netflix', 'com.hulu.plus', 'com.disney.disneyplus',
+            'com.wbd.hbomax', 'com.hbo.hbonow', 'tv.twitch',
+            'com.peacocktv.peacock', 'com.amazon.aiv.AIVApp',
+            'com.cbsplayer.PARAMOUNTPLUSAPP',
+        ],
+        tagline: 'No social or entertainment',
+    },
+    {
+        id: 'preset-deep-work', name: 'Deep Work', mode: 'focus',
+        bundleIds: [
+            'com.burbn.instagram', 'com.zhiliaoapp.musically', 'com.atebits.Tweetie2',
+            'com.toyopagroup.picaboo', 'com.facebook.Facebook', 'com.reddit.Reddit',
+            'com.pinterest', 'com.burbn.barcelona', 'com.apple.news',
+            'com.flipboard.flipboard', 'com.robinhood.release.Robinhood',
+            'com.coinbase.iphone-client', 'com.amazon.Amazon', 'com.ebay.iphone',
+            'com.google.ios.youtube', 'com.netflix.Netflix',
+        ],
+        tagline: 'Block social + games + shopping + news',
+    },
+];
+
+// Commitment durations the web flip offers.  Web sessions intentionally
+// require a duration — manual (no-end-date) sessions could be unflipped
+// from the Mac app instantly, defeating the "no rage-quit from your
+// phone" semantic.  Mode is FlipMode.focus so the backend treats them
+// as commitment-mode (UNFLIP button hidden in the Mac UI; only path
+// out is emergency unflip 1/month or letting the timer expire).
+const DURATIONS = [
+    { label: '30 min',  seconds: 30 * 60 },
+    { label: '1 hour',  seconds: 60 * 60 },
+    { label: '2 hours', seconds: 2 * 60 * 60 },
+    { label: '4 hours', seconds: 4 * 60 * 60 },
+    { label: '8 hours', seconds: 8 * 60 * 60 },
+];
+const STORAGE_DURATION_KEY = 'flipped.web.duration';
+
+let state = {
+    token: localStorage.getItem(STORAGE_KEY) || null,
+    deviceId: localStorage.getItem(STORAGE_DEVICE_KEY) || null,
+    activeProfileId: localStorage.getItem(STORAGE_PROFILE_KEY) || 'preset-simple',
+    activeDurationSeconds: parseInt(localStorage.getItem(STORAGE_DURATION_KEY) || '3600', 10),
+    activeSession: null,
+};
+
+function $(id) { return document.getElementById(id); }
+function show(id, val = true) { $(id).style.display = val ? '' : 'none'; }
+function setStatus(elId, text, kind = 'good') {
+    $(elId).innerHTML = text ? `<div class="status-${kind}">${text}</div>` : '';
+}
+
+async function api(path, opts = {}) {
+    opts.headers = opts.headers || {};
+    if (state.token) opts.headers['Authorization'] = `Bearer ${state.token}`;
+    if (opts.body && typeof opts.body !== 'string') {
+        opts.body = JSON.stringify(opts.body);
+        opts.headers['Content-Type'] = 'application/json';
+    }
+    const r = await fetch(API + path, opts);
+    if (!r.ok) {
+        let detail = '';
+        try { detail = (await r.json()).detail || ''; } catch (e) {}
+        throw new Error(`HTTP ${r.status}${detail ? ': ' + detail : ''}`);
+    }
+    if (r.status === 204) return null;
+    return r.json();
+}
+
+async function redeem() {
+    const key = $('key-input').value.trim();
+    if (!key) return;
+    $('redeem-btn').disabled = true;
+    setStatus('redeem-status', 'Connecting…', 'good');
+    try {
+        const r = await fetch(API + '/api/license/redeem', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({key}),
+        });
+        if (!r.ok) {
+            const detail = (await r.json().catch(() => ({}))).detail || '';
+            throw new Error(detail || `HTTP ${r.status}`);
+        }
+        const data = await r.json();
+        state.token = data.access_token;
+        localStorage.setItem(STORAGE_KEY, state.token);
+        // Pull the user's existing supervised device.
+        const devStatus = await api('/api/devices/status').catch(() => null);
+        if (devStatus && devStatus.device) {
+            state.deviceId = devStatus.device.id;
+            localStorage.setItem(STORAGE_DEVICE_KEY, state.deviceId);
+        }
+        setStatus('redeem-status', '', 'good');
+        await refreshActiveSession();
+        renderActive();
+    } catch (e) {
+        setStatus('redeem-status', e.message, 'warn');
+    } finally {
+        $('redeem-btn').disabled = false;
+    }
+}
+
+async function refreshActiveSession() {
+    try {
+        const data = await api('/api/sessions/active');
+        state.activeSession = data && data.session ? data.session : null;
+    } catch (e) {
+        // 404 means no active session — normal idle state
+        if (!String(e).includes('404')) console.warn(e);
+        state.activeSession = null;
+    }
+}
+
+function renderActive() {
+    show('card-redeem', !state.token);
+    show('card-active', !!state.token);
+    if (!state.token) return;
+    if (state.activeSession) {
+        // Locked active state — no UNFLIP button.  Web flip is one-way
+        // by design.  Show the countdown + remind the user where the
+        // emergency exit is (Mac app's emergency unflip in Focus mode).
+        $('status-label').textContent = 'PHONE IS FLIPPED';
+        $('status-content').innerHTML = `
+            <div class="session-active">
+                <p class="session-big">${state.activeSession.endDate ? formatRemaining(state.activeSession) : 'PHONE IS FLIPPED'}</p>
+                <p class="session-meta">${state.activeSession.endDate ? 'REMAINING · ' : ''}MODE: ${state.activeSession.mode}</p>
+                <p style="font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 18px; line-height: 1.6;">
+                    Web flip is one-way.  To end early, open Flipped on your Mac
+                    and tap EMERGENCY UNFLIP (Focus mode, 1×/month).  Otherwise
+                    the timer expires on its own.
+                </p>
+            </div>`;
+        $('picker-area').style.display = 'none';
+        $('action-btn').style.display = 'none';
+    } else {
+        $('status-label').textContent = 'STATUS';
+        $('status-content').innerHTML = `
+            <h2 style="margin: 12px 0 8px; font-size: 22px;">Phone is free</h2>
+            <p style="color: rgba(255,255,255,0.6); font-size: 13px; margin: 0;">
+                Pick what to block + how long to commit.  No early-quit from this page.
+            </p>`;
+        renderProfileList();
+        renderDurationList();
+        $('picker-area').style.display = '';
+        $('action-btn').style.display = '';
+        $('action-btn').textContent = '▶ FLIP';
+        $('action-btn').classList.remove('btn-warn');
+    }
+}
+
+function renderProfileList() {
+    const html = PROFILES.map(p => `
+        <li class="${p.id === state.activeProfileId ? 'active' : ''}"
+            onclick="setActiveProfile('${p.id}')">
+            <div>
+                <div class="profile-name">${p.name}</div>
+                <div class="profile-meta">${p.bundleIds.length} apps · ${p.tagline}</div>
+            </div>
+            ${p.id === state.activeProfileId ? '<span class="profile-meta">ACTIVE</span>' : ''}
+        </li>`).join('');
+    $('profile-list').innerHTML = html;
+}
+
+function renderDurationList() {
+    const html = DURATIONS.map(d => `
+        <li class="${d.seconds === state.activeDurationSeconds ? 'active' : ''}"
+            onclick="setActiveDuration(${d.seconds})">
+            <div>
+                <div class="profile-name">${d.label}</div>
+                <div class="profile-meta">No early-quit from web</div>
+            </div>
+            ${d.seconds === state.activeDurationSeconds ? '<span class="profile-meta">SELECTED</span>' : ''}
+        </li>`).join('');
+    $('duration-list').innerHTML = html;
+}
+
+function setActiveProfile(id) {
+    state.activeProfileId = id;
+    localStorage.setItem(STORAGE_PROFILE_KEY, id);
+    renderProfileList();
+}
+
+function setActiveDuration(seconds) {
+    state.activeDurationSeconds = seconds;
+    localStorage.setItem(STORAGE_DURATION_KEY, String(seconds));
+    renderDurationList();
+}
+
+function formatRemaining(session) {
+    if (!session.endDate) return 'FLIPPED';
+    const ms = new Date(session.endDate) - new Date();
+    if (ms <= 0) return '0m';
+    const m = Math.floor(ms / 60000);
+    if (m < 60) return `${m}m`;
+    return `${Math.floor(m / 60)}h ${m % 60}m`;
+}
+
+// Web flip is start-only.  We send mode=focus + an explicit duration so
+// the backend creates a commitment session: the iPhone will auto-unflip
+// when the timer expires, but there's no /api/sessions/active DELETE
+// path exposed from this page.  Mac app keeps the emergency-unflip
+// escape (1× per month, Focus mode only) for true emergencies.
+async function startFlip() {
+    if (state.activeSession) {
+        // Defensive — UI shouldn't even allow this, but if a stale state
+        // slips through, redirect to the locked view rather than firing
+        // a 409.
+        renderActive();
+        return;
+    }
+    if (!state.deviceId) {
+        setStatus('action-status', 'No registered iPhone — set up via the Mac app first.', 'warn');
+        return;
+    }
+    $('action-btn').disabled = true;
+    try {
+        const profile = PROFILES.find(p => p.id === state.activeProfileId);
+        await api('/api/sessions/start', {
+            method: 'POST',
+            body: {
+                device_id: state.deviceId,
+                // Force Focus mode regardless of the profile's native mode.
+                // Focus is the only mode with the emergency-unflip escape
+                // hatch on the Mac side, which is the right "1×/month
+                // break glass" for web-started commitments.
+                mode: 'focus',
+                duration_seconds: state.activeDurationSeconds,
+                blocked_bundle_ids: profile.bundleIds,
+            },
+        });
+        setStatus('action-status', 'Flipped — distractions disappear in ~30s.', 'good');
+        await refreshActiveSession();
+        renderActive();
+    } catch (e) {
+        setStatus('action-status', e.message, 'warn');
+    } finally {
+        $('action-btn').disabled = false;
+    }
+}
+
+function logout() {
+    if (!confirm('Disconnect this device from your Flipped account?  You\'ll need your license key again to reconnect.')) return;
+    state = { token: null, deviceId: null, activeProfileId: 'preset-simple', activeSession: null };
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_DEVICE_KEY);
+    localStorage.removeItem(STORAGE_PROFILE_KEY);
+    renderActive();
+}
+
+// Boot — restore from localStorage if previously connected.
+(async () => {
+    if (state.token) {
+        try {
+            await refreshActiveSession();
+        } catch (e) {
+            // Token expired — drop it, user re-redeems.
+            state.token = null;
+            localStorage.removeItem(STORAGE_KEY);
+        }
+    }
+    renderActive();
+    // Refresh active-session view every 30s while flipped so the
+    // countdown stays roughly current.
+    setInterval(() => {
+        if (state.token && state.activeSession) {
+            refreshActiveSession().then(renderActive);
+        }
+    }, 30000);
+})();
+</script>
+</body>
+</html>
