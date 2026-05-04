@@ -26,6 +26,18 @@
             --display: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", system-ui, sans-serif;
         }
 
+        /* Universal border-box so paddings don't blow past viewport.
+           Without this, .shell's max-width + padding overflows on
+           mobile and pushes content past the left edge. */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            /* Belt-and-suspenders: even if some descendant tries to
+               extend past 100vw, the body clips it.  No horizontal
+               scrollbar should ever appear on /flip. */
+            overflow-x: hidden;
+        }
+
         body {
             margin: 0;
             background: var(--bg);
