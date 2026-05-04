@@ -322,9 +322,14 @@
             .device-meta { font-size: 11px; }
             .signout {
                 margin: 0;
-                font-size: 8px;
-                letter-spacing: 1.5px;
+                font-size: 10px;
+                letter-spacing: 2px;
+                padding: 6px 10px;
+                border: var(--hairline) solid var(--border-up);
+                border-radius: 6px;
+                color: var(--text-dim);
             }
+            .signout:hover { color: var(--warn); border-color: var(--warn); }
             /* Cards: tighter padding, smaller hero copy */
             .card { padding: 20px 18px; }
             .h1 { font-size: 19px; }
@@ -665,8 +670,32 @@ function renderApp() {
         </aside>
         <main class="main">
             ${session ? renderActiveSession(session)
-                      : (state.tab === 'home' ? renderHome() : renderModes())}
+                      : (!state.deviceId ? renderNoDevice()
+                      : (state.tab === 'home' ? renderHome() : renderModes()))}
         </main>
+    </div>
+    `;
+}
+
+// Shown when the signed-in account has no enrolled iPhone — usually
+// means the user pasted a key for a different account than their Mac
+// app uses.  Surface a prominent "use a different key" affordance so
+// they can recover without hunting for the tiny sign-out link.
+function renderNoDevice() {
+    return `
+    <h1 class="h1">No iPhone on this account</h1>
+    <p class="h-meta">This license key isn't linked to an enrolled iPhone.</p>
+    <div class="card">
+        <div class="label">WHAT TO DO</div>
+        <div class="display">Use the same key as your Mac app</div>
+        <p class="muted">
+            The web flip needs the license key tied to the account your
+            Mac app + iPhone are already using.  If you have multiple
+            keys (beta + retail, work + personal), make sure you signed
+            in with the matching one.
+        </p>
+        <div class="divider"></div>
+        <button class="btn-flip" onclick="signOut()">USE A DIFFERENT KEY →</button>
     </div>
     `;
 }
