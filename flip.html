@@ -526,7 +526,19 @@ function render() {
     root.innerHTML = renderApp();
 }
 
+// Helper called from the sign-in card's inline onclick / onkeydown.
+// Reads the input value at click-time so it works regardless of when
+// the listener was attached.
+function submitSignIn() {
+    const el = document.getElementById('key-input');
+    if (!el) return;
+    redeem(el.value);
+}
+
 function renderSignIn() {
+    // Inline event handlers (not a <script> block) — innerHTML strips
+    // <script> execution, so we wire the button via onclick + onkeydown
+    // attributes directly.
     return `
     <div class="signin-shell">
         <div class="wordmark">FLIPPED</div>
@@ -541,21 +553,16 @@ function renderSignIn() {
             <input id="key-input" class="signin-input"
                    placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"
                    autocomplete="off" autocapitalize="characters"
-                   spellcheck="false" />
-            <button class="btn-flip" id="signin-btn"
+                   spellcheck="false"
+                   onkeydown="if (event.key === 'Enter') submitSignIn();" />
+            <button class="btn-flip"
+                    onclick="submitSignIn()"
                     ${state.busy ? 'disabled' : ''}>
                 ${state.busy ? 'CONNECTING…' : 'CONNECT →'}
             </button>
             ${state.error ? `<div class="status warn">${state.error}</div>` : ''}
         </div>
     </div>
-    <script>
-      document.getElementById('signin-btn').onclick = () =>
-          redeem(document.getElementById('key-input').value);
-      document.getElementById('key-input').addEventListener('keydown', e => {
-          if (e.key === 'Enter') redeem(e.target.value);
-      });
-    <\/script>
     `;
 }
 
