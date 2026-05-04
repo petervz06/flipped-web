@@ -6,10 +6,10 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.21</title>
-      <pubDate>Mon, 04 May 2026 21:02:39 +0000</pubDate>
-      <sparkle:version>1.0.21</sparkle:version>
-      <sparkle:shortVersionString>1.0.21</sparkle:shortVersionString>
+      <title>Version 1.0.22</title>
+      <pubDate>Mon, 04 May 2026 21:26:07 +0000</pubDate>
+      <sparkle:version>1.0.22</sparkle:version>
+      <sparkle:shortVersionString>1.0.22</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<pre>backend: user_events log + /admin endpoints for friend-rollout monitoring
 
@@ -23,7 +23,7 @@
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="dUoLFdTj8mVxwNk1epJlRqaKQQ4Z5pSpZYBstbfXusZT+4PyoAEBoq2gGboriyvS6cbopLDGlsPMmqouJMQ3DA==" length="7959664" />
+        sparkle:edSignature="OXam3R7ZGR5OxVodspNlFIjywLWvTT2oxAUhvHj9py9pgjmxwdEtHlpgZYThC+kqn2huDk/WoVA2Utf9gNIJDA==" length="7959915" />
     </item>
   </channel>
 </rss>
