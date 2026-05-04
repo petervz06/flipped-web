@@ -291,9 +291,63 @@
 
         /* ─── Mobile (sidebar collapses to top bar) ──────────────────────── */
         @media (max-width: 720px) {
-            .shell { flex-direction: column; padding: 10px; gap: 10px; }
-            .sidebar { width: auto; padding: 14px; }
-            .device-row { margin-top: 0; padding-top: 12px; }
+            .shell {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+                max-width: 100%;
+            }
+            .sidebar {
+                width: auto;
+                padding: 14px 16px;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px 16px;
+            }
+            /* Brand wordmark sits left, nav rows compact next to it */
+            .wordmark {
+                margin-bottom: 0;
+                font-size: 13px;
+                letter-spacing: 3px;
+            }
+            .nav-row { padding: 4px 6px; }
+            /* Device row + sign-out wrap below the brand on a narrow row */
+            .device-row {
+                margin: 0 0 0 auto;
+                padding: 0;
+                border: none;
+                gap: 8px;
+            }
+            .device-meta { font-size: 11px; }
+            .signout {
+                margin: 0;
+                font-size: 8px;
+                letter-spacing: 1.5px;
+            }
+            /* Cards: tighter padding, smaller hero copy */
+            .card { padding: 20px 18px; }
+            .h1 { font-size: 19px; }
+            .display { font-size: 20px; }
+            .locked-time { font-size: 44px; }
+            .picker-grid {
+                grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+                gap: 6px;
+            }
+            .btn-mode {
+                min-width: 0;
+                padding: 9px 8px;
+                font-size: 10px;
+                letter-spacing: 1.5px;
+            }
+            .signin-shell { margin: 24px auto; padding: 0 14px; }
+        }
+        /* Extra-narrow phones: collapse picker to two columns so the
+           DURATION grid never crops. */
+        @media (max-width: 380px) {
+            .picker-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -409,6 +463,21 @@ async function refreshActiveSession() {
         if (!String(e).includes('404')) console.warn(e);
         state.activeSession = null;
     }
+    // Also re-check device — covers the "I just enrolled my iPhone via Mac"
+    // case where the user's already signed into the web with a stale (no-
+    // device) token, plus the boot path where we restore a token from
+    // localStorage but never fetched the deviceId.
+    try {
+        const ds = await api('/api/devices/status');
+        if (ds && ds.device) {
+            state.deviceId = ds.device.id;
+            persist('device', state.deviceId);
+        }
+    } catch (e) {
+        // 404 = no device on this account; leave deviceId null so the FLIP
+        // button surfaces the "no iPhone enrolled" hint.
+        if (!String(e).includes('404')) console.warn(e);
+    }
 }
 
 // ─── Sign-in ────────────────────────────────────────────────────────────
@@ -448,7 +517,7 @@ function signOut() {
 // Mirrors the Mac app's HomeView FLIP button.
 async function startManualFlip(profileId) {
     if (!state.deviceId) {
-        state.error = 'No iPhone enrolled — set up via the Mac app first.';
+        state.error = 'No iPhone on this account.  Make sure you signed in with the same license key the Mac app uses.';
         render(); return;
     }
     state.busy = true; state.error = null; render();
@@ -476,7 +545,7 @@ async function startManualFlip(profileId) {
 // emergency-unflip from the Mac app only (Focus 1×/month).
 async function startCommittedFlip(mode, durationSec) {
     if (!state.deviceId) {
-        state.error = 'No iPhone enrolled — set up via the Mac app first.';
+        state.error = 'No iPhone on this account.  Make sure you signed in with the same license key the Mac app uses.';
         render(); return;
     }
     state.busy = true; state.error = null; render();
