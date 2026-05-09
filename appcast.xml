@@ -6,31 +6,29 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.23</title>
-      <pubDate>Thu, 07 May 2026 01:48:51 +0000</pubDate>
-      <sparkle:version>1.0.23</sparkle:version>
-      <sparkle:shortVersionString>1.0.23</sparkle:shortVersionString>
+      <title>Version 1.0.24</title>
+      <pubDate>Fri, 08 May 2026 21:30:00 +0000</pubDate>
+      <sparkle:version>1.0.24</sparkle:version>
+      <sparkle:shortVersionString>1.0.24</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>feat: API base override for staging / local-dev builds
+      <description><![CDATA[<pre>fix: pre-flight backend health check before iPhone supervise
 
-FlippedAPI.base is now resolved via:
-  1. Launch arg --api-base=&lt;url&gt;
-  2. Env var FLIPPED_API_BASE
-  3. UserDefaults key flipped.apiBaseOverride (set from Settings)
-  4. Production default
+Before starting the destructive supervise + reboot flow on your
+iPhone, Flipped now pings the backend with a 5-second timeout. If
+the server is mid-redeploy or unreachable, you get a clear retry
+prompt instead of a stuck iPhone in DEP enrollment.
 
-Production users always hit prod (none of #1-3 set).  This unlocks:
-  - Dev builds talking to a future staging Railway service
-  - Pete pointing his test phone at staging while customers use prod
-  - Local FastAPI development without rebuilding the Mac app
+Also includes the structured onboarding error recovery from 1.0.23:
+SetupErrorRecovery now pattern-matches known failures (cable, lock,
+Find My, Stolen Device Protection, passcode, backup/restore,
+tools-missing) into a numbered recovery card instead of raw stderr.
 
-The Settings toggle that writes to flipped.apiBaseOverride lands in
-a follow-up commit (visible only in dev builds, gated behind a
-DEBUG #if).</pre>]]></description>
+Adds ~1 second to the happy path. Saves a brick when the backend
+is having a moment.</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="JrVbAk4ZWexrtyGx3DYOCHIirH9AkN6s3ACOU++6Q62pyesSP+ufgVZStFrzUT9CaDhuNjE+jz8GTXrSl0DSAA==" length="7992564" />
+        sparkle:edSignature="Z+pRC9q/WoHBPiGAhe6l/J0aC7tJke2pV3lmkSYkoftstNwcITRGOPGYaugX4FIAx34Z11Ud9gcthNB9l7oDAg==" length="7995053" />
     </item>
   </channel>
 </rss>
