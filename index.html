@@ -34,21 +34,23 @@
     </p>
 
     <!-- ── Primary CTA: signup form ────────────────────────────
-         Friend submits email → Railway API generates a license
-         key → Resend emails it → friend pastes into the Mac app. -->
+         Friend submits email → backend mints a 6-digit code →
+         Resend emails it → friend enters the code in the Mac app.
+         No license key to lose; nothing to copy/paste long strings of. -->
     <form class="signup-form" id="signup-form" novalidate>
         <input id="signup-email" type="email" name="email"
                placeholder="you@example.com" autocomplete="email" required />
         <button type="submit" class="btn primary" id="signup-submit">
-            <span class="arrow">▶</span> EMAIL ME MY KEY
+            <span class="arrow">▶</span> EMAIL ME A CODE
         </button>
     </form>
     <p class="micro" id="signup-status">macOS 13+ · iPhone iOS 17+ · free while in beta</p>
 
     <!-- ── Secondary CTA: direct download ────────────────────────
-         For users who already have a key from a prior message. -->
+         For users who already have an account or just want to grab
+         the app first.  Sign-in happens inside the app via email + code. -->
     <div class="hero-secondary">
-        <span class="muted">Already have a key?</span>
+        <span class="muted">Already signed up?</span>
         <a href="/downloads/Flipped-latest.dmg" class="btn secondary">
             <span class="arrow">▼</span> DOWNLOAD MAC APP
         </a>
@@ -63,12 +65,12 @@
         <div class="feature">
             <div class="feature-num">01</div>
             <h3>SIGN UP</h3>
-            <p>Drop your email above.  We send you a license key.</p>
+            <p>Drop your email above.  We send you a 6-digit sign-in code.</p>
         </div>
         <div class="feature">
             <div class="feature-num">02</div>
-            <h3>INSTALL + PLUG IN</h3>
-            <p>Download the Mac app, paste the key, plug your iPhone in via USB once.  Setup takes 2–3 minutes.</p>
+            <h3>INSTALL + ENTER CODE</h3>
+            <p>Download the Mac app, enter your code, plug your iPhone in via USB once.  Setup takes 2–3 minutes.</p>
         </div>
         <div class="feature">
             <div class="feature-num">03</div>
@@ -109,11 +111,15 @@
 </footer>
 
 <!-- ── Signup-form behaviour ──────────────────────────────────────────────
-     POSTs the email to the Railway-hosted Flipped API.  Server always
-     returns 204 (no enumeration leak) so any non-error response is
-     "success — check your inbox."  Network failures show a generic
-     retry message; we don't surface 4xx detail because rate-limit and
-     validation paths share the same friendly "try again" copy.
+     POSTs the email to /api/auth/email/request-code on the Railway
+     backend.  Server always returns 204 (no enumeration leak) so any
+     non-error response is "success — check your inbox."  Network failures
+     show a generic retry message; we don't surface 4xx detail because
+     rate-limit and validation paths share the same friendly "try again"
+     copy.
+
+     The user receives a 6-digit code by email and types it into the Mac
+     app's onboarding step 1.  No license key to copy/paste/lose.
 ─────────────────────────────────────────────────────────────────────── -->
 <script>
 (function () {
@@ -136,13 +142,13 @@
     function showSuccess(email) {
         form.innerHTML =
             "<div class='signup-success'>" +
-              "<div class='signup-success-line'>✓ KEY ON ITS WAY TO " + escapeHtml(email.toUpperCase()) + "</div>" +
+              "<div class='signup-success-line'>✓ SIGN-IN CODE SENT TO " + escapeHtml(email.toUpperCase()) + "</div>" +
               "<a href='" + DOWNLOAD_URL + "' class='btn primary' style='margin-top:18px;'>" +
                 "<span class='arrow'>▼</span> DOWNLOAD MAC APP" +
               "</a>" +
-              "<p class='signup-success-help'>Open the Mac app, paste the key from your email, and Flipped walks you through setting up your iPhone.</p>" +
+              "<p class='signup-success-help'>Open the Mac app and enter the 6-digit code from your email.  Codes expire in 10 minutes.</p>" +
             "</div>";
-        setStatus("Didn't get the email?  Check spam, then submit again — you'll get the same key.", null);
+        setStatus("Didn't get it?  Check spam, then submit again to get a new code.", null);
     }
 
     function escapeHtml(s) {
@@ -164,7 +170,7 @@
         submit.innerHTML = "SENDING…";
         setStatus("", null);
 
-        fetch(API_BASE + "/api/license/request-key", {
+        fetch(API_BASE + "/api/auth/email/request-code", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: email })
@@ -175,17 +181,17 @@
             } else if (resp.status === 429) {
                 setStatus("Too many requests.  Wait a minute and try again.", "warn");
                 submit.disabled = false;
-                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
             } else {
                 setStatus("Something went wrong.  Try again, or email support@useflipped.com.", "warn");
                 submit.disabled = false;
-                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
             }
         })
         .catch(function () {
             setStatus("Network error.  Check your connection and retry.", "warn");
             submit.disabled = false;
-            submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME MY KEY";
+            submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
         });
     });
 })();

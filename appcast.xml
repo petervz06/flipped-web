@@ -6,29 +6,29 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.24</title>
-      <pubDate>Fri, 08 May 2026 21:30:00 +0000</pubDate>
-      <sparkle:version>1.0.24</sparkle:version>
-      <sparkle:shortVersionString>1.0.24</sparkle:shortVersionString>
+      <title>Version 1.0.25</title>
+      <pubDate>Sat, 09 May 2026 22:45:00 +0000</pubDate>
+      <sparkle:version>1.0.25</sparkle:version>
+      <sparkle:shortVersionString>1.0.25</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fix: pre-flight backend health check before iPhone supervise
+      <description><![CDATA[<pre>feat: email + 6-digit code sign-in (replaces license-key paste)
 
-Before starting the destructive supervise + reboot flow on your
-iPhone, Flipped now pings the backend with a 5-second timeout. If
-the server is mid-redeploy or unreachable, you get a clear retry
-prompt instead of a stuck iPhone in DEP enrollment.
+Sign in with your email and a 6-digit code we send you — same pattern
+Linear, Cursor, Cal.com, and Vercel use.  No more pasting long
+activation keys.
 
-Also includes the structured onboarding error recovery from 1.0.23:
-SetupErrorRecovery now pattern-matches known failures (cable, lock,
-Find My, Stolen Device Protection, passcode, backup/restore,
-tools-missing) into a numbered recovery card instead of raw stderr.
+Existing license keys still work forever via the same /api/license/redeem
+endpoint, so your account from previous versions is unaffected.
 
-Adds ~1 second to the happy path. Saves a brick when the backend
-is having a moment.</pre>]]></description>
+Behind the scenes:
+  - Refresh tokens stored in Keychain so silent re-auth doesn't bounce
+    you back to the email-code prompt every JWT expiry
+  - Backend pre-flight health check from 1.0.24 still in place
+  - Structured onboarding error recovery from 1.0.23 still in place</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="Z+pRC9q/WoHBPiGAhe6l/J0aC7tJke2pV3lmkSYkoftstNwcITRGOPGYaugX4FIAx34Z11Ud9gcthNB9l7oDAg==" length="7995053" />
+        sparkle:edSignature="9LRBW/Vke8arMJ0zyU9oa0Hg5w3TTYicLiq4SkCgkqBvWuPt7/+zA1dn94ufJp3piQAyxagiRLbTj+jX3WXaCQ==" length="7968979" />
     </item>
   </channel>
 </rss>
