@@ -6,29 +6,31 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.25</title>
-      <pubDate>Sat, 09 May 2026 22:45:00 +0000</pubDate>
-      <sparkle:version>1.0.25</sparkle:version>
-      <sparkle:shortVersionString>1.0.25</sparkle:shortVersionString>
+      <title>Version 1.0.26</title>
+      <pubDate>Sun, 10 May 2026 02:30:00 +0000</pubDate>
+      <sparkle:version>1.0.26</sparkle:version>
+      <sparkle:shortVersionString>1.0.26</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>feat: email + 6-digit code sign-in (replaces license-key paste)
+      <description><![CDATA[<pre>fixes:
 
-Sign in with your email and a 6-digit code we send you — same pattern
-Linear, Cursor, Cal.com, and Vercel use.  No more pasting long
-activation keys.
+- Stops the false "FLIP FAILED · TAP TO RETRY" banner from
+  showing after a successful UNFLIP.  Old behavior: stale apiError
+  from a previous attempt persisted across the unflip transition,
+  so "Phone is free" rendered with a contradictory red error
+  banner.  Now endFlip clears the error too.
 
-Existing license keys still work forever via the same /api/license/redeem
-endpoint, so your account from previous versions is unaffected.
+- Emergency unflip is now available in any committed time-bound
+  session — Focus, Unplug ModesView, Nomad, Social — not just
+  Focus.  Forever sessions still refuse by design.  Cooldown copy
+  fixed: was "3 days between uses", now reads "1 per month" /
+  "30 days" matching the actual backend rule.
 
-Behind the scenes:
-  - Refresh tokens stored in Keychain so silent re-auth doesn't bounce
-    you back to the email-code prompt every JWT expiry
-  - Backend pre-flight health check from 1.0.24 still in place
-  - Structured onboarding error recovery from 1.0.23 still in place</pre>]]></description>
+Includes everything from 1.0.25 (email + 6-digit code sign-in)
+and 1.0.24 (backend pre-flight health check).</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="9LRBW/Vke8arMJ0zyU9oa0Hg5w3TTYicLiq4SkCgkqBvWuPt7/+zA1dn94ufJp3piQAyxagiRLbTj+jX3WXaCQ==" length="7968979" />
+        sparkle:edSignature="7gV+RgtNPgXig+2PEBi7F1oaJQRUhYZFMiPO+oYq09Xhi2J+tMNQU5klRbpsv4odoejBonqDSKT53RQgWfMuDQ==" length="7969405" />
     </item>
   </channel>
 </rss>
