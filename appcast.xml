@@ -6,28 +6,25 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.27</title>
-      <pubDate>Sun, 10 May 2026 02:02:28 +0000</pubDate>
-      <sparkle:version>1.0.27</sparkle:version>
-      <sparkle:shortVersionString>1.0.27</sparkle:shortVersionString>
+      <title>Version 1.0.28</title>
+      <pubDate>Sun, 10 May 2026 02:15:13 +0000</pubDate>
+      <sparkle:version>1.0.28</sparkle:version>
+      <sparkle:shortVersionString>1.0.28</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fix: separate flip errors from generic API errors
+      <description><![CDATA[<pre>fix: app icon now has proper macOS squircle shape
 
-The "FLIP FAILED · TAP TO RETRY" banner used to surface ANY background
-API error, including the auto-iPhone-app-list-sync that fires on app
-launch.  If that 12-second sync timed out, you'd see a flip-failed
-banner without ever attempting a flip.
+Kyle and Rylan's installations rendered the icon as a hard-edged
+black square because the source PNG was a fully-square black image
+with no transparent corners.  macOS does not auto-mask Mac app icons
+(only iOS does), so the raw artwork showed through.
 
-Now flip-attempt errors and background-sync errors are tracked
-separately.  The banner only shows when a real flip / unflip / emergency
-unflip actually fails.
-
-Includes 1.0.26's emergency-unflip widening (any committed time-bound
-session, not just Focus) and the corrected "1 per month" cooldown copy.</pre>]]></description>
+The icon is now masked to the standard macOS rounded-corner shape
+(~22.5% radius) with transparent corners.  Will look like every
+other Mac app in the Dock, Launchpad, and Finder.</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="JMinXKEwQoEKjxKDDcO5V82H84+zv8y94oM3iliH5IC0MabojYahuHGliXXSry904dp53+rs1jzNJQIILq6vAQ==" length="7969956" />
+        sparkle:edSignature="EI/x7aUPmEAWz9AG9M99QXUi/41iyyd139sUYvxSdfl6abhblMDd/CvcojChxdK2Yx6+9/fcb+NAYQCR6cDIAg==" length="7990695" />
     </item>
   </channel>
 </rss>
