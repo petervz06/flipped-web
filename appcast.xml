@@ -6,31 +6,28 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.26</title>
-      <pubDate>Sun, 10 May 2026 02:30:00 +0000</pubDate>
-      <sparkle:version>1.0.26</sparkle:version>
-      <sparkle:shortVersionString>1.0.26</sparkle:shortVersionString>
+      <title>Version 1.0.27</title>
+      <pubDate>Sun, 10 May 2026 02:02:28 +0000</pubDate>
+      <sparkle:version>1.0.27</sparkle:version>
+      <sparkle:shortVersionString>1.0.27</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fixes:
+      <description><![CDATA[<pre>fix: separate flip errors from generic API errors
 
-- Stops the false "FLIP FAILED · TAP TO RETRY" banner from
-  showing after a successful UNFLIP.  Old behavior: stale apiError
-  from a previous attempt persisted across the unflip transition,
-  so "Phone is free" rendered with a contradictory red error
-  banner.  Now endFlip clears the error too.
+The "FLIP FAILED · TAP TO RETRY" banner used to surface ANY background
+API error, including the auto-iPhone-app-list-sync that fires on app
+launch.  If that 12-second sync timed out, you'd see a flip-failed
+banner without ever attempting a flip.
 
-- Emergency unflip is now available in any committed time-bound
-  session — Focus, Unplug ModesView, Nomad, Social — not just
-  Focus.  Forever sessions still refuse by design.  Cooldown copy
-  fixed: was "3 days between uses", now reads "1 per month" /
-  "30 days" matching the actual backend rule.
+Now flip-attempt errors and background-sync errors are tracked
+separately.  The banner only shows when a real flip / unflip / emergency
+unflip actually fails.
 
-Includes everything from 1.0.25 (email + 6-digit code sign-in)
-and 1.0.24 (backend pre-flight health check).</pre>]]></description>
+Includes 1.0.26's emergency-unflip widening (any committed time-bound
+session, not just Focus) and the corrected "1 per month" cooldown copy.</pre>]]></description>
       <enclosure
         url="https://useflipped.com/downloads/Flipped-latest.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="7gV+RgtNPgXig+2PEBi7F1oaJQRUhYZFMiPO+oYq09Xhi2J+tMNQU5klRbpsv4odoejBonqDSKT53RQgWfMuDQ==" length="7969405" />
+        sparkle:edSignature="JMinXKEwQoEKjxKDDcO5V82H84+zv8y94oM3iliH5IC0MabojYahuHGliXXSry904dp53+rs1jzNJQIILq6vAQ==" length="7969956" />
     </item>
   </channel>
 </rss>
