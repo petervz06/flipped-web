@@ -6,6 +6,29 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.39</title>
+      <pubDate>Mon, 11 May 2026 21:25:00 +0000</pubDate>
+      <sparkle:version>1.0.39</sparkle:version>
+      <sparkle:shortVersionString>1.0.39</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Two quiet fixes.
+
+1. No more "Couldn't sync apps: Server error 404" banner.
+   The Mac was calling a backend endpoint that didn't
+   exist yet; the actual app-list refresh always worked,
+   the error was just noise.  Endpoint is now wired up,
+   so the sync triggers a real refresh from your iPhone.
+
+2. Update banner appears automatically.  Flipped now
+   checks for updates in the background on launch and
+   every hour after — you'll see the "Update available"
+   banner without having to open the menu.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.39.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="zR2mkZcAAHxXp3hU0hAwpOPlW8CU2FRhBrjnCIAMFpVN4u6dCRyuvtxj/bkmA1eV06jA90/U4+PPSOIo2iS5DA==" length="8036590" />
+    </item>
+    <item>
       <title>Version 1.0.38</title>
       <pubDate>Mon, 11 May 2026 21:10:00 +0000</pubDate>
       <sparkle:version>1.0.38</sparkle:version>
