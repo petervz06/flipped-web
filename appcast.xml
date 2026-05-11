@@ -6,28 +6,25 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.34</title>
-      <pubDate>Mon, 11 May 2026 19:20:31 +0000</pubDate>
-      <sparkle:version>1.0.34</sparkle:version>
-      <sparkle:shortVersionString>1.0.34</sparkle:shortVersionString>
+      <title>Version 1.0.35</title>
+      <pubDate>Mon, 11 May 2026 19:28:16 +0000</pubDate>
+      <sparkle:version>1.0.35</sparkle:version>
+      <sparkle:shortVersionString>1.0.35</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>tighter onboarding + better "all set" pro tips
+      <description><![CDATA[<pre>fix + redesign: "Time regained" stat
 
-- Removed the forced "Move apps to App Library" onboarding step.
-  Cuts the flow from 7 to 6 steps.  That guidance is now an
-  optional tip on the final screen instead of a forced action.
-
-- New ANCHOR APP pro tip on the final screen.  Teaches users to
-  keep a system app (Messages / Notes / Camera) next to their
-  distractions so apps return to the same spots after unflip —
-  no home-screen reshuffle.
-
-- App Library is offered as a secondary optional tip for users
-  who want distractions gone entirely.</pre>]]></description>
+- Visual: silver chrome value flanked by em-dashes (FLIPPED wordmark
+  style), with "TIME REGAINED" mono caps label below.  Bigger,
+  prouder, more trophy-like.
+- Copy: dropped "Precious" — just "TIME REGAINED".
+- Bug fix (server-side, already deployed): manual Home FLIP sessions
+  no longer cause the totalSecondsFlipped stat to drift upward
+  after unflipping.  Backend now stamps an ended_at on every session
+  completion + the stats SQL uses it.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.34.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.35.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="eCu19s01HWGuTP/QNsmsnMw3v7dZ3MGqekSFYQaPVcPMXSPzJXbiqOctaUTt+y84XWV+sK9Vah7lRQBh+5HgCw==" length="8018785" />
+        sparkle:edSignature="2CC0cBWJAtRXo97/23vn8kIaTJds7af0RHKcrvhKAQrr/fnJOJNkkKn44gtkomiw1JNeLlgYKauUfehrDoDfCA==" length="8020829" />
     </item>
   </channel>
 </rss>
