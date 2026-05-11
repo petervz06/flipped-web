@@ -6,28 +6,27 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.30</title>
-      <pubDate>Mon, 11 May 2026 17:36:34 +0000</pubDate>
-      <sparkle:version>1.0.30</sparkle:version>
-      <sparkle:shortVersionString>1.0.30</sparkle:shortVersionString>
+      <title>Version 1.0.31</title>
+      <pubDate>Mon, 11 May 2026 17:44:27 +0000</pubDate>
+      <sparkle:version>1.0.31</sparkle:version>
+      <sparkle:shortVersionString>1.0.31</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>feat: "Precious time you've regained" stat
+      <description><![CDATA[<pre>fix + feat: 15-min check-in now discoverable + reliable
 
-A new live-ticking stat appears on Home in both states:
+Bug: every time the Mac re-polled the active session from the
+server, the check-in button silently disappeared mid-flip because
+the server response field wasn't being decoded.  Mac now reads
+check_in_enabled + check_in_active_until from the server payload
+and restores the FlipSession with the correct state.
 
-  • Idle: shows total time you've reclaimed across every flip
-    session, ever.
-  • Flipped: same total — plus the current session's elapsed time
-    rolled in, ticking up every minute while you sit flipped.
-
-Format auto-scales: "47m", then "1h 47m", then "1d 4h 32m" once
-you cross 24 hours.  Silver chrome to match the FLIPPED wordmark.
-
-Nothing else on Home moves.</pre>]]></description>
+Discoverability: when you slide a Focus session to 4hr+ or pick
+any Unplug duration in ModesView, a new "✓ INCLUDES ONE 15-MIN
+CHECK-IN" hint appears below the duration picker.  No more
+mystery feature.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.30.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.31.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="QVYWYpNL/wpmnVBlJ9UppI0o0zvya7bANa3kzWXkUa3Q1/J3xPVCv9X+ZjaEXf1EJ88cT8wynFj5hODQ21AvAA==" length="8013864" />
+        sparkle:edSignature="VCOoKSLn/1jgzPIBh9Q9wi3iMxd/tOL/Krn6voMRhdurPO5H3Io9HiHL/2/PACFmSeGQF7r3Zn4SO/WpL3H0Ag==" length="8019421" />
     </item>
   </channel>
 </rss>
