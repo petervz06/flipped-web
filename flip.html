@@ -267,6 +267,36 @@
             text-transform: uppercase;
             margin-bottom: 18px;
         }
+        .blocked-block {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: var(--hairline) solid var(--border);
+        }
+        .blocked-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .blocked-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px 10px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .blocked-list .item {
+            white-space: nowrap;
+        }
+        .blocked-list .sep {
+            color: var(--text-faint);
+        }
         .locked-tip {
             text-align: center;
             color: var(--text-dim);
@@ -383,6 +413,48 @@ const LS = {
 // Profiles mirror BlockProfile.swift presets — keep in lockstep when the
 // Mac app's preset list changes.  Custom profiles are Mac-side only for
 // now; the web flip uses presets.
+// Bundle-ID → friendly name lookup used by the active-session view to
+// show the user exactly which apps are hidden on their iPhone.  Same
+// list the Mac app uses (Flipped/Models/FriendlyAppNames.swift) — keep
+// in sync when adding apps to a preset.
+const APP_NAMES = {
+    'com.burbn.instagram':              'Instagram',
+    'com.zhiliaoapp.musically':         'TikTok',
+    'com.atebits.Tweetie2':             'X',
+    'com.toyopagroup.picaboo':          'Snapchat',
+    'com.facebook.Facebook':            'Facebook',
+    'com.reddit.Reddit':                'Reddit',
+    'com.pinterest':                    'Pinterest',
+    'com.burbn.barcelona':              'Threads',
+    'xyz.blueskyweb.app':               'Bluesky',
+    'com.alphaexploration.chrono':      'BeReal',
+    'com.tumblr':                       'Tumblr',
+    'org.joinmastodon.app':             'Mastodon',
+    'com.linkedin.LinkedIn':            'LinkedIn',
+    'com.google.ios.youtube':           'YouTube',
+    'com.google.ios.youtubeunplugged':  'YouTube TV',
+    'com.google.ios.ytcreator':         'YouTube Studio',
+    'com.netflix.Netflix':              'Netflix',
+    'com.hulu.plus':                    'Hulu',
+    'com.disney.disneyplus':            'Disney+',
+    'com.wbd.hbomax':                   'HBO Max',
+    'com.hbo.hbonow':                   'HBO Now',
+    'tv.twitch':                        'Twitch',
+    'com.peacocktv.peacock':            'Peacock',
+    'com.amazon.aiv.AIVApp':            'Prime Video',
+    'com.cbsplayer.PARAMOUNTPLUSAPP':   'Paramount+',
+    'com.apple.news':                   'Apple News',
+    'com.flipboard.flipboard':          'Flipboard',
+    'com.robinhood.release.Robinhood':  'Robinhood',
+    'com.coinbase.iphone-client':       'Coinbase',
+    'com.amazon.Amazon':                'Amazon',
+    'com.ebay.iphone':                  'eBay',
+};
+
+function friendlyAppName(bundleId) {
+    return APP_NAMES[bundleId] || bundleId;
+}
+
 const PROFILES = {
     'preset-simple': {
         id: 'preset-simple', name: 'Simple', mode: 'social',
@@ -808,6 +880,31 @@ function renderActiveSession(session) {
            <strong style="color: var(--text)">UNFLIP</strong>
            whenever you're ready.  Manual sessions don't expire on their
            own — that's the point.`;
+
+    // Try to surface the list of apps that ARE currently hidden on the
+    // phone.  Best-effort: the website knows which profile it started
+    // the session with (state.profileId, persisted to localStorage) so
+    // we look up its bundleIds and render friendly names.  If the user
+    // started the flip from the Mac instead, state.profileId may not
+    // reflect reality — in that case we just skip the section rather
+    // than show wrong info.
+    const profileBundles =
+        (PROFILES[state.profileId] && PROFILES[state.profileId].bundleIds) || [];
+    const blockedItems = profileBundles
+        .map(friendlyAppName)
+        .filter(Boolean);
+    const blockedHTML = blockedItems.length === 0 ? '' : `
+        <div class="blocked-block">
+            <div class="blocked-label">— Hidden right now (${blockedItems.length}) —</div>
+            <div class="blocked-list">
+                ${blockedItems.map((name, i) => `
+                    <span class="item">${name}</span>${
+                        i < blockedItems.length - 1 ? '<span class="sep">·</span>' : ''
+                    }
+                `).join('')}
+            </div>
+        </div>`;
+
     return `
     <h1 class="h1">In session</h1>
     <p class="h-meta">${hasTimer
@@ -817,6 +914,7 @@ function renderActiveSession(session) {
         <div class="locked-meta">PHONE IS FLIPPED · MODE: ${(session.mode || '').toUpperCase()}</div>
         <div class="locked-time">${hasTimer ? fmtRemaining(session) : '∞'}</div>
         <div class="locked-meta">${hasTimer ? 'REMAINING' : 'MANUAL · NO TIMER'}</div>
+        ${blockedHTML}
         <div class="locked-tip">${tipBody}</div>
     </div>
     `;
