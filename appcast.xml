@@ -6,25 +6,24 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.35</title>
-      <pubDate>Mon, 11 May 2026 19:28:16 +0000</pubDate>
-      <sparkle:version>1.0.35</sparkle:version>
-      <sparkle:shortVersionString>1.0.35</sparkle:shortVersionString>
+      <title>Version 1.0.36</title>
+      <pubDate>Mon, 11 May 2026 19:37:32 +0000</pubDate>
+      <sparkle:version>1.0.36</sparkle:version>
+      <sparkle:shortVersionString>1.0.36</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fix + redesign: "Time regained" stat
+      <description><![CDATA[<pre>redesign: Time Regained becomes a 4-cell stopwatch grid
 
-- Visual: silver chrome value flanked by em-dashes (FLIPPED wordmark
-  style), with "TIME REGAINED" mono caps label below.  Bigger,
-  prouder, more trophy-like.
-- Copy: dropped "Precious" — just "TIME REGAINED".
-- Bug fix (server-side, already deployed): manual Home FLIP sessions
-  no longer cause the totalSecondsFlipped stat to drift upward
-  after unflipping.  Backend now stamps an ended_at on every session
-  completion + the stats SQL uses it.</pre>]]></description>
+The single chrome value flanked by em-dashes (1.0.35) is replaced
+by a four-cell grid: DAYS · HRS · MIN · SEC, each on a subtle
+white fill, numbers in the FLIPPED chrome silver gradient.
+
+While you're flipped, the seconds tick live every second.  All
+four units stay visible at every scale — no auto-hiding of zero
+days or zero hours.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.35.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.36.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="2CC0cBWJAtRXo97/23vn8kIaTJds7af0RHKcrvhKAQrr/fnJOJNkkKn44gtkomiw1JNeLlgYKauUfehrDoDfCA==" length="8020829" />
+        sparkle:edSignature="U3CCJF0Cpit6IMHmr+POnaoUafN+8vXMeL5Bcl/+hhWbh3WiR2ifDALgi48bTU+CkeJrXAFvWP1h+45PkubuCg==" length="8026874" />
     </item>
   </channel>
 </rss>
