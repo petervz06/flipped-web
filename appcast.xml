@@ -6,6 +6,35 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.42</title>
+      <pubDate>Mon, 11 May 2026 22:00:00 +0000</pubDate>
+      <sparkle:version>1.0.42</sparkle:version>
+      <sparkle:shortVersionString>1.0.42</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Real fix for locked-phone flips.
+
+When you tap FLIP with your iPhone locked, iOS replies
+"NotNow" to the install command — meaning "I got it but
+can't process while locked, hold this."  Pre-1.0.42 the
+server treated NotNow as a full Ack and dropped the
+command from the queue.  After unlock, the iPhone had
+nothing to apply.
+
+Now the server keeps the command pending through NotNow
+replies, so the moment you unlock, the iPhone polls the
+queue, finds the InstallProfile still waiting, and
+applies it.  Flips that fail at lock time now succeed
+the instant you unlock.
+
+Also: the orange "WAITING FOR IPHONE…" badge no longer
+flashes during normal flips — only appears after 7
+seconds of actually waiting.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.42.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="JiNmjbQPWP+UeE3XM85AYTk7/t7PFjza70AMbHe6+n5Oob1ievIzT6iRQGWll0pRHuKHoTS3miMDf9vhTCFQAQ==" length="8036829" />
+    </item>
+    <item>
       <title>Version 1.0.41</title>
       <pubDate>Mon, 11 May 2026 21:50:00 +0000</pubDate>
       <sparkle:version>1.0.41</sparkle:version>
