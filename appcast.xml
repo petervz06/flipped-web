@@ -6,6 +6,30 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.40</title>
+      <pubDate>Mon, 11 May 2026 21:35:00 +0000</pubDate>
+      <sparkle:version>1.0.40</sparkle:version>
+      <sparkle:shortVersionString>1.0.40</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Fix the "update again" loop.
+
+Pre-1.0.40, every release shipped with CFBundleVersion=1
+because build-dmg.sh only set the marketing version, not
+the build number.  Sparkle compares CFBundleVersion to
+sparkle:version in the appcast — so "1" was always less
+than "1.0.39", and the update banner re-appeared on every
+launch even right after you updated.
+
+This release sets both version fields at build time so the
+installed app's build number actually matches what's in
+the appcast.  After installing 1.0.40, the banner stays
+hidden until a real 1.0.41 ships.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.40.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="f9/JTQ36swdR9oBJJozFC1EYGZrrs6BovwKSmgc4X/pMZs6tYYNlokIHml0BQlEtENV95c77I09W7tz4IZ7dCQ==" length="8036631" />
+    </item>
+    <item>
       <title>Version 1.0.39</title>
       <pubDate>Mon, 11 May 2026 21:25:00 +0000</pubDate>
       <sparkle:version>1.0.39</sparkle:version>
