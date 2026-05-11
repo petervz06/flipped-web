@@ -6,6 +6,27 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.37</title>
+      <pubDate>Mon, 11 May 2026 21:00:00 +0000</pubDate>
+      <sparkle:version>1.0.37</sparkle:version>
+      <sparkle:shortVersionString>1.0.37</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Flips now retry until your iPhone is reachable.
+
+If your iPhone is locked or offline when you tap FLIP, the
+server keeps re-pushing every 30 seconds for up to 10 minutes
+— so the next time the phone unlocks, the flip lands without
+you having to do anything.
+
+Home shows "WAITING FOR IPHONE · UNLOCK TO APPLY" while we're
+still waiting, and switches to "PHONE IS FLIPPED" the moment
+iOS confirms.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.37.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="51xuw/0CK+/+2iUE3uQK1yQRIN/zRnj3nnZUovguFtRqZ3Bh6ezEqH/uUG8eZf2/JCuEw3ARO3ZkDeu0PC/FBQ==" length="8027396" />
+    </item>
+    <item>
       <title>Version 1.0.36</title>
       <pubDate>Mon, 11 May 2026 19:37:32 +0000</pubDate>
       <sparkle:version>1.0.36</sparkle:version>
