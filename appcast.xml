@@ -6,27 +6,24 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.31</title>
-      <pubDate>Mon, 11 May 2026 17:44:27 +0000</pubDate>
-      <sparkle:version>1.0.31</sparkle:version>
-      <sparkle:shortVersionString>1.0.31</sparkle:shortVersionString>
+      <title>Version 1.0.32</title>
+      <pubDate>Mon, 11 May 2026 18:01:03 +0000</pubDate>
+      <sparkle:version>1.0.32</sparkle:version>
+      <sparkle:shortVersionString>1.0.32</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fix + feat: 15-min check-in now discoverable + reliable
+      <description><![CDATA[<pre>feat: blocked-apps list now seamless across clients
 
-Bug: every time the Mac re-polled the active session from the
-server, the check-in button silently disappeared mid-flip because
-the server response field wasn't being decoded.  Mac now reads
-check_in_enabled + check_in_active_until from the server payload
-and restores the FlipSession with the correct state.
+Every active session now stores its blocked_bundle_ids on the
+backend.  The "what's hidden right now" disclosure on Home and the
+blocked-apps section on useflipped.com/flip both pull from this
+server-authoritative list — so the list is correct regardless of
+which client started the session (Mac, web, schedule, another Mac).
 
-Discoverability: when you slide a Focus session to 4hr+ or pick
-any Unplug duration in ModesView, a new "✓ INCLUDES ONE 15-MIN
-CHECK-IN" hint appears below the duration picker.  No more
-mystery feature.</pre>]]></description>
+No user-visible UI changes; just behind-the-scenes correctness.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.31.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.32.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="VCOoKSLn/1jgzPIBh9Q9wi3iMxd/tOL/Krn6voMRhdurPO5H3Io9HiHL/2/PACFmSeGQF7r3Zn4SO/WpL3H0Ag==" length="8019421" />
+        sparkle:edSignature="vHw/F8o72gc8DJMiNJYj71uW7tJEsiC9WF51+syrcqiXClE54n0o6eUE6+j40HRx488TdQTGH0vaYzm1lhLyDQ==" length="8019036" />
     </item>
   </channel>
 </rss>
