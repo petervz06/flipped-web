@@ -6,26 +6,28 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.33</title>
-      <pubDate>Mon, 11 May 2026 18:29:41 +0000</pubDate>
-      <sparkle:version>1.0.33</sparkle:version>
-      <sparkle:shortVersionString>1.0.33</sparkle:shortVersionString>
+      <title>Version 1.0.34</title>
+      <pubDate>Mon, 11 May 2026 19:20:31 +0000</pubDate>
+      <sparkle:version>1.0.34</sparkle:version>
+      <sparkle:shortVersionString>1.0.34</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>fix: app icon now sized like every other Mac app
+      <description><![CDATA[<pre>tighter onboarding + better "all set" pro tips
 
-The 1.0.28 squircle fix solved the SHAPE (square corners → rounded)
-but the icon still rendered at the full 1024px canvas with no
-padding, which made it look oversized next to other apps in the
-Dock and Launchpad.
+- Removed the forced "Move apps to App Library" onboarding step.
+  Cuts the flow from 7 to 6 steps.  That guidance is now an
+  optional tip on the final screen instead of a forced action.
 
-Apple's macOS HIG specifies the visible icon should occupy roughly
-824x824 inside a 1024x1024 canvas, with ~100px transparent padding
-on each side.  Rebuilt to that spec — should now match the visual
-weight of Finder / Mail / Safari / etc.</pre>]]></description>
+- New ANCHOR APP pro tip on the final screen.  Teaches users to
+  keep a system app (Messages / Notes / Camera) next to their
+  distractions so apps return to the same spots after unflip —
+  no home-screen reshuffle.
+
+- App Library is offered as a secondary optional tip for users
+  who want distractions gone entirely.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.33.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.34.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="oRPVwiQcS8n5X9O1tkBmJBQpzORvhLzsUGHnj0tMoUbfdfq1/KxdvEF9sDEdRqZJMdSLU67gXM8h9t4ymjRKBQ==" length="8028427" />
+        sparkle:edSignature="eCu19s01HWGuTP/QNsmsnMw3v7dZ3MGqekSFYQaPVcPMXSPzJXbiqOctaUTt+y84XWV+sK9Vah7lRQBh+5HgCw==" length="8018785" />
     </item>
   </channel>
 </rss>
