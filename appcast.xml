@@ -6,6 +6,29 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.38</title>
+      <pubDate>Mon, 11 May 2026 21:10:00 +0000</pubDate>
+      <sparkle:version>1.0.38</sparkle:version>
+      <sparkle:shortVersionString>1.0.38</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Edit a preset profile in place — no more "X Custom" duplicate.
+
+Before: tapping the pencil on Simple spawned a separate
+"Simple Custom" row in the Profiles list.  Edits to either
+diverged and the list got cluttered.
+
+Now: edits modify the preset in place, and any leftover
+"X Custom" rows from before are removed on launch.
+
+Plus everything from 1.0.37 — flips retry every 30s while
+your iPhone is locked / offline, and Home shows "WAITING
+FOR IPHONE · UNLOCK TO APPLY" until iOS confirms.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.38.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="yuiyI3doaTP+NWEN+yhdb+dr+0BXmNxyVljfHO51wLbDlrme+ixPy2i8tHhjIQtDJzaeEifl/AV3j/zAjFMlAg==" length="8036159" />
+    </item>
+    <item>
       <title>Version 1.0.37</title>
       <pubDate>Mon, 11 May 2026 21:00:00 +0000</pubDate>
       <sparkle:version>1.0.37</sparkle:version>
