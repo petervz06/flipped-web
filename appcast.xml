@@ -6,28 +6,28 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.29</title>
-      <pubDate>Sun, 10 May 2026 02:20:04 +0000</pubDate>
-      <sparkle:version>1.0.29</sparkle:version>
-      <sparkle:shortVersionString>1.0.29</sparkle:shortVersionString>
+      <title>Version 1.0.30</title>
+      <pubDate>Mon, 11 May 2026 17:36:34 +0000</pubDate>
+      <sparkle:version>1.0.30</sparkle:version>
+      <sparkle:shortVersionString>1.0.30</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>feat: 15-minute check-in window for long sessions
+      <description><![CDATA[<pre>feat: "Precious time you've regained" stat
 
-When you start a Focus or Unplug session of 4 hours or longer, the
-in-session "▶ START 15-MIN CHECK-IN" button now appears on the
-Mac Home screen during the session.  Tap it once to unlock the
-phone for 15 minutes — the apps return, you grab a Citi Bike code
-or download an app, and 15 minutes later the session locks back
-down automatically.
+A new live-ticking stat appears on Home in both states:
 
-One check-in per 20-hour rolling window per session.  Forever
-sessions still don't qualify (uninterruptible by design).
+  • Idle: shows total time you've reclaimed across every flip
+    session, ever.
+  • Flipped: same total — plus the current session's elapsed time
+    rolled in, ticking up every minute while you sit flipped.
 
-Shorter sessions can opt-in via the toggle in ModesView.</pre>]]></description>
+Format auto-scales: "47m", then "1h 47m", then "1d 4h 32m" once
+you cross 24 hours.  Silver chrome to match the FLIPPED wordmark.
+
+Nothing else on Home moves.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.29.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.30.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="FC3vN0smPyQH4KaFfsBTTRlg2uR41vBOfzTmvLRsa/+WO8SZw6z4+Ers3N7mhD1YABXtLwP4uleWw2OYB2CbAQ==" length="8004981" />
+        sparkle:edSignature="QVYWYpNL/wpmnVBlJ9UppI0o0zvya7bANa3kzWXkUa3Q1/J3xPVCv9X+ZjaEXf1EJ88cT8wynFj5hODQ21AvAA==" length="8013864" />
     </item>
   </channel>
 </rss>
