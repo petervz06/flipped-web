@@ -4,198 +4,206 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FLIPPED — flip your phone. get your life back.</title>
-    <meta name="description" content="Hide distracting apps and filter distracting websites on your iPhone.  Zero workarounds." />
-    <link rel="stylesheet" href="styles.css?v=15" />
+    <meta name="description" content="A screen-time blocker for iPhone with zero workarounds. Currently in open beta — free for testers." />
+    <link rel="stylesheet" href="styles.css?v=16" />
+    <style>
+        /* ── Beta homepage — minimal centered (Variant E) ───────────────────
+           Everything centered. No signup form. One CTA → download. Footer.
+           Designed for beta testers; nothing fake (no testimonials, no
+           pricing, no press logos) until we earn them.
+        ─────────────────────────────────────────────────────────────────── */
+        :root {
+            --mono: "SF Mono", Menlo, monospace;
+            --silver-1: #ffffff;
+            --silver-2: #d8d8d8;
+            --silver-3: #888888;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topnav-min {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 22px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .topnav-min .brand {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            background: linear-gradient(to bottom, var(--silver-1), var(--silver-2), var(--silver-3), var(--silver-2), var(--silver-1));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        main.hero-min {
+            flex: 1 0 auto;
+            text-align: center;
+            padding: 80px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .beta-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            color: #999;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 5px 12px;
+            margin-bottom: 28px;
+        }
+
+        .headline-min {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -1.2px;
+            margin: 0 0 16px;
+            text-align: center;
+        }
+
+        .lede-min {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.6;
+            max-width: 360px;
+            margin: 0 auto 28px;
+            text-align: center;
+        }
+
+        .btn-download {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 14px 26px;
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn-download:hover { opacity: 0.92; }
+        .btn-download .arrow { margin-right: 6px; }
+
+        .micro-min {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #666;
+            margin-top: 14px;
+        }
+
+        .how-band {
+            padding: 44px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+        .how-three {
+            max-width: 380px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .how-line {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #fff;
+            text-align: center;
+        }
+        .how-line .step {
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .footer-min {
+            padding: 28px 20px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #666;
+            text-align: center;
+        }
+        .footer-min a {
+            color: #888;
+            text-decoration: none;
+        }
+        .footer-min a:hover { color: #fff; }
+
+        /* Mobile tweaks */
+        @media (max-width: 540px) {
+            main.hero-min { padding: 56px 18px 44px; }
+            .headline-min { font-size: 34px; }
+            .lede-min { font-size: 13px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ── Top nav ──────────────────────────────────────────────────────── -->
-<nav class="topnav">
-    <div class="brand-mini">FLIPPED</div>
-    <div class="topnav-links">
-        <a href="#how">HOW</a>
-        <a href="#faq">FAQ</a>
-        <a href="mailto:support@useflipped.com">SUPPORT</a>
-    </div>
+<!-- ── Centered brand nav ─────────────────────────────────────────── -->
+<nav class="topnav-min">
+    <div class="brand">FLIPPED</div>
 </nav>
 
-<main class="hero">
+<!-- ── Hero — centered, single CTA ───────────────────────────────── -->
+<main class="hero-min">
 
-    <div class="lbl">SCREEN-TIME BLOCKER · IOS</div>
+    <div class="beta-pill">OPEN BETA · FREE</div>
 
-    <h1 class="headline-mega">
+    <h1 class="headline-min">
         Flip your phone.<br>
         Get your life back.
     </h1>
 
-    <p class="lede">
-        Hide distracting apps and filter distracting websites on your iPhone.
-        Zero workarounds.  Currently in open beta — free for testers.
+    <p class="lede-min">
+        A screen-time blocker for iPhone with zero workarounds.
     </p>
 
-    <!-- ── Primary CTA: signup form ────────────────────────────
-         Friend submits email → backend mints a 6-digit code →
-         Resend emails it → friend enters the code in the Mac app.
-         No license key to lose; nothing to copy/paste long strings of. -->
-    <form class="signup-form" id="signup-form" novalidate>
-        <input id="signup-email" type="email" name="email"
-               placeholder="you@example.com" autocomplete="email" required />
-        <button type="submit" class="btn primary" id="signup-submit">
-            <span class="arrow">▶</span> EMAIL ME A CODE
-        </button>
-    </form>
-    <p class="micro" id="signup-status">macOS 13+ · iPhone iOS 17+ · free while in beta</p>
+    <a href="/downloads/Flipped-latest.dmg" class="btn-download">
+        <span class="arrow">▼</span>DOWNLOAD FOR MAC
+    </a>
 
-    <!-- ── Secondary CTA: direct download ────────────────────────
-         For users who already have an account or just want to grab
-         the app first.  Sign-in happens inside the app via email + code. -->
-    <div class="hero-secondary">
-        <span class="muted">Already signed up?</span>
-        <a href="/downloads/Flipped-latest.dmg" class="btn secondary">
-            <span class="arrow">▼</span> DOWNLOAD MAC APP
-        </a>
-    </div>
+    <div class="micro-min">macOS 13+ · iPhone iOS 17+</div>
 
 </main>
 
-<!-- ── How it works ──────────────────────────────────────────── -->
-<section class="section" id="how">
-    <div class="section-label">// how it works</div>
-    <div class="features">
-        <div class="feature">
-            <div class="feature-num">01</div>
-            <h3>SIGN UP</h3>
-            <p>Drop your email above.  We send you a 6-digit sign-in code.</p>
-        </div>
-        <div class="feature">
-            <div class="feature-num">02</div>
-            <h3>INSTALL + ENTER CODE</h3>
-            <p>Download the Mac app, enter your code, plug your iPhone in via USB once.  Setup takes 2–3 minutes.</p>
-        </div>
-        <div class="feature">
-            <div class="feature-num">03</div>
-            <h3>TAP FLIP</h3>
-            <p>Apps disappear from your iPhone.  Distracting sites get blocked in Safari.  Tap UNFLIP when done.</p>
-        </div>
+<!-- ── How it works — 3 single lines, centered ──────────────────── -->
+<section class="how-band">
+    <div class="how-three">
+        <div class="how-line"><span class="step">01</span>Plug your iPhone into your Mac</div>
+        <div class="how-line"><span class="step">02</span>Pick a profile, set a timer</div>
+        <div class="how-line"><span class="step">03</span>Tap FLIP · apps disappear</div>
     </div>
 </section>
 
-<!-- ── FAQ ────────────────────────────────────────────────────── -->
-<section class="section" id="faq">
-    <div class="section-label">// common questions</div>
-    <details class="faq">
-        <summary>Will this let me look up porn / adult content?</summary>
-        <p>No.  Apple's built-in adult-content filter is active during every session and blocks adult sites automatically.  You can't turn it off during a flip.</p>
-    </details>
-    <details class="faq">
-        <summary>Can I unflip early in Focus mode?</summary>
-        <p>Focus sessions end automatically when the timer hits zero.  One emergency unflip per 30 days is allowed if something urgent comes up.  Unplug + Forever modes have no early-end option — that's the point.</p>
-    </details>
-    <details class="faq">
-        <summary>Does Flipped read my messages or photos?</summary>
-        <p>No.  Flipped can hide apps and filter URLs but never reads the contents of any app on your phone.</p>
-    </details>
-    <details class="faq">
-        <summary>What if I want to stop using Flipped?</summary>
-        <p>Remove it any time: Mac app → Settings → Remove Flipped, or from your iPhone's Settings → General → VPN &amp; Device Management.</p>
-    </details>
-</section>
-
-<footer>
-    <div>© 2026 FLIPPED</div>
-    <div>
-        <a href="privacy.html">PRIVACY</a> ·
-        <a href="terms.html">TERMS</a> ·
-        <a href="mailto:support@useflipped.com">SUPPORT</a>
-    </div>
+<!-- ── Footer ───────────────────────────────────────────────────── -->
+<footer class="footer-min">
+    © 2026 FLIPPED ·
+    <a href="privacy.html">PRIVACY</a> ·
+    <a href="terms.html">TERMS</a> ·
+    <a href="mailto:support@useflipped.com">SUPPORT</a>
 </footer>
-
-<!-- ── Signup-form behaviour ──────────────────────────────────────────────
-     POSTs the email to /api/auth/email/request-code on the Railway
-     backend.  Server always returns 204 (no enumeration leak) so any
-     non-error response is "success — check your inbox."  Network failures
-     show a generic retry message; we don't surface 4xx detail because
-     rate-limit and validation paths share the same friendly "try again"
-     copy.
-
-     The user receives a 6-digit code by email and types it into the Mac
-     app's onboarding step 1.  No license key to copy/paste/lose.
-─────────────────────────────────────────────────────────────────────── -->
-<script>
-(function () {
-    var API_BASE = "https://flipped-production-79b3.up.railway.app";
-    var DOWNLOAD_URL = "/downloads/Flipped-latest.dmg";
-
-    var form     = document.getElementById("signup-form");
-    var input    = document.getElementById("signup-email");
-    var status   = document.getElementById("signup-status");
-    var submit   = document.getElementById("signup-submit");
-
-    if (!form) return;
-
-    function setStatus(text, kind) {
-        status.textContent = text;
-        status.classList.remove("ok", "warn");
-        if (kind) status.classList.add(kind);
-    }
-
-    function showSuccess(email) {
-        form.innerHTML =
-            "<div class='signup-success'>" +
-              "<div class='signup-success-line'>✓ SIGN-IN CODE SENT TO " + escapeHtml(email.toUpperCase()) + "</div>" +
-              "<a href='" + DOWNLOAD_URL + "' class='btn primary' style='margin-top:18px;'>" +
-                "<span class='arrow'>▼</span> DOWNLOAD MAC APP" +
-              "</a>" +
-              "<p class='signup-success-help'>Open the Mac app and enter the 6-digit code from your email.  Codes expire in 10 minutes.</p>" +
-            "</div>";
-        setStatus("Didn't get it?  Check spam, then submit again to get a new code.", null);
-    }
-
-    function escapeHtml(s) {
-        return String(s).replace(/[&<>"']/g, function (c) {
-            return { "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c];
-        });
-    }
-
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = (input.value || "").trim();
-        if (!email || email.indexOf("@") < 0) {
-            setStatus("Enter a valid email address.", "warn");
-            input.focus();
-            return;
-        }
-
-        submit.disabled = true;
-        submit.innerHTML = "SENDING…";
-        setStatus("", null);
-
-        fetch(API_BASE + "/api/auth/email/request-code", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email })
-        })
-        .then(function (resp) {
-            if (resp.status === 204 || (resp.status >= 200 && resp.status < 300)) {
-                showSuccess(email);
-            } else if (resp.status === 429) {
-                setStatus("Too many requests.  Wait a minute and try again.", "warn");
-                submit.disabled = false;
-                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
-            } else {
-                setStatus("Something went wrong.  Try again, or email support@useflipped.com.", "warn");
-                submit.disabled = false;
-                submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
-            }
-        })
-        .catch(function () {
-            setStatus("Network error.  Check your connection and retry.", "warn");
-            submit.disabled = false;
-            submit.innerHTML = "<span class='arrow'>▶</span> EMAIL ME A CODE";
-        });
-    });
-})();
-</script>
 
 </body>
 </html>
