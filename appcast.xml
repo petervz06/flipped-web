@@ -6,22 +6,26 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.32</title>
-      <pubDate>Mon, 11 May 2026 18:03:35 +0000</pubDate>
-      <sparkle:version>1.0.32</sparkle:version>
-      <sparkle:shortVersionString>1.0.32</sparkle:shortVersionString>
+      <title>Version 1.0.33</title>
+      <pubDate>Mon, 11 May 2026 18:29:41 +0000</pubDate>
+      <sparkle:version>1.0.33</sparkle:version>
+      <sparkle:shortVersionString>1.0.33</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<pre>feat: blocked-apps list is now seamless across Mac + web
+      <description><![CDATA[<pre>fix: app icon now sized like every other Mac app
 
-Backend persists each session's blocked_bundle_ids on the row.  Mac
-+ web both render the server-provided list (or fall back to the local
-profile if the field is empty, for pre-1.0.32 sessions).  No matter
-where the flip was started, every client now shows the exact apps
-that are currently hidden on your iPhone.</pre>]]></description>
+The 1.0.28 squircle fix solved the SHAPE (square corners → rounded)
+but the icon still rendered at the full 1024px canvas with no
+padding, which made it look oversized next to other apps in the
+Dock and Launchpad.
+
+Apple's macOS HIG specifies the visible icon should occupy roughly
+824x824 inside a 1024x1024 canvas, with ~100px transparent padding
+on each side.  Rebuilt to that spec — should now match the visual
+weight of Finder / Mail / Safari / etc.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.32.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.33.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="vHw/F8o72gc8DJMiNJYj71uW7tJEsiC9WF51+syrcqiXClE54n0o6eUE6+j40HRx488TdQTGH0vaYzm1lhLyDQ==" length="8019036" />
+        sparkle:edSignature="oRPVwiQcS8n5X9O1tkBmJBQpzORvhLzsUGHnj0tMoUbfdfq1/KxdvEF9sDEdRqZJMdSLU67gXM8h9t4ymjRKBQ==" length="8028427" />
     </item>
   </channel>
 </rss>
