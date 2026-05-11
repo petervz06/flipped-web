@@ -518,6 +518,9 @@ let state = {
     unplugDuration: 24 * 3600,
     error:        null,
     busy:         false,
+    // Sign-in flow: 'email' (initial) → 'code' (after we email a 6-digit code)
+    signInPhase:  'email',
+    signInEmail:  null,
 };
 
 function $(id) { return document.getElementById(id); }
@@ -569,24 +572,61 @@ async function refreshActiveSession() {
     }
 }
 
-// ─── Sign-in ────────────────────────────────────────────────────────────
-async function redeem(key) {
+// ─── Sign-in (email + 6-digit code) ─────────────────────────────────────
+// Two-phase: enter email → backend emails a code → enter code → JWT.
+// Mirrors the Mac app's onboarding step 1 exactly.
+
+async function requestEmailCode(email) {
     state.busy = true; state.error = null; render();
     try {
-        const r = await fetch(API + '/api/license/redeem', {
+        const r = await fetch(API + '/api/auth/email/request-code', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({key: key.trim()}),
+            body: JSON.stringify({email: email.trim().toLowerCase()}),
         });
-        if (!r.ok) throw new Error((await r.json()).detail || `HTTP ${r.status}`);
-        state.token = (await r.json()).access_token;
+        // Backend always returns 204 for valid email — no enumeration leak.
+        if (r.status === 429) throw new Error('Too many attempts — wait a minute and try again.');
+        if (!r.ok && r.status !== 204) throw new Error(`HTTP ${r.status}`);
+        // Success: advance to the code-entry phase.
+        state.signInEmail = email.trim().toLowerCase();
+        state.signInPhase = 'code';
+    } catch (e) {
+        state.error = e.message || 'Network error.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+async function verifyEmailCode(code) {
+    state.busy = true; state.error = null; render();
+    try {
+        const r = await fetch(API + '/api/auth/email/verify-code', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: state.signInEmail,
+                code:  code.trim(),
+            }),
+        });
+        if (!r.ok) {
+            const detail = (await r.json().catch(() => ({}))).detail
+                || (r.status === 400 ? 'Invalid or expired code.'
+                  : r.status === 429 ? 'Too many attempts — try again later.'
+                  : `HTTP ${r.status}`);
+            throw new Error(detail);
+        }
+        const body = await r.json();
+        state.token = body.access_token;
         persist('token', state.token);
+        // Try device-status; ok if no device yet.
         const ds = await api('/api/devices/status').catch(() => null);
         if (ds && ds.device) {
             state.deviceId = ds.device.id;
             persist('device', state.deviceId);
         }
         await refreshActiveSession();
+        // Reset sign-in state for next time.
+        state.signInPhase = 'email'; state.signInEmail = null;
     } catch (e) {
         state.error = e.message;
     } finally {
@@ -594,9 +634,17 @@ async function redeem(key) {
     }
 }
 
+function backToEmailEntry() {
+    state.signInPhase = 'email';
+    state.error = null;
+    state.signInEmail = null;
+    render();
+}
+
 function signOut() {
-    if (!confirm('Sign out of this device?  You\'ll need your license key to sign in again.')) return;
+    if (!confirm('Sign out of this device?  You\'ll need a fresh sign-in code to return.')) return;
     state.token = null; state.deviceId = null; state.activeSession = null;
+    state.signInPhase = 'email'; state.signInEmail = null;
     persist('token', null); persist('device', null);
     render();
 }
@@ -606,7 +654,7 @@ function signOut() {
 // Mirrors the Mac app's HomeView FLIP button.
 async function startManualFlip(profileId) {
     if (!state.deviceId) {
-        state.error = 'No iPhone on this account.  Make sure you signed in with the same license key the Mac app uses.';
+        state.error = 'No iPhone on this account.  Make sure you signed in with the same email the Mac app uses.';
         render(); return;
     }
     state.busy = true; state.error = null; render();
@@ -634,7 +682,7 @@ async function startManualFlip(profileId) {
 // emergency-unflip from the Mac app only (Focus 1×/month).
 async function startCommittedFlip(mode, durationSec) {
     if (!state.deviceId) {
-        state.error = 'No iPhone on this account.  Make sure you signed in with the same license key the Mac app uses.';
+        state.error = 'No iPhone on this account.  Make sure you signed in with the same email the Mac app uses.';
         render(); return;
     }
     state.busy = true; state.error = null; render();
@@ -684,44 +732,91 @@ function render() {
     root.innerHTML = renderApp();
 }
 
-// Helper called from the sign-in card's inline onclick / onkeydown.
-// Reads the input value at click-time so it works regardless of when
-// the listener was attached.
-function submitSignIn() {
-    const el = document.getElementById('key-input');
+// Inline-onclick helpers — readInput at click-time so they work regardless
+// of when the listener was attached (innerHTML strips <script> tags).
+function submitEmailRequest() {
+    const el = document.getElementById('email-input');
     if (!el) return;
-    redeem(el.value);
+    requestEmailCode(el.value);
+}
+function submitCodeVerify() {
+    const el = document.getElementById('code-input');
+    if (!el) return;
+    verifyEmailCode(el.value);
 }
 
 function renderSignIn() {
-    // Inline event handlers (not a <script> block) — innerHTML strips
-    // <script> execution, so we wire the button via onclick + onkeydown
-    // attributes directly.
+    if (state.signInPhase === 'code') return renderCodeEntry();
+    return renderEmailEntry();
+}
+
+function renderEmailEntry() {
     return `
     <div class="signin-shell">
         <div class="wordmark">FLIPPED</div>
         <div class="card">
             <div class="label">SIGN IN</div>
-            <div class="display">Paste your license key</div>
+            <div class="display">Enter your email</div>
             <p class="muted">
-                Same key from your Flipped welcome email.  Saved in this
-                browser only — we don't store it on a server.  After you sign
-                in once, every visit goes straight to the flip controls.
+                We'll email you a 6-digit code.  Same email you used to
+                sign in to the Mac app.
             </p>
-            <input id="key-input" class="signin-input"
-                   placeholder="XXXX-XXXX-XXXX-XXXX-XXXX"
-                   autocomplete="off" autocapitalize="characters"
+            <input id="email-input" class="signin-input"
+                   type="email"
+                   placeholder="you@example.com"
+                   autocomplete="email"
                    spellcheck="false"
-                   onkeydown="if (event.key === 'Enter') submitSignIn();" />
+                   onkeydown="if (event.key === 'Enter') submitEmailRequest();" />
             <button class="btn-flip"
-                    onclick="submitSignIn()"
+                    onclick="submitEmailRequest()"
                     ${state.busy ? 'disabled' : ''}>
-                ${state.busy ? 'CONNECTING…' : 'CONNECT →'}
+                ${state.busy ? 'SENDING…' : 'SEND CODE →'}
             </button>
             ${state.error ? `<div class="status warn">${state.error}</div>` : ''}
         </div>
     </div>
     `;
+}
+
+function renderCodeEntry() {
+    return `
+    <div class="signin-shell">
+        <div class="wordmark">FLIPPED</div>
+        <div class="card">
+            <div class="label">CHECK YOUR EMAIL</div>
+            <div class="display">Enter the 6-digit code</div>
+            <p class="muted">
+                We sent it to <strong style="color: var(--text)">${
+                    state.signInEmail ? escapeHtml(state.signInEmail) : 'your inbox'
+                }</strong>.  Codes expire in 10 minutes.  iCloud
+                sometimes takes 30-60s to deliver.
+            </p>
+            <input id="code-input" class="signin-input"
+                   type="text"
+                   inputmode="numeric"
+                   maxlength="6"
+                   placeholder="123456"
+                   autocomplete="one-time-code"
+                   spellcheck="false"
+                   style="letter-spacing: 6px; text-align: center;"
+                   onkeydown="if (event.key === 'Enter') submitCodeVerify();" />
+            <button class="btn-flip"
+                    onclick="submitCodeVerify()"
+                    ${state.busy ? 'disabled' : ''}>
+                ${state.busy ? 'VERIFYING…' : 'VERIFY →'}
+            </button>
+            <button class="signout" onclick="backToEmailEntry()" style="margin-top:14px;">
+                — Use a different email
+            </button>
+            ${state.error ? `<div class="status warn">${state.error}</div>` : ''}
+        </div>
+    </div>
+    `;
+}
+
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
 
 function renderApp() {
@@ -762,24 +857,23 @@ function renderApp() {
 }
 
 // Shown when the signed-in account has no enrolled iPhone — usually
-// means the user pasted a key for a different account than their Mac
-// app uses.  Surface a prominent "use a different key" affordance so
+// means the user signed in with a different email than their Mac app
+// uses.  Surface a prominent "use a different email" affordance so
 // they can recover without hunting for the tiny sign-out link.
 function renderNoDevice() {
     return `
     <h1 class="h1">No iPhone on this account</h1>
-    <p class="h-meta">This license key isn't linked to an enrolled iPhone.</p>
+    <p class="h-meta">This email isn't linked to an enrolled iPhone.</p>
     <div class="card">
         <div class="label">WHAT TO DO</div>
-        <div class="display">Use the same key as your Mac app</div>
+        <div class="display">Use the same email as your Mac app</div>
         <p class="muted">
-            The web flip needs the license key tied to the account your
-            Mac app + iPhone are already using.  If you have multiple
-            keys (beta + retail, work + personal), make sure you signed
-            in with the matching one.
+            The web flip needs the email tied to the account your
+            Mac app + iPhone are already using.  Sign out and try
+            again with the matching email.
         </p>
         <div class="divider"></div>
-        <button class="btn-flip" onclick="signOut()">USE A DIFFERENT KEY →</button>
+        <button class="btn-flip" onclick="signOut()">USE A DIFFERENT EMAIL →</button>
     </div>
     `;
 }
