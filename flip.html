@@ -538,6 +538,24 @@ async function api(path, opts = {}) {
     }
     const r = await fetch(API + path, opts);
     if (!r.ok) {
+        // 401/403 on any authed call means the JWT is stale (token rotated
+        // after a backend deploy, account password change, etc.).  Drop it
+        // and route back to the sign-in screen so the user doesn't have to
+        // hunt for the "Sign out" button manually.  Pre-1.0.43 this just
+        // surfaced "Invalid or expired token" under the START button while
+        // the header still said "ONLINE · idle," which read as broken.
+        if ((r.status === 401 || r.status === 403) && state.token) {
+            state.token = null;
+            state.deviceId = null;
+            state.activeSession = null;
+            state.signInPhase = 'email';
+            state.signInEmail = null;
+            state.error = 'Session expired — sign in again with your email.';
+            persist('token', null);
+            persist('device', null);
+            render();
+            throw new Error('session_expired');
+        }
         let detail = '';
         try { detail = (await r.json()).detail || ''; } catch (_) {}
         throw new Error(detail || `HTTP ${r.status}`);
