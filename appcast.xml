@@ -6,6 +6,37 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.45</title>
+      <pubDate>Tue, 12 May 2026 23:10:00 +0000</pubDate>
+      <sparkle:version>1.0.45</sparkle:version>
+      <sparkle:shortVersionString>1.0.45</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Three setup-friction fixes before launch.
+
+1.  Get unstuck without emailing support.  If setup fails
+    OR the FINALIZING step hangs for 2+ minutes waiting on
+    iPhone enrollment, a compact "Problem?  Remove Flipped
+    while we get you support so you can keep using your
+    phone." card appears with a single REMOVE button.
+    Rolls back the supervision profile cleanly — no factory
+    reset, no terminal.
+
+2.  Pre-flight step now explains WHY Flipped needs Find
+    My and Stolen Device Protection off — and exactly
+    what Flipped can and can't see on your iPhone (it
+    cannot read messages, photos, location, or your
+    Apple ID).  Clear bullets, not a wall of legalese.
+
+3.  Stolen Device Protection 1-hour delay now reminds
+    users to set a phone alarm and confirm the toggle
+    within a minute of expiry — iOS resets the timer
+    otherwise, costing another hour.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.45.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="nfiNfynVXKunp2/PWuQyXTvBEwKMmHIAEZHOOKGuldlB3bH4fxDlNa+yfrGmJsAz0Mc/n5dyHPkZEM0u5oabBA==" length="21768720" />
+    </item>
+    <item>
       <title>Version 1.0.44</title>
       <pubDate>Tue, 12 May 2026 20:42:00 +0000</pubDate>
       <sparkle:version>1.0.44</sparkle:version>
