@@ -6,6 +6,30 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.44</title>
+      <pubDate>Tue, 12 May 2026 20:42:00 +0000</pubDate>
+      <sparkle:version>1.0.44</sparkle:version>
+      <sparkle:shortVersionString>1.0.44</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>One-click "Reset Trust" when iPhone gets stuck.
+
+When setup hangs on "Waiting for iPhone" because your
+Mac is holding a stale USB pair record, a Reset Trust
+button now appears in the diagnostic.  Tap it, enter
+your Mac password once, Flipped wipes the stale record
+and bounces usbmuxd in the background — no Terminal,
+no sudo, just unplug and re-plug afterward.
+
+Plus: bundled Python 3.12 (~13 MB, signed) means the
+"Install Command Line Developer Tools" dialog never
+appears on fresh Macs.  Setup ships with everything it
+needs.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.44.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="MfImV9i/qVctXdynqrqjytkftO/lhez0Q7mcTExZeBL/RApR9hYFLSiyJLfl5vjRRZ5x3i0ftBvhopOWBqoBBg==" length="21735273" />
+    </item>
+    <item>
       <title>Version 1.0.43</title>
       <pubDate>Mon, 11 May 2026 22:15:00 +0000</pubDate>
       <sparkle:version>1.0.43</sparkle:version>
