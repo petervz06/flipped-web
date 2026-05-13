@@ -615,11 +615,16 @@ async function requestEmailCode(email) {
     try {
         const r = await fetch(API + '/api/auth/email/request-code', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'X-Client': 'web'},
             body: JSON.stringify({email: email.trim().toLowerCase()}),
         });
-        // Backend always returns 204 for valid email — no enumeration leak.
+        // 204 = code sent.  429 = rate-limited (per-email + per-IP).  404 =
+        // either the email isn't on file OR the backend route is temporarily
+        // unavailable — surface a friendlier message that points users to
+        // the Mac onboarding so they don't sit waiting for an email that
+        // never arrives.  Pete reported the silent-failure UX 2026-05-13.
         if (r.status === 429) throw new Error('Too many attempts — wait a minute and try again.');
+        if (r.status === 404) throw new Error("We don't have an account for that email yet — sign up from the Mac app first, then come back here to flip from the web.");
         if (!r.ok && r.status !== 204) throw new Error(`HTTP ${r.status}`);
         // Success: advance to the code-entry phase.
         state.signInEmail = email.trim().toLowerCase();
