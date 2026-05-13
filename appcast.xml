@@ -6,6 +6,57 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.48</title>
+      <pubDate>Wed, 13 May 2026 23:30:00 +0000</pubDate>
+      <sparkle:version>1.0.48</sparkle:version>
+      <sparkle:shortVersionString>1.0.48</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Cross-client sync + reliability pass on top of 1.0.47.
+
+Fixes a long-standing bug where the Mac app said "flipped"
+even when the backend rejected the flip (most often when
+your iPhone's MDM enrollment had drifted into a state
+where push tokens weren't registered).  Now Mac honestly
+reverts to "not flipped" and surfaces the real error so
+you can act on it — instead of a UI that lies until you
+manually unflip and re-flip.
+
+Sister bug fixed: the Mac no longer ignores sessions
+started elsewhere.  If you flip from useflipped.com or
+another Mac, this Mac now picks it up the moment you
+bring the app foreground or wake from sleep — was 15s of
+"Flip" button while a session was already active.
+
+Profile picker:
+•  Deep Work and Nomad presets hidden — Simple is the
+   single starter, edit or duplicate to customise.
+•  Picker now only shows apps actually on your iPhone
+   instead of every app you've ever classified.
+
+Settings → Get Help additions:
+•  Reset Trust button for when your Mac stops seeing
+   your iPhone — no more dropping to Terminal.
+•  Plain-English explainer for the "Flipped turned off
+   my location services / dictation" reports we keep
+   getting: Flipped never touches those toggles, the
+   restriction profile only hides apps.  Re-enable
+   under Settings → Privacy & Security.
+
+Backend (deployed separately):
+•  Spotify added to the always-allowed safety floor —
+   flipping should no longer break background music
+   playback or hide the Spotify icon unless you've
+   explicitly added Spotify to your blocklist.
+•  Mac now mirrors your active profile to the server
+   so the website's flip button uses your real custom
+   profile bundle list instead of falling back to
+   Simple.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.48.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="UybCQcKrZcd5k1wM608YklzCJZ7s3BC7wT7Ra+lDt1ltMYw32o1QIa9k22lfuysMK9E235ewdTfm/H948UFJDw==" length="23163288" />
+    </item>
+    <item>
       <title>Version 1.0.47</title>
       <pubDate>Wed, 13 May 2026 16:30:00 +0000</pubDate>
       <sparkle:version>1.0.47</sparkle:version>
