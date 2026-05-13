@@ -6,6 +6,54 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.46</title>
+      <pubDate>Wed, 13 May 2026 04:30:00 +0000</pubDate>
+      <sparkle:version>1.0.46</sparkle:version>
+      <sparkle:shortVersionString>1.0.46</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Big architectural upgrade + a lot of setup polish.
+
+Under the hood: supervision now uses native Swift +
+Apple's MobileDevice.framework directly (the same one
+Apple Configurator uses) instead of a bundled Python
+script.  Faster, cleaner, fewer moving parts.  Same
+flip / unflip experience.
+
+The legacy Python path stays as a runtime escape hatch
+in case anyone hits a bug on the new path:
+
+    defaults write com.flippedapp.Flipped \
+      FlippedUseLegacySupervise -bool YES
+
+Setup-flow polish (top of the list):
+•  Setup screens no longer flash past — Step 4 (Setting
+   Up) and Step 5 (Finalizing) now have manual NEXT
+   buttons so you control the pace.
+•  Trust state on Step 2 detected near-instantly (was
+   waiting up to 30s).  Uses the same usbmuxd state
+   Finder uses, so if Finder sees your iPhone, Flipped
+   sees it.
+•  Pre-flight "WHY THIS IS SAFE" + "HEADS UP" cards
+   tightened up — fits cleanly without scrolling.
+•  Settings → Remove failure copy leads with the real
+   most-common cause (Mac trust state) instead of
+   burying it under Find My.
+•  Email field text appears immediately on paste —
+   was invisible on macOS Light Mode until a keystroke.
+•  Backend cleans up MDMEnrollment row when you remove
+   the supervision from your iPhone, so re-setup
+   doesn't see "already enrolled" from stale data.
+
+Internal: 200KB Swift kit replaces 50MB of bundled
+libimobiledevice + a 13MB bundled Python.  The full
+size reduction lands in v1.0.47+ once the legacy
+path retires.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.46.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="j+x+i+ZQQHts+bpyWN6zaB061a0ugW8F+gVTFCeBYtgM+2HzkO0vEyJy/ULk3+48W7CVXE/MQFR8X+Q+51zSAA==" length="23152683" />
+    </item>
+    <item>
       <title>Version 1.0.45</title>
       <pubDate>Tue, 12 May 2026 23:10:00 +0000</pubDate>
       <sparkle:version>1.0.45</sparkle:version>
