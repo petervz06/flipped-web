@@ -6,6 +6,39 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.47</title>
+      <pubDate>Wed, 13 May 2026 16:30:00 +0000</pubDate>
+      <sparkle:version>1.0.47</sparkle:version>
+      <sparkle:shortVersionString>1.0.47</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Setup-flow declutter pass on top of 1.0.46.
+
+Pre-flight step (Step 3 of 6 — turn off Find My + SDP)
+is materially less crowded.  The "Continue with Partial
+Setup vs Erase This iPhone" warning that used to live
+on pre-flight has moved down to the actual moment your
+iPhone shows that screen — three places was two too
+many.  WHY THIS IS SAFE trimmed to the two bullets you
+can't read anywhere else in the flow.
+
+Finalizing step (Step 5 of 6) reordered to match the
+actual iOS prompt order on a real device:
+
+    1. Tap Trust
+    2. Tap Continue with Partial Setup
+    3. Tap Enroll This iPhone
+
+Done step lost the OPTIONAL · APP LIBRARY pro-tip —
+the Anchor App tip stays.  Update banner clears the
+macOS traffic-light cluster now (used to live behind
+the close/minimize/zoom buttons because the window has
+a hidden title bar).</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.47.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="yMugZD+zWayya7J0s9nssc1rq+ffruJSlYizBZ3bMHxiS8YHZ32mKOTjmMFUju16zYyrBwBk7qekeIZkCDN4Ag==" length="23137232" />
+    </item>
+    <item>
       <title>Version 1.0.46</title>
       <pubDate>Wed, 13 May 2026 04:30:00 +0000</pubDate>
       <sparkle:version>1.0.46</sparkle:version>
