@@ -317,7 +317,7 @@
             width: 100%;
             padding: 14px;
             font-family: var(--mono);
-            font-size: 14px;
+            font-size: 16px; /* iOS Safari auto-zooms inputs <16px — keep flush. */
             letter-spacing: 1px;
             background: var(--surface);
             color: var(--text);
@@ -1045,11 +1045,12 @@ function renderActiveSession(session) {
         }
     }
     render();
-    // Refresh active session every 30s while flipped, so the countdown
-    // stays roughly current and we notice when it expires.
+    // Refresh active session every 5s, matching the Mac app's poll cadence.
+    // Keeps the web view in sync with sessions started or ended on the Mac
+    // (or vice versa) within the same window users perceive as "instant."
     setInterval(() => {
         if (state.token) refreshActiveSession().then(render);
-    }, 30000);
+    }, 5000);
 })();
 </script>
 </body>
