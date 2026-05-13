@@ -588,6 +588,22 @@ async function refreshActiveSession() {
         // button surfaces the "no iPhone enrolled" hint.
         if (!String(e).includes('404')) console.warn(e);
     }
+    // Pull the Mac-synced active profile (v1.0.48 — Sam-fix).  Pre-1.0.48
+    // the web fell back to PROFILES['preset-simple'] for any custom slug
+    // because it had no way to know about custom profiles.  Now the Mac
+    // PUTs /api/me/active-profile whenever the user picks/edits a profile,
+    // and we read it here so the next flip carries the right bundles.
+    // 404 = nothing synced yet (legacy user, or never picked); fine, the
+    // pre-1.0.48 PROFILES fallback path still works.
+    try {
+        const ap = await api('/api/me/active-profile');
+        if (ap && Array.isArray(ap.bundle_ids)) {
+            state.macActiveProfile = ap;
+        }
+    } catch (e) {
+        if (!String(e).includes('404')) console.warn(e);
+        state.macActiveProfile = null;
+    }
 }
 
 // ─── Sign-in (email + 6-digit code) ─────────────────────────────────────
@@ -677,7 +693,11 @@ async function startManualFlip(profileId) {
     }
     state.busy = true; state.error = null; render();
     try {
-        const profile = PROFILES[profileId] || PROFILES['preset-simple'];
+        // v1.0.48 — prefer the Mac-synced active profile (lets web see
+        // custom profiles).  Fall back to the hardcoded PROFILES dict so
+        // legacy users without an active-profile sync still flip cleanly,
+        // and finally to preset-simple if neither knows about the slug.
+        const profile = resolveFlipProfile(profileId);
         await api('/api/sessions/start', {
             method: 'POST',
             body: {
@@ -696,6 +716,24 @@ async function startManualFlip(profileId) {
     }
 }
 
+// Resolve a flip request to a {mode, bundleIds} pair.  Priority:
+//   1. Mac-synced active profile (covers custom profiles created on Mac)
+//   2. Hardcoded PROFILES dict (covers presets when nothing's synced)
+//   3. preset-simple fallback (legacy behavior; web never shows nothing)
+// Pre-1.0.48 we only had #2 → #3, which is why Sam's custom profile
+// silently got replaced with Simple when he flipped from web.
+function resolveFlipProfile(profileId) {
+    const synced = state.macActiveProfile;
+    if (synced && Array.isArray(synced.bundle_ids)
+        && (synced.slug === profileId || !PROFILES[profileId])) {
+        return {
+            mode:      synced.mode || 'focus',
+            bundleIds: synced.bundle_ids,
+        };
+    }
+    return PROFILES[profileId] || PROFILES['preset-simple'];
+}
+
 // Committed flip from Modes tab: fixed duration, locked from the web,
 // emergency-unflip from the Mac app only (Focus 1×/month).
 async function startCommittedFlip(mode, durationSec) {
@@ -706,8 +744,9 @@ async function startCommittedFlip(mode, durationSec) {
     state.busy = true; state.error = null; render();
     try {
         // Modes use the active profile's bundle list — same contract as
-        // Mac ModesView (profile = WHAT, mode = HOW LONG).
-        const profile = PROFILES[state.profileId] || PROFILES['preset-simple'];
+        // Mac ModesView (profile = WHAT, mode = HOW LONG).  Same Mac-sync
+        // preference as startManualFlip — see resolveFlipProfile above.
+        const profile = resolveFlipProfile(state.profileId);
         await api('/api/sessions/start', {
             method: 'POST',
             body: {
