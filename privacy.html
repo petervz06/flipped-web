@@ -11,7 +11,7 @@
 
     <div class="legal">
         <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: May 3, 2026</p>
+        <p class="updated">Last updated: May 14, 2026</p>
 
         <p>
             Flipped is a Mac desktop application that helps you reduce phone
@@ -32,11 +32,11 @@
 
         <h3>From your Flipped account</h3>
         <ul>
-            <li><strong>Email address</strong> — to identify you and send account-related emails (welcome email with your license key, password resets, security notices).</li>
-            <li><strong>License key</strong> — your primary credential.  When you sign up via useflipped.com, we mint a license key, email it to you, and use it to authenticate the Mac app and the web flip page (useflipped.com/flip).  We store it on our server and one Mac per user.</li>
-            <li><strong>Optional password</strong> — if you set one, it's stored only as a bcrypt hash; we never see your plain password.  The Mac app may also store it in your Mac's Keychain so it can silently re-mint expired session tokens — that copy stays on your machine and never leaves it.</li>
-            <li><strong>"Always allow" bundle list</strong> — bundle IDs you've added in Settings → Always Allow so apps like web clips (Pulse, etc.) survive every flip.  We store this list against your account so it follows you across Mac reinstalls.</li>
-            <li><strong>Account timestamps</strong> — when you created your account, logged in, and triggered sessions.</li>
+            <li><strong>Email address</strong> — to identify you, send a 6-digit sign-in code when you log in, and send account-related notices (security alerts, billing receipts if you're on a paid plan).</li>
+            <li><strong>Sign-in codes</strong> — when you sign in via Mac or web, we email you a 6-digit code that's valid for 10 minutes. We store these as SHA-256 hashes; they're consumed on first use and never reused.</li>
+            <li><strong>Session tokens</strong> — short-lived JWTs we issue after you sign in, so the Mac and web can talk to our backend without re-prompting for a code every time. Stored on your device; refresh tokens are stored on our server only as SHA-256 hashes.</li>
+            <li><strong>Active profile and "Always allow" bundle list</strong> — your selected block profile (which apps go away during a flip) and any per-app exceptions you've added. We store these against your account so they follow you across Mac reinstalls and so the web flip page (useflipped.com/flip) honours your customizations.</li>
+            <li><strong>Account timestamps</strong> — when you created your account, signed in, and triggered sessions.</li>
         </ul>
 
         <h3>From your iPhone (via MDM)</h3>
@@ -63,14 +63,45 @@
             <li><strong>Email</strong> — transactional emails only (password reset, security notices). No marketing unless you opt in.</li>
         </ul>
 
-        <h2>Who we share with</h2>
+        <h2>Who we share with (subprocessors)</h2>
         <ul>
-            <li><strong>Apple</strong> — Apple's Push Notification service relays MDM commands to your iPhone. Apple sees that a command is being sent but not its contents.</li>
-            <li><strong>Hosting provider (Railway)</strong> — runs our backend; has access to our database under their own privacy commitments.</li>
-            <li><strong>Sentry</strong> (if enabled) — error reports for engineering debugging.</li>
-            <li><strong>Payment processor</strong> (Stripe, when we monetize) — payment details per their privacy policy; we never store full card numbers.</li>
+            <li><strong>Apple</strong> — Apple's Push Notification service relays MDM commands to your iPhone. Apple sees that a command is being sent but not its contents. (Flipped is not affiliated with or endorsed by Apple Inc.; we use standard iOS supervision APIs available to developers.)</li>
+            <li><strong>Railway</strong> (<a href="https://railway.com/legal/privacy" target="_blank" rel="noopener">privacy policy</a>) — hosting; runs our backend and database under their own commitments.</li>
+            <li><strong>Resend</strong> (<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">privacy policy</a>) — sends transactional emails (sign-in codes, security notices).</li>
+            <li><strong>Sentry</strong> (<a href="https://sentry.io/privacy/" target="_blank" rel="noopener">privacy policy</a>) — error reports for engineering debugging. Receives stack traces and minimal context (user ID, timestamps).</li>
+            <li><strong>Stripe</strong> (<a href="https://stripe.com/privacy" target="_blank" rel="noopener">privacy policy</a>, when we monetize) — payment details per their privacy policy; we never see or store full card numbers.</li>
         </ul>
         <p>We do not sell your data, share it with advertisers, or use it for marketing profiles.</p>
+
+        <h2>Children's privacy</h2>
+        <p>
+            Flipped is not intended for children under 13. We do not knowingly
+            collect personal information from anyone under 13. If you believe
+            a child has signed up for Flipped, email
+            <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>
+            and we'll delete the account and associated data.
+        </p>
+        <p>
+            Users aged 13–17 should have a parent or guardian review this
+            policy before signing up.
+        </p>
+
+        <h2>International users</h2>
+        <p>
+            Flipped is operated from the United States. By using Flipped from
+            outside the US, you consent to the transfer of your data to the
+            US for processing. We honor data-rights requests (access,
+            deletion, export) from all users regardless of jurisdiction —
+            email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>.
+        </p>
+
+        <h2>Cookies and analytics on useflipped.com</h2>
+        <p>
+            Our website uses only essential storage (your sign-in code session,
+            your selected active profile). We do not use third-party
+            advertising cookies, behavioral tracking, or marketing analytics
+            scripts on useflipped.com.
+        </p>
 
         <h2>Device Management Disclosure</h2>
         <p>
