@@ -1075,64 +1075,19 @@ function renderActiveSession(session) {
             </div>
         </div>`;
 
-    // Manual flips (no timer) get a web-end button as of 2026-05-13 —
-    // pre-fix, the asymmetry where Mac could create a manual session
-    // but only Mac could end it created a stuck state: if Mac's
-    // endFlip API call failed silently, web showed "in session" with
-    // no recovery path.  Now web can end manual sessions too.
-    // Committed flips (focus/unplug with a timer) keep the lockdown —
-    // those are the commitment-device sessions where one-click web
-    // unflip would defeat the purpose.
-    const manualEndButton = hasTimer ? '' : `
-        <button class="primary"
-                ${state.busy ? 'disabled' : ''}
-                style="margin-top: 18px; background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border);"
-                onclick="endManualFlip()">
-            ${state.busy ? 'UNFLIPPING…' : '◼ UNFLIP'}
-        </button>
-        ${state.error ? `<div class="status warn" style="margin-top:10px">${state.error}</div>` : ''}
-    `;
-
     return `
     <h1 class="h1">In session</h1>
     <p class="h-meta">${hasTimer
         ? 'Web flip is one-way.  Wait for the timer or use your Mac app’s emergency unflip.'
-        : 'Manual session.  Unflip here or from your Mac — both work.'}</p>
+        : 'Manual session.  Only your Mac can end this.'}</p>
     <div class="card">
         <div class="locked-meta">PHONE IS FLIPPED · MODE: ${(session.mode || '').toUpperCase()}</div>
         <div class="locked-time">${hasTimer ? fmtRemaining(session) : '∞'}</div>
         <div class="locked-meta">${hasTimer ? 'REMAINING' : 'MANUAL · NO TIMER'}</div>
         ${blockedHTML}
         <div class="locked-tip">${tipBody}</div>
-        ${manualEndButton}
     </div>
     `;
-}
-
-// End a manual (no-timer) session from the web.  Calls the same
-// DELETE /api/sessions/active endpoint the Mac uses.  Backend queues
-// RemoveProfile + APNs push, retry task picks it up if the first
-// push fails to reach the iPhone.  Web is unaware whether the
-// session was started from Mac or web — the user just wants out
-// and the server is the authority on session state.
-async function endManualFlip() {
-    state.busy = true; state.error = null; render();
-    try {
-        const r = await fetch(API + '/api/sessions/active', {
-            method: 'DELETE',
-            headers: {'Authorization': `Bearer ${state.token}`},
-        });
-        // 204 = ended, 404 = nothing to end (already gone — also a win)
-        if (r.status !== 204 && r.status !== 404) {
-            throw new Error(`HTTP ${r.status}`);
-        }
-        state.activeSession = null;
-        await refreshActiveSession();
-    } catch (e) {
-        state.error = `Couldn't unflip: ${e.message}.  Try again or use your Mac app.`;
-    } finally {
-        state.busy = false; render();
-    }
 }
 
 // ─── Boot + periodic refresh ────────────────────────────────────────────
