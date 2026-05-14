@@ -565,7 +565,18 @@ async function api(path, opts = {}) {
 }
 
 async function refreshActiveSession() {
-    if (!state.token) return;
+    if (!state.token) {
+        // Token's been wiped (expiry or explicit sign-out).  Pre-fix
+        // this early-return left state.activeSession holding its last
+        // value — so if the JWT expired while a session was active,
+        // the UI showed "in session" forever even after the backend
+        // had ended the session.  Pete hit this 2026-05-13.  Clear
+        // any lingering session state so the next render shows the
+        // sign-in screen, not a stale flipped state.
+        state.activeSession = null;
+        state.macActiveProfile = null;
+        return;
+    }
     try {
         const data = await api('/api/sessions/active');
         state.activeSession = data && data.session ? data.session : null;
