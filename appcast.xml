@@ -6,6 +6,28 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.51</title>
+      <pubDate>Thu, 14 May 2026 01:40:00 +0000</pubDate>
+      <sparkle:version>1.0.51</sparkle:version>
+      <sparkle:shortVersionString>1.0.51</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Honest unflip state.
+
+If the network blips while you're tapping UNFLIP, the
+app used to clear the "flipped" UI locally and then
+silently fail to tell the server.  Result: your Mac
+said free, the server still thought you were flipped,
+and you couldn't recover without re-launching the app.
+
+v1.0.51 keeps the snappy optimistic UI but reverts on
+backend error and surfaces "Couldn't unflip — tap
+again."  Mac state always matches server reality.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.51.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="kdGDhkeOM+Qpoinw7H+hNoRdzSuk+Q1a7PYgImNGT/oK1tKH49nK18T9gqop9fm4876Y9iYrOt9ihYfnhiNvCA==" length="23189020" />
+    </item>
+    <item>
       <title>Version 1.0.50</title>
       <pubDate>Thu, 14 May 2026 00:05:00 +0000</pubDate>
       <sparkle:version>1.0.50</sparkle:version>
