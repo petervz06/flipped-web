@@ -6,6 +6,29 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.50</title>
+      <pubDate>Thu, 14 May 2026 00:05:00 +0000</pubDate>
+      <sparkle:version>1.0.50</sparkle:version>
+      <sparkle:shortVersionString>1.0.50</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Menu-bar icon fix.
+
+v1.0.49's menu-bar icon used a custom SwiftUI shape that
+didn't render in the menu-bar slot.  v1.0.50 switches to
+SF Symbol lock/unlock — guaranteed to show up.
+
+  • Free       → open lock
+  • Flipped    → closed lock
+
+The rest of the menu-bar item is unchanged from 1.0.49:
+status line, Flip/Unflip with your active profile, Open
+Flipped, Quit Flipped.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.50.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="u5hKIcLys18b8kflpRf+pkhpbVw+5lDl02bJi7JT5HePnjaQ06LEt9gcdlqvVTMIVIkIuaylxTdxneKn61f3AA==" length="23186944" />
+    </item>
+    <item>
       <title>Version 1.0.49</title>
       <pubDate>Thu, 14 May 2026 00:00:00 +0000</pubDate>
       <sparkle:version>1.0.49</sparkle:version>
