@@ -626,7 +626,12 @@ async function requestEmailCode(email) {
     try {
         const r = await fetch(API + '/api/auth/email/request-code', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json', 'X-Client': 'web'},
+            // The X-Client header that briefly lived here was rejected by
+            // the backend's CORS allow-list (Disallowed CORS headers →
+            // preflight 400 → Safari throws "Load failed").  Removed
+            // 2026-05-13.  When/if we re-introduce it, also add to the
+            // backend's CORSMiddleware allow_headers list.
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email: email.trim().toLowerCase()}),
         });
         // 204 = code sent.  429 = rate-limited (per-email + per-IP).  404 =
