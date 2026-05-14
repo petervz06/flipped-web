@@ -6,6 +6,34 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.52</title>
+      <pubDate>Wed, 14 May 2026 20:00:00 +0000</pubDate>
+      <sparkle:version>1.0.52</sparkle:version>
+      <sparkle:shortVersionString>1.0.52</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>One-tap recovery + clearer picker.
+
+Edit a preset, change your mind?  v1.0.52 adds a
+"Reset to default" button when you're editing Simple
+(or any preset).  One tap and you're back to the
+original bundle list.  No more unchecking apps
+one by one.
+
+Also: when you toggle an Apple stock app — Maps,
+Camera, Music, Calendar, etc. — to block, the picker
+now warns you.  iOS supervised mode silently won't
+hide those apps; the warning's just so the picker
+isn't lying about what'll happen on your phone.
+
+Quiet plumbing: if you ever get stuck and ping me,
+I can now fix your local state from the backend in
+one curl.  No more "uninstall + reinstall Flipped."</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.52.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="MzXt9tGhT9D3xG7AzT+b+ezHmBklyGq7+CFdUtUV96mtxF4zgvSFoOyavYRHvYSjeJe9Snle17oduweoXDKNAQ==" length="23206353" />
+    </item>
+    <item>
       <title>Version 1.0.51</title>
       <pubDate>Thu, 14 May 2026 01:40:00 +0000</pubDate>
       <sparkle:version>1.0.51</sparkle:version>
