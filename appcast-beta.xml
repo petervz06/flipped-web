@@ -6,6 +6,37 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.53</title>
+      <pubDate>Wed, 14 May 2026 22:30:00 +0000</pubDate>
+      <sparkle:version>1.0.53</sparkle:version>
+      <sparkle:shortVersionString>1.0.53</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Onboarding safety net.
+
+The "STUCK? GET HELP →" link at the bottom of every
+onboarding step used to dump you straight into Mail
+with a half-written support ticket.  v1.0.53 sends
+you to useflipped.com/help instead — a real help
+page with step-by-step recovery for every stuck
+state you can hit during setup.  Self-serve first,
+escalate to email only if needed.
+
+The link also jumps you to the section that matches
+where you got stuck.  Plug-in step?  Cable + trust
+troubleshooting.  Enroll step?  Recovery for the
+"Device Management" screen.  Smarter than a blanket
+mailto:.
+
+Plus a quiet support feature: I can now run a single
+curl on my end that triggers your Mac to cleanly
+remove Flipped from your iPhone.  If you ever DM me
+that you're stuck, it's one command from my phone.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.53.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="aikJLzj+L/CkpbxwFn1ELlK4cqVRGtvRtN80kFPKUV+pVl7NbPpyWx1bRXfq1y8St5o3uiuvymyv2HDQ7cDDDg==" length="23204117" />
+    </item>
+    <item>
       <title>Version 1.0.52</title>
       <pubDate>Wed, 14 May 2026 20:00:00 +0000</pubDate>
       <sparkle:version>1.0.52</sparkle:version>
