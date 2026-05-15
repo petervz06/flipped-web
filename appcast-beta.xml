@@ -6,6 +6,53 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.54</title>
+      <pubDate>Fri, 15 May 2026 21:33:44 +0000</pubDate>
+      <sparkle:version>1.0.54</sparkle:version>
+      <sparkle:shortVersionString>1.0.54</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Open-beta launch quality bundle.
+
+Setup flow:
+• "Setup failed" no longer surfaces on transient
+  hiccups — the backend is now the source of truth
+  on whether enrollment landed.
+• "START FRESH SETUP" button appears after a
+  successful Remove so you always have a forward
+  path instead of a dead-end Phone Restored screen.
+• Pre-flight health check retries on transient
+  network blips (was a single 5s shot before).
+• Welcome screen rebalanced; subtle safety stamp
+  under the CTA.
+• Sign-in screen adds "no password needed"
+  microcopy.
+• Plug-in step explains why a wired connection
+  is required.
+
+Settings &#8594; Danger Zone:
+&#8226; Remove Flipped is now the primary action; Reset
+  Local + Your Data collapse into "Other actions"
+  for a less crowded screen.
+&#8226; Removal flow copy walks you through Stolen
+  Device Protection &#8594; Find My ordering (you can't
+  turn Find My off without disabling SDP first).
+&#8226; Removing shows a numbered timeline with time
+  estimates per stage.
+
+Email:
+&#8226; Sign-in code emails are now branded with the
+  Flipped wordmark and a big monospace code.
+
+Server-side (no Mac update needed):
+&#8226; Signup gap closed - randos who hit useflipped.com
+  and enter their email now get an account auto-
+  created instead of silent zero-email.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.54.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="6g6U4tvFxaOVt1XJalybjU+t5o9h0zIZXUj720dalVXX3/KKPJTlOomKIO7S3HF76gNtqsanhy0HiPVvPvQIBw==" length="23988653" />
+    </item>
+    <item>
       <title>Version 1.0.53</title>
       <pubDate>Wed, 14 May 2026 22:30:00 +0000</pubDate>
       <sparkle:version>1.0.53</sparkle:version>
