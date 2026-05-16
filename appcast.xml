@@ -6,6 +6,64 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.56</title>
+      <pubDate>Sat, 16 May 2026 20:29:33 +0000</pubDate>
+      <sparkle:version>1.0.56</sparkle:version>
+      <sparkle:shortVersionString>1.0.56</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Big setup-flow + reliability batch since 1.0.52.
+
+Onboarding is leaner and clearer:
+&#8226; Welcome screen rebalanced — wordmark sized as
+  a brand stamp, "Flip your phone." as the visual
+  hero, GET STARTED anchored to the bottom.
+&#8226; Pre-flight's "why this is safe" panel becomes
+  a tap-to-expand card.  Less wall of text.
+&#8226; "Profile installed" interstitial removed — your
+  iPhone goes straight from setup progress to the
+  three taps that finish enrollment.
+&#8226; "START FRESH SETUP" button appears after a
+  successful Remove so you always have a forward
+  path instead of dead-ending on Phone Restored.
+&#8226; Pre-flight health check retries on transient
+  network blips (was a single 5s shot).
+
+Settings + reliability:
+&#8226; Settings → Danger Zone restructured: Remove
+  Flipped is the primary action; Reset Local +
+  Your Data collapse into "Other actions" (now
+  actually clickable).
+&#8226; Settings → Get Help adds Reset Trust + clearer
+  guidance for "Mac can't see my iPhone."
+&#8226; Removal-failed detail panel no longer shows
+  internal supervise paths — just the error.
+&#8226; Edited preset profiles (Simple, Deep Work,
+  Nomad) now actually apply on FLIP.  Was silently
+  falling back to the hardcoded preset list.
+&#8226; "Waiting for iPhone" badge during flip reads
+  "WAKE OR UNLOCK" instead of asserting "UNLOCK TO
+  APPLY" — accurate when iOS is briefly busy on an
+  awake phone.
+
+Email + sign-in:
+&#8226; Sign-in code emails are branded with the
+  Flipped wordmark and a big monospace code.
+&#8226; Random email + code flow auto-creates an
+  account for new users (was silently failing if
+  the email had never signed up before).
+
+Server-side (no Mac update needed):
+&#8226; Website's manual FLIP button works on every
+  profile mode — was silently 422-ing on focus /
+  unplug under a generic error.
+&#8226; Branded help page at useflipped.com/help with
+  step-by-step recovery for stuck states.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.56.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="fcVNRkm4R1myQdnUh4fCbw6DqYl4Th6+Ktlz9XuSnmhTPmTCzIUHLV6FUijsB5k8re5B/9Sc0RJbTSrWMt6XAA==" length="23227547" />
+    </item>
+    <item>
       <title>Version 1.0.52</title>
       <pubDate>Wed, 14 May 2026 20:00:00 +0000</pubDate>
       <sparkle:version>1.0.52</sparkle:version>

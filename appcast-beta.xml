@@ -6,6 +6,44 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.56</title>
+      <pubDate>Sat, 16 May 2026 20:29:33 +0000</pubDate>
+      <sparkle:version>1.0.56</sparkle:version>
+      <sparkle:shortVersionString>1.0.56</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Onboarding polish — less crowded, one less click.
+
+Pre-flight step is leaner.  The "why this is safe"
+explainer is now a tap-to-expand card instead of
+a wall of text, and the top intro is two sentences
+instead of three.
+
+Setup flow is one click shorter.  The "Profile
+installed" success screen between Setting Up and
+Finalizing is gone — your iPhone now goes straight
+from the setup progress bar to the three taps that
+finish enrollment.  Same announcement now lives in
+Finalizing's title.
+
+Settings → Danger Zone "Other actions" is actually
+clickable now.  Before the chevron was invisible on
+macOS and the section read as a static label.  Now
+it's a proper tap-to-expand toggle.
+
+Welcome screen rebalanced — wordmark smaller as a
+brand stamp, "Flip your phone." bigger as the
+visual hero, GET STARTED anchored to the bottom of
+the window.
+
+Plus: the removal-failed detail panel no longer
+surfaces internal supervise paths — just the
+actual error and how to fix it.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.56.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="fcVNRkm4R1myQdnUh4fCbw6DqYl4Th6+Ktlz9XuSnmhTPmTCzIUHLV6FUijsB5k8re5B/9Sc0RJbTSrWMt6XAA==" length="23227547" />
+    </item>
+    <item>
       <title>Version 1.0.55</title>
       <pubDate>Sat, 16 May 2026 18:57:36 +0000</pubDate>
       <sparkle:version>1.0.55</sparkle:version>
