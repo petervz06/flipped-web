@@ -6,6 +6,39 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.55</title>
+      <pubDate>Sat, 16 May 2026 18:57:36 +0000</pubDate>
+      <sparkle:version>1.0.55</sparkle:version>
+      <sparkle:shortVersionString>1.0.55</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Two reliability fixes.
+
+Edits to the Simple profile now actually apply when
+you tap FLIP.  Pre-1.0.55, removing an app from
+Simple (or any preset you'd edited) silently fell
+back to the hardcoded preset list — so the app you
+just unchecked got hidden anyway.  Now the edited
+version wins, like you'd expect.
+
+Same fix covers edits to Deep Work and Nomad.
+
+Plus: the orange "waiting" badge during flip now
+reads "WAITING FOR IPHONE · WAKE OR UNLOCK" — the
+old "UNLOCK TO APPLY" copy lied any time iOS was
+just briefly busy on an awake phone (network blip,
+mid-update, etc.).  Cosmetic, but accurate matters.
+
+Server-side (no Mac update needed): the website's
+manual FLIP button now works regardless of which
+profile mode you've selected — was silently 422-ing
+on focus / unplug mode for months under a generic
+"[object Object]" error.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.55.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="Fgc1rcsLXUzss6P6BiAsSuzt+nvavTtpTAWJpb9zmzIKgHP4sgO/5UjpwPF8EkmE6ny9MMn7FLZPYeCbv3BWDQ==" length="23222908" />
+    </item>
+    <item>
       <title>Version 1.0.54</title>
       <pubDate>Fri, 15 May 2026 21:33:44 +0000</pubDate>
       <sparkle:version>1.0.54</sparkle:version>
