@@ -529,6 +529,29 @@ function persist(key, value) {
     else localStorage.setItem(LS[key], value);
 }
 
+// Turn whatever FastAPI puts in `detail` into a human-readable string.
+// String → as-is.  Pydantic 422 array → join each entry's "loc: msg".
+// Object → prefer .msg/.message, else JSON.  Anything else → String().
+function formatErrorDetail(detail) {
+    if (detail == null || detail === '') return '';
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+        return detail.map(e => {
+            if (typeof e === 'string') return e;
+            if (e && typeof e === 'object') {
+                const loc = Array.isArray(e.loc) ? e.loc.join('.') : '';
+                const msg = e.msg || e.message || JSON.stringify(e);
+                return loc ? `${loc}: ${msg}` : msg;
+            }
+            return String(e);
+        }).join('; ');
+    }
+    if (typeof detail === 'object') {
+        return detail.msg || detail.message || JSON.stringify(detail);
+    }
+    return String(detail);
+}
+
 async function api(path, opts = {}) {
     opts.headers = opts.headers || {};
     if (state.token) opts.headers['Authorization'] = `Bearer ${state.token}`;
@@ -557,8 +580,16 @@ async function api(path, opts = {}) {
             throw new Error('session_expired');
         }
         let detail = '';
-        try { detail = (await r.json()).detail || ''; } catch (_) {}
-        throw new Error(detail || `HTTP ${r.status}`);
+        try { detail = (await r.json()).detail; } catch (_) {}
+        // FastAPI returns `detail` as a string for HTTPException, but as an
+        // array of {loc, msg, type} objects for Pydantic validation (422).
+        // `new Error([{...}])` coerces via String() to "[object Object]" —
+        // which is what surfaced under FLIP for Pete 2026-05-15.  Normalise
+        // to a human-readable string before throwing.
+        if (detail && typeof detail !== 'string') {
+            console.error('api(): non-string error detail from', path, 'status', r.status, detail);
+        }
+        throw new Error(formatErrorDetail(detail) || `HTTP ${r.status}`);
     }
     if (r.status === 204) return null;
     return r.json();
@@ -683,7 +714,7 @@ async function verifyEmailCode(code) {
         // Reset sign-in state for next time.
         state.signInPhase = 'email'; state.signInEmail = null;
     } catch (e) {
-        state.error = e.message;
+        state.error = e.message || String(e) || 'Something went wrong.';
     } finally {
         state.busy = false; render();
     }
@@ -731,7 +762,7 @@ async function startManualFlip(profileId) {
         });
         await refreshActiveSession();
     } catch (e) {
-        state.error = e.message;
+        state.error = e.message || String(e) || 'Something went wrong.';
     } finally {
         state.busy = false; render();
     }
@@ -779,7 +810,7 @@ async function startCommittedFlip(mode, durationSec) {
         });
         await refreshActiveSession();
     } catch (e) {
-        state.error = e.message;
+        state.error = e.message || String(e) || 'Something went wrong.';
     } finally {
         state.busy = false; render();
     }
