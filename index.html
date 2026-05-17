@@ -180,7 +180,12 @@
         A screen-time blocker for iPhone with zero workarounds.
     </p>
 
-    <a href="/downloads/Flipped-latest.dmg" class="btn-download" download="Flipped.dmg">
+    <!-- Routes through Railway /api/download so we record every click as a
+         user_event + push a real-time ntfy to Pete.  Backend 302-redirects
+         to /downloads/Flipped-latest.dmg on GitHub Pages.  Cross-origin so
+         we drop the `download` attr — Safari/Chrome download anyway because
+         GitHub Pages serves the .dmg with Content-Type:application/octet-stream. -->
+    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-download">
         <span class="arrow">▼</span>DOWNLOAD FOR MAC
     </a>
 
