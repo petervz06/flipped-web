@@ -307,6 +307,63 @@
             border-top: var(--hairline) solid var(--border);
         }
 
+        /* ─── In-session controls (check-in + emergency unflip) ────────── */
+        .in-session-controls {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: var(--hairline) solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-secondary {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--text);
+            border: var(--hairline) solid var(--border-up);
+            border-radius: var(--radius-sm);
+            font-family: var(--mono);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.12s;
+        }
+        .btn-secondary:hover:not(:disabled) { background: var(--surface-up); }
+        .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-danger {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--warn);
+            border: var(--hairline) solid var(--warn);
+            border-radius: var(--radius-sm);
+            font-family: var(--mono);
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.12s;
+        }
+        .btn-danger:hover:not(:disabled) { background: rgba(255,138,138,0.08); }
+        .btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+        .check-in-active {
+            width: 100%;
+            padding: 14px;
+            text-align: center;
+            color: var(--text);
+            border: var(--hairline) solid var(--border-up);
+            border-radius: var(--radius-sm);
+            font-family: var(--mono);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
         /* ─── License-key sign-in card (shown only when not signed in) ──── */
         .signin-shell {
             max-width: 440px;
@@ -611,9 +668,18 @@ async function refreshActiveSession() {
     try {
         const data = await api('/api/sessions/active');
         state.activeSession = data && data.session ? data.session : null;
+        // Per-user 30-day emergency-unflip cooldown end (ISO8601 string).
+        // Null means the user has never used emergency → button is eligible.
+        // Stored at top level (not on session) because the cooldown crosses
+        // sessions.
+        state.userEmergencyEligibleAt =
+            data && data.user_emergency_eligible_at
+                ? data.user_emergency_eligible_at
+                : null;
     } catch (e) {
         if (!String(e).includes('404')) console.warn(e);
         state.activeSession = null;
+        state.userEmergencyEligibleAt = null;
     }
     // Also re-check device — covers the "I just enrolled my iPhone via Mac"
     // case where the user's already signed into the web with a stale (no-
@@ -786,8 +852,9 @@ function resolveFlipProfile(profileId) {
     return PROFILES[profileId] || PROFILES['preset-simple'];
 }
 
-// Committed flip from Modes tab: fixed duration, locked from the web,
-// emergency-unflip from the Mac app only (Focus 1×/month).
+// Committed flip from Modes tab: fixed duration.  4hr+ sessions auto-
+// enable the 15-min check-in window (Shift parity).  Web now supports
+// emergency unflip + check-in directly — no Mac trip required.
 async function startCommittedFlip(mode, durationSec) {
     if (!state.deviceId) {
         state.error = 'No iPhone on this account.  Make sure you signed in with the same email the Mac app uses.';
@@ -799,6 +866,10 @@ async function startCommittedFlip(mode, durationSec) {
         // Mac ModesView (profile = WHAT, mode = HOW LONG).  Same Mac-sync
         // preference as startManualFlip — see resolveFlipProfile above.
         const profile = resolveFlipProfile(state.profileId);
+        // 14400s = 4hr — match the Mac's threshold for offering check-in.
+        // Backend ignores the flag for forever-mode sessions, so the
+        // condition is purely informational here.
+        const checkInEnabled = durationSec >= 14400;
         await api('/api/sessions/start', {
             method: 'POST',
             body: {
@@ -806,11 +877,45 @@ async function startCommittedFlip(mode, durationSec) {
                 mode: mode,                  // 'focus' or 'unplug'
                 duration_seconds: durationSec,
                 blocked_bundle_ids: profile.bundleIds,
+                check_in_enabled: checkInEnabled,
             },
         });
         await refreshActiveSession();
     } catch (e) {
         state.error = e.message || String(e) || 'Something went wrong.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+// ─── In-session controls (web parity with Mac) ──────────────────────────
+// Both buttons hit the same endpoints as the Mac app.  Server enforces the
+// once-per-session + 30-day-per-user limits; we hide the buttons after use
+// to keep the UI honest, but the server is the ultimate gate.
+
+async function emergencyUnflipWeb() {
+    if (!confirm('Use your 1×/month emergency unflip?  This ends the session immediately and locks the button for 30 days across all your devices.')) return;
+    state.busy = true; state.error = null; render();
+    try {
+        await api('/api/sessions/active/emergency-end', { method: 'POST' });
+        await refreshActiveSession();
+    } catch (e) {
+        // 400 = wrong mode, 409 = already used this session, 429 = cooldown.
+        // Surface backend's detail string directly — it's already user-friendly.
+        state.error = e.message || String(e) || 'Emergency unflip failed.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+async function startCheckInWeb() {
+    state.busy = true; state.error = null; render();
+    try {
+        await api('/api/sessions/active/check-in', { method: 'POST' });
+        await refreshActiveSession();
+    } catch (e) {
+        // 409 = window already open, 429 = already used this session.
+        state.error = e.message || String(e) || 'Check-in failed.';
     } finally {
         state.busy = false; render();
     }
@@ -1074,15 +1179,6 @@ function renderModes() {
 
 function renderActiveSession(session) {
     const hasTimer = !!(session.expires_at || session.endDate);
-    const tipBody = hasTimer
-        ? `To end early: open Flipped on your Mac and tap
-           <strong style="color: var(--text)">EMERGENCY UNFLIP</strong>
-           (Focus mode, 1×/month).  Otherwise the timer runs out on its
-           own and your apps return.`
-        : `Open Flipped on your Mac and tap
-           <strong style="color: var(--text)">UNFLIP</strong>
-           whenever you're ready.  Manual sessions don't expire on their
-           own — that's the point.`;
 
     // Surface the list of apps currently hidden on the phone.  Prefer
     // the server-provided blocked_bundle_ids (accurate regardless of
@@ -1111,16 +1207,88 @@ function renderActiveSession(session) {
             </div>
         </div>`;
 
+    // ── In-session controls (parity with Mac HomeView) ──────────────────
+    // 15-min check-in: visible only when (a) check-in was enabled at session
+    // start (4hr+ sessions get it automatically), (b) the user hasn't taken
+    // one in this session, and (c) no check-in window is currently open
+    // (server returns check_in_active_until while open — show the live
+    // countdown then).
+    const now = new Date();
+    const checkInActiveUntil = session.check_in_active_until
+        ? new Date(session.check_in_active_until)
+        : null;
+    const checkInWindowOpen = checkInActiveUntil && checkInActiveUntil > now;
+    const checkInUsed = !!session.last_check_in_at;
+    const showCheckInButton = !!session.check_in_enabled && !checkInUsed && !checkInWindowOpen;
+    const checkInBlock = checkInWindowOpen
+        ? `<div class="check-in-active">
+              CHECK-IN ACTIVE · ${Math.max(0, Math.round((checkInActiveUntil - now) / 60000))} MIN REMAINING
+              <div class="muted" style="font-size:11px; margin-top:4px;">Phone re-locks when this hits zero.</div>
+           </div>`
+        : (showCheckInButton
+            ? `<button class="btn-secondary" ${state.busy ? 'disabled' : ''}
+                       onclick="startCheckInWeb()">
+                   ▶ START 15-MIN CHECK-IN
+               </button>`
+            : '');
+
+    // Emergency unflip: the web's universal escape hatch.  Visible on any
+    // active session ≤ 1 week (including manual no-timer flips, since web
+    // users away from their Mac have no other way to end).  Hidden when
+    // (a) already used this session, (b) per-user 30-day cooldown active,
+    // (c) duration > 1 week (multi-week Unplug — server requires support
+    // contact), or (d) mode is the retired forever (defensive).
+    const userEligibleAt = state.userEmergencyEligibleAt
+        ? new Date(state.userEmergencyEligibleAt)
+        : null;
+    const cooldownActive = userEligibleAt && userEligibleAt > now;
+    const emergencyUsed = !!session.emergency_end_used;
+    const durationSec = Number(session.duration_seconds) || 0;
+    const sessionTooLongForEmergency = durationSec > 604800;  // 7 days
+    const isForeverMode = (session.mode || '').toLowerCase() === 'forever';
+    const showEmergencyButton =
+        !emergencyUsed
+        && !cooldownActive
+        && !sessionTooLongForEmergency
+        && !isForeverMode;
+    const emergencyBlock = showEmergencyButton
+        ? `<button class="btn-danger" ${state.busy ? 'disabled' : ''}
+                   onclick="emergencyUnflipWeb()">
+               EMERGENCY UNFLIP — 1/MONTH
+           </button>`
+        : '';
+
+    // Tip copy adapts based on what the user can/can't do from web.
+    let tipBody;
+    if (!hasTimer) {
+        tipBody = `Open Flipped on your Mac and tap
+                   <strong style="color: var(--text)">UNFLIP</strong>
+                   whenever you're ready.  Manual sessions don't expire on their
+                   own — that's the point.`;
+    } else if (showEmergencyButton || showCheckInButton || checkInWindowOpen) {
+        tipBody = `Otherwise the timer runs out on its own and your apps return.`;
+    } else {
+        tipBody = `Wait for the timer to end — your apps return automatically.`;
+    }
+
+    const controlsHTML = (checkInBlock || emergencyBlock)
+        ? `<div class="in-session-controls">
+               ${checkInBlock}
+               ${emergencyBlock}
+           </div>`
+        : '';
+
     return `
     <h1 class="h1">In session</h1>
     <p class="h-meta">${hasTimer
-        ? 'Web flip is one-way.  Wait for the timer or use your Mac app’s emergency unflip.'
+        ? 'Timer running.  You can take your check-in or use your monthly emergency unflip below.'
         : 'Manual session.  Only your Mac can end this.'}</p>
     <div class="card">
         <div class="locked-meta">PHONE IS FLIPPED · MODE: ${(session.mode || '').toUpperCase()}</div>
         <div class="locked-time">${hasTimer ? fmtRemaining(session) : '∞'}</div>
         <div class="locked-meta">${hasTimer ? 'REMAINING' : 'MANUAL · NO TIMER'}</div>
         ${blockedHTML}
+        ${controlsHTML}
         <div class="locked-tip">${tipBody}</div>
     </div>
     `;
