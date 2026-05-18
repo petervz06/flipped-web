@@ -6,6 +6,33 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.57</title>
+      <pubDate>Mon, 18 May 2026 19:14:13 +0000</pubDate>
+      <sparkle:version>1.0.57</sparkle:version>
+      <sparkle:shortVersionString>1.0.57</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Simple now hides the App Store.
+
+After a 15-minute check-in ends, the apps that come back
+match exactly what you picked — no more stale picks from
+old profiles dragging in extra blocks.
+
+The 15-min check-in button hides itself after you use it
+and resets at the start of your next session.
+
+EMERGENCY UNFLIP hides itself after you use it OR while
+you're in the 30-day cooldown.  Sessions longer than a
+week route to support@useflipped.com instead.
+
+Web parity: useflipped.com/flip now has its own EMERGENCY
+UNFLIP and 15-min check-in buttons — same monthly
+allowance, same per-session reset.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.57.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="LPZ/4QOlEfdeMkY4WMgyxiCysxHDcxYVx9XRpPSz6WQx3mtwL+em6ciC/Xxus3CjTPmk+k1Hec2pPtzLArqdBw==" length="23234025" />
+    </item>
+    <item>
       <title>Version 1.0.56</title>
       <pubDate>Sat, 16 May 2026 20:29:33 +0000</pubDate>
       <sparkle:version>1.0.56</sparkle:version>
