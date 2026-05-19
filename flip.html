@@ -475,6 +475,7 @@ const LS = {
 // list the Mac app uses (Flipped/Models/FriendlyAppNames.swift) — keep
 // in sync when adding apps to a preset.
 const APP_NAMES = {
+    'com.apple.AppStore':               'App Store',
     'com.burbn.instagram':              'Instagram',
     'com.zhiliaoapp.musically':         'TikTok',
     'com.atebits.Tweetie2':             'X',
@@ -517,6 +518,10 @@ const PROFILES = {
         id: 'preset-simple', name: 'Simple', mode: 'social',
         tagline: 'No social or entertainment.  Discord, work, music stay.',
         bundleIds: [
+            // App Store — locked into Simple (prevents reinstall workarounds).
+            // Mirrors BlockProfile.swift's Simple preset + the editor's
+            // lockedBundleIds(for: "preset-simple") set on the Mac.
+            'com.apple.AppStore',
             'com.burbn.instagram','com.zhiliaoapp.musically','com.atebits.Tweetie2',
             'com.toyopagroup.picaboo','com.facebook.Facebook','com.reddit.Reddit',
             'com.pinterest','com.burbn.barcelona','xyz.blueskyweb.app',
