@@ -6,6 +6,30 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.60</title>
+      <pubDate>Tue, 19 May 2026 23:18:06 +0000</pubDate>
+      <sparkle:version>1.0.60</sparkle:version>
+      <sparkle:shortVersionString>1.0.60</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Simple is a preset now — no edits.
+
+Simple's pencil icon is gone.  The blocked apps in Simple
+are the blocked apps in Simple — full stop.  If you want
+full control over what gets blocked, tap "+ NEW PROFILE"
+and build from scratch.
+
+If you'd already customized Simple in an earlier version,
+your edits keep working — just no new edits.
+
+Also: the apps-blocked count on each profile row now
+reflects the live bundle list, not whatever it said the
+last time you saved.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.60.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="420HFo7RNG8MC0irVygZDSs55Lv2keTd1QLCI1kbcgusxiNw2qzrsDPX4S0S01bM/aKw3krCWN0EFHV2xisEBw==" length="24009229" />
+    </item>
+    <item>
       <title>Version 1.0.56</title>
       <pubDate>Sat, 16 May 2026 20:29:33 +0000</pubDate>
       <sparkle:version>1.0.56</sparkle:version>
