@@ -6,6 +6,34 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.61</title>
+      <pubDate>Wed, 20 May 2026 17:50:41 +0000</pubDate>
+      <sparkle:version>1.0.61</sparkle:version>
+      <sparkle:shortVersionString>1.0.61</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Honest about offline.
+
+When Flipped can't reach our servers (rare, but Railway
+went down for ~90 minutes last night), the app used to
+silently flip the UI to "no session" — even when your
+iPhone was still flipped.  That made it look like Flipped
+was broken.
+
+Now the app keeps your last-known state, shows an
+"OFFLINE — BACKEND UNREACHABLE" badge, and links to
+status.useflipped.com so you can check what's actually
+happening.  Auto-clears the moment we reconnect.
+
+Pairs with our new public status page —
+status.useflipped.com — that shows live uptime, recent
+incidents, and what we're working on when something
+breaks.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.61.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="ePQ3qtSjCW/7LfmI1RpkiXQVpitCqjLEij7braeWET+yokSm5G6ZOpZne24O2nLtT/l6/Ln9po3GuRaN5SQcBA==" length="23270797" />
+    </item>
+    <item>
       <title>Version 1.0.60</title>
       <pubDate>Tue, 19 May 2026 23:18:06 +0000</pubDate>
       <sparkle:version>1.0.60</sparkle:version>
