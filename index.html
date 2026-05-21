@@ -103,6 +103,48 @@
         }
         .btn-download:hover { opacity: 0.92; }
         .btn-download .arrow { margin-right: 6px; }
+        /* Side-by-side Mac + Windows on desktop, stacks on narrow. */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        /* Secondary download button — same shape but outline-on-dark
+           so the Mac one keeps visual priority while Windows is still
+           legible.  Used today for the "coming Saturday" Windows
+           placeholder; swap to .btn-download when the binary lands. */
+        .btn-download.secondary {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-download.secondary:hover { border-color: rgba(255,255,255,0.6); opacity: 1; }
+        .btn-download.disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .btn-download .sub {
+            display: block;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 4px;
+        }
+        /* On the white Mac button the sub-line needs darker text. */
+        .btn-download:not(.secondary) .sub { color: rgba(0,0,0,0.55); }
+        /* Subtle "Windows coming soon" note under the Mac micro-text.
+           Same mono treatment as .micro-min but slightly dimmer + smaller
+           leading so it reads as secondary information, not a CTA. */
+        .windows-soon {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #555;
+            margin-top: 8px;
+        }
 
         .micro-min {
             font-family: var(--mono);
@@ -184,12 +226,16 @@
          user_event + push a real-time ntfy to Pete.  Backend 302-redirects
          to /downloads/Flipped-latest.dmg on GitHub Pages.  Cross-origin so
          we drop the `download` attr — Safari/Chrome download anyway because
-         GitHub Pages serves the .dmg with Content-Type:application/octet-stream. -->
+         GitHub Pages serves the .dmg with Content-Type:application/octet-stream.
+         Windows variant lives behind the .btn-row / .secondary / .disabled
+         CSS classes above (kept in the stylesheet so the future swap is
+         an HTML-only edit, not a styling pass). -->
     <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-download">
         <span class="arrow">▼</span>DOWNLOAD FOR MAC
     </a>
 
     <div class="micro-min">macOS 13+ · iPhone iOS 17+</div>
+    <div class="windows-soon">Windows version coming soon</div>
 
 </main>
 
