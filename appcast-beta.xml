@@ -6,6 +6,48 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.62</title>
+      <pubDate>Thu, 21 May 2026 22:26:12 +0000</pubDate>
+      <sparkle:version>1.0.62</sparkle:version>
+      <sparkle:shortVersionString>1.0.62</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Adult content stays blocked.  Always.
+
+Flipped now installs an always-on adult-content
+filter when you set up your iPhone — separate
+from your flip schedule.  It stays on whether
+you're flipped or not, blocks ~150 of the
+highest-traffic adult domains plus everything
+Apple's classifier picks up, and forces SafeSearch
+on Google / Bing / Yahoo.  Only your paired Mac
+can remove it.
+
+Also in this release:
+
+— Focus + Unplug now respect your active profile
+   (used to silently use a different one).
+— Menu-bar icon stays in your menu bar after you
+   close the Flipped window.  Click it to flip
+   from up there without re-opening the app.
+— New GET HELP button at the bottom of onboarding
+   for the "I'm stuck" moments — Copy Diagnostics,
+   Reset Trust, and email support all from one
+   sheet.
+— Settings → Get Help is cleaner.  Setup-time
+   fixes moved into the onboarding help sheet
+   where they belong.
+— Quieter: removed the false-alarm "WAITING FOR
+   IPHONE · WAKE OR UNLOCK" badge that fired on
+   phones that were already flipped.
+— Onboarding progress bar now shows the right
+   number of ticks (was 7, should always have
+   been 6).</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.62.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="+Attu4CfZJYq/DIxff1uve/ha45x+2pMkUDTybUlymO3vfw2lQU4z+/ORkBEZ3oY860UF8jnqUC0yCIMrkGXBw==" length="23284820" />
+    </item>
+    <item>
       <title>Version 1.0.61</title>
       <pubDate>Wed, 20 May 2026 17:50:41 +0000</pubDate>
       <sparkle:version>1.0.61</sparkle:version>
