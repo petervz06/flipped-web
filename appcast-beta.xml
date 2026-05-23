@@ -6,6 +6,36 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.63</title>
+      <pubDate>Sat, 23 May 2026 21:59:57 +0000</pubDate>
+      <sparkle:version>1.0.63</sparkle:version>
+      <sparkle:shortVersionString>1.0.63</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Clearer error when removal can't finish.
+
+When Remove Flipped fails — because Find My is still on,
+the iPhone isn't trusted, or the cable can't connect — the
+sheet now shows a specific fix, not a generic banner.
+
+If Find My is blocking, you get the literal Settings path
+to turn it off.  If trust is the issue, the unplug-replug-
+trust sequence.  TRY AGAIN button reruns the removal in
+place — no need to close the sheet.
+
+The raw technical log is still there, just collapsed
+behind a "SHOW TECHNICAL LOG" toggle instead of being
+auto-expanded on every failure.
+
+Includes everything in v1.0.62 (always-on adult-content
+filter, Focus + Unplug respect active profile, menu-bar
+icon persists past window close, onboarding GET HELP pill,
+quieter active-session display).</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.63.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="ueDE92f4W9cGZvecs9Qb9cwzzvFc7wmYw1QB8mVJKvZMroqRsuLpGzoZsozyvW9bvUkLGk1Y03xWMGbzjoRoDQ==" length="23325151" />
+    </item>
+    <item>
       <title>Version 1.0.62</title>
       <pubDate>Thu, 21 May 2026 22:26:12 +0000</pubDate>
       <sparkle:version>1.0.62</sparkle:version>
