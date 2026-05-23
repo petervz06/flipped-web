@@ -6,6 +6,43 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.64</title>
+      <pubDate>Sat, 23 May 2026 23:12:41 +0000</pubDate>
+      <sparkle:version>1.0.64</sparkle:version>
+      <sparkle:shortVersionString>1.0.64</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Honest setup, no false confirmations.
+
+Two bugs fixed that were quietly making the setup
+flow look like it worked when it hadn't:
+
+1. If the supervise process errored before your
+   iPhone rebooted, the Mac used to silently jump
+   to step 5 ("Profile installed · Finalizing
+   enrollment") even though nothing actually
+   happened on the iPhone.  Now you stay on the
+   progress view with a clear error + a one-click
+   bail-out card if the device needs to be
+   restored.
+
+2. The backend's enrollment check matched
+   stale records from previous setups of the same
+   physical iPhone (e.g., test devices changing
+   hands).  That made "✓ Enrollment confirmed on
+   our servers" light up without the iPhone
+   actually checking in.  Now the check requires
+   a fresh check-in after the current account
+   took ownership of the device.
+
+Together: when you tap START INSTALLATION and
+hold your breath, what you see on the Mac is
+what's actually happening on the iPhone.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.64.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="O3YRsZGw/FfNCBTgJrJ+p4CCUXl9YAjlb9vJzf/p1Nc/AwFhmUJlHWN767uG59oVHijqQkRj3TTsH64XxlzLAg==" length="23325381" />
+    </item>
+    <item>
       <title>Version 1.0.63</title>
       <pubDate>Sat, 23 May 2026 21:59:57 +0000</pubDate>
       <sparkle:version>1.0.63</sparkle:version>
