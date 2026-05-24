@@ -125,6 +125,17 @@
             cursor: not-allowed;
             pointer-events: none;
         }
+        /* Applied via JS when the visitor's user-agent is iPhone, iPad,
+           or Android.  Same shape as the Mac download button so layout
+           doesn't reflow, but click is a no-op (we can't actually serve
+           a .dmg to an iOS/Android device that can do anything with it). */
+        .btn-download.wrong-device {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: default;
+        }
+        .btn-download.wrong-device:hover { opacity: 1; }
         .btn-download .sub {
             display: block;
             font-size: 8px;
@@ -248,6 +259,29 @@
 
     <div class="micro-min">macOS 13+ · iPhone iOS 17+</div>
     <div class="windows-soon">Windows version coming soon</div>
+
+    <!-- Inline UA-sniff: when the visitor is on iPhone / iPad / Android
+         the Mac download is useless (iOS can't mount .dmg, Android
+         can't run Mac binaries).  Rather than letting them download
+         an inert file we swap the button copy + neuter the click.
+         Vanilla JS, runs once at first paint, no framework needed. -->
+    <script>
+        (function () {
+            var ua = navigator.userAgent || '';
+            var isMobile = /(iPhone|iPad|iPod|Android)/i.test(ua);
+            if (!isMobile) return;
+            var btn = document.querySelector('.btn-download');
+            if (!btn) return;
+            btn.classList.add('wrong-device');
+            btn.removeAttribute('href');
+            btn.innerHTML = '<span class="arrow">↗</span>OPEN ON A MAC TO DOWNLOAD';
+            btn.addEventListener('click', function (e) { e.preventDefault(); });
+            var micro = document.querySelector('.micro-min');
+            if (micro) {
+                micro.textContent = 'Flipped installs on a Mac and pairs with your iPhone over USB.  Visit this page from a Mac to install.';
+            }
+        })();
+    </script>
 
 </main>
 
