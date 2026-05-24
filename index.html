@@ -177,6 +177,18 @@
             color: #666;
             margin-right: 10px;
         }
+        /* Sub-line under the 3-step "how it works" band.  Discloses the
+           USB-once-then-wireless model without front-loading the cable
+           in the daily-use copy above.  Dimmer + smaller so it reads
+           as a footnote, not a step. */
+        .how-sub {
+            margin-top: 16px;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #555;
+            text-align: center;
+        }
 
         .footer-min {
             padding: 28px 20px 32px;
@@ -239,13 +251,18 @@
 
 </main>
 
-<!-- ── How it works — 3 single lines, centered ──────────────────── -->
+<!-- ── How it works — 3 single lines, centered.  Pre-2026-05-23 this
+     led with "Plug your iPhone into your Mac" which read as a daily
+     ritual.  Now describes the actual daily ritual; the one-time
+     USB pairing lives in the .how-sub footnote so the cable
+     disclosure is honest without front-loading. ──────────────────── -->
 <section class="how-band">
     <div class="how-three">
-        <div class="how-line"><span class="step">01</span>Plug your iPhone into your Mac</div>
-        <div class="how-line"><span class="step">02</span>Pick a profile, set a timer</div>
+        <div class="how-line"><span class="step">01</span>Pick a profile</div>
+        <div class="how-line"><span class="step">02</span>Set a timer</div>
         <div class="how-line"><span class="step">03</span>Tap FLIP · apps disappear</div>
     </div>
+    <div class="how-sub">Set up once with a USB cable. Everything after is wireless.</div>
 </section>
 
 <!-- ── Footer ───────────────────────────────────────────────────── -->
