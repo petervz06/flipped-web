@@ -6,6 +6,27 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.65</title>
+      <pubDate>Tue, 26 May 2026 23:58:50 +0000</pubDate>
+      <sparkle:version>1.0.65</sparkle:version>
+      <sparkle:shortVersionString>1.0.65</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Removed RE-ENROLL button.
+
+The RE-ENROLL button in Settings → Device could
+put your iPhone in a broken state if clicked
+while already enrolled (we saw this happen to a
+beta tester today).  Removed.
+
+If you need to start over, use REMOVE FLIPPED
+in Settings → Danger Zone — it takes you back
+through the sign-in + setup flow cleanly.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.65.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="/2VUGk5KcesrbNV0hJlpljZDodsPmsRK3jKe+EBS7mGaVXxj2a8OMoWBSKTsHuyFrVqGCmSMpHuoI+PHHTODAw==" length="23325927" />
+    </item>
+    <item>
       <title>Version 1.0.64</title>
       <pubDate>Sat, 23 May 2026 23:12:41 +0000</pubDate>
       <sparkle:version>1.0.64</sparkle:version>
