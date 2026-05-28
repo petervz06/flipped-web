@@ -6,6 +6,30 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.66</title>
+      <pubDate>Thu, 28 May 2026 18:02:21 +0000</pubDate>
+      <sparkle:version>1.0.66</sparkle:version>
+      <sparkle:shortVersionString>1.0.66</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Reliability fix: phone no longer self-unflips
+when you start a session from the web.
+
+Internal fix to a race condition where the Mac
+app's polling could accidentally cancel an
+active session that was created from another
+device (the website or your iPhone).
+
+The Mac now treats the server as the source of
+truth — when it sees no active session, it
+matches locally instead of telling the server
+to clean up.  Only the UNFLIP button on Mac
+sends an unflip command.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.66.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="rEEPajLYP+pmLvTmeTJ8B7xsIY51CkznkBLIj3lvYSwpYWpZFKLCxmr9L4rG6EZKsUeorbMkK8Kc9yJTz3lcAA==" length="23326152" />
+    </item>
+    <item>
       <title>Version 1.0.65</title>
       <pubDate>Tue, 26 May 2026 23:58:50 +0000</pubDate>
       <sparkle:version>1.0.65</sparkle:version>
