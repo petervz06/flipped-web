@@ -1,372 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Help & Recovery — Flipped</title>
-    <meta name="description" content="Stuck during Flipped setup? Need to remove Flipped from your iPhone? Step-by-step recovery for the most common situations." />
-    <link rel="stylesheet" href="styles.css?v=16" />
-    <style>
-        /* ── Help-page-specific layout (modern SaaS-style accordions) ────
-           Lives inline so we don't bloat styles.css with rules used on a
-           single page.  The legal pages inherit their styling from
-           styles.css's body/h1/h2/p/ul rules; this page extends with
-           collapsible <details>/<summary> blocks that keep the page
-           scannable instead of one long wall of text.
-        ───────────────────────────────────────────────────────────────── */
-        .help-wrap {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 48px 28px 80px;
-        }
-        .help-wrap h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
-        .help-wrap .lede {
-            color: rgba(255,255,255,0.6);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        .help-wrap .contact-line {
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-        .help-wrap .contact-line strong {
-            color: rgba(255,255,255,0.85);
-        }
-        .help-wrap .section-label {
-            font-family: ui-monospace, "SF Mono", monospace;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            margin: 32px 0 12px;
-        }
-
-        details.faq {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            margin-bottom: 8px;
-            transition: background 0.15s ease;
-        }
-        details.faq:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        details.faq[open] {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.15);
-        }
-        details.faq summary {
-            cursor: pointer;
-            padding: 18px 20px;
-            font-size: 15px;
-            font-weight: 500;
-            color: #f0f0f0;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-        details.faq summary::-webkit-details-marker { display: none; }
-        details.faq summary::after {
-            content: "+";
-            font-family: ui-monospace, "SF Mono", monospace;
-            font-size: 20px;
-            font-weight: 400;
-            color: rgba(255,255,255,0.5);
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        details.faq[open] summary::after {
-            content: "−";
-            color: rgba(255,255,255,0.85);
-        }
-        details.faq summary:hover {
-            color: #fff;
-        }
-
-        details.faq .answer {
-            padding: 4px 20px 22px;
-            color: rgba(255,255,255,0.75);
-            font-size: 14px;
-            line-height: 1.65;
-        }
-        details.faq .answer p { margin: 0 0 14px; }
-        details.faq .answer ol,
-        details.faq .answer ul {
-            margin: 0 0 14px 22px;
-            padding: 0;
-        }
-        details.faq .answer li { margin-bottom: 8px; }
-        details.faq .answer strong { color: #f0f0f0; }
-        details.faq .answer a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-        details.faq .answer a:hover { color: #fff; }
-        details.faq .answer code {
-            font-family: ui-monospace, "SF Mono", monospace;
-            font-size: 13px;
-            background: rgba(255,255,255,0.06);
-            padding: 1px 6px;
-            border-radius: 4px;
-        }
-
-        .help-wrap footer {
-            margin-top: 80px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            justify-content: space-between;
-            color: rgba(255,255,255,0.5);
-            font-size: 12px;
-        }
-        .help-wrap footer a { color: rgba(255,255,255,0.5); }
-        .help-wrap footer a:hover { color: #fff; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help & Recovery — Flipped</title>
+  <meta name="description" content="Stuck during Flipped setup? Need to remove Flipped from your iPhone? Step-by-step recovery for the most common situations." />
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
-    <div class="brand">FLIPPED</div>
 
-    <div class="help-wrap">
-        <h1>Help & Recovery</h1>
-        <p class="lede">
-            Flipped is a tool, not a trap. Every state your iPhone can get
-            into during setup is recoverable from your Mac. Pick what
-            matches what you're seeing.
-        </p>
-        <p class="contact-line">
-            <strong>Can't find your situation?</strong>
-            Email <a href="mailto:support@useflipped.com">support@useflipped.com</a>
-            with a screenshot — Pete (the founder) answers personally,
-            usually within a few hours.
-        </p>
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="index.html#how" class="nav-link">HOW IT WORKS</a>
+    <a href="pricing.html" class="nav-link">PRICING</a>
+    <a href="getting-started.html" class="nav-link">GET STARTED</a>
+    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
+</nav>
 
-        <div class="section-label">Onboarding & enrollment</div>
+<div class="content-wrap">
+  <h1>Help & Recovery</h1>
+  <p>
+    Flipped is a tool, not a trap. Every state your iPhone can get into during setup is recoverable from your Mac. Pick what matches what you're seeing.
+  </p>
+  <p>
+    <strong>Can't find your situation?</strong>
+    Email <a href="mailto:support@useflipped.com">support@useflipped.com</a> with a screenshot — Pete (the founder) answers personally, usually within a few hours.
+  </p>
 
-        <details class="faq" id="stuck-on-device-management">
-            <summary>My iPhone is stuck on the "Device Management" screen</summary>
-            <div class="answer">
-                <p>
-                    Your iPhone has already been put into supervised mode by the
-                    previous step, so iOS is waiting on enrollment. Tapping
-                    Back doesn't actually escape it. The fix is one click in
-                    the Mac app:
-                </p>
-                <ol>
-                    <li>Make sure your iPhone is plugged into your Mac via USB.</li>
-                    <li>Open Flipped on your Mac → Settings → tap
-                        <strong>"Remove from iPhone."</strong></li>
-                    <li>Wait ~30 seconds. Your iPhone reboots back to the
-                        normal home screen. No data lost, no factory reset
-                        needed.</li>
-                </ol>
-                <p>
-                    The Mac app can strip Flipped's supervision even when
-                    enrollment is mid-way or failed — same path as the
-                    "Remove Flipped & Restore Phone" button that appears
-                    inside the onboarding flow after 2 minutes of being stuck.
-                </p>
-                <p>
-                    <strong>Want to try again?</strong> Email
-                    <a href="mailto:support@useflipped.com">support@useflipped.com</a>
-                    so we can check whether the enrollment failure was a
-                    server-side hiccup — we can usually fix the underlying
-                    issue, then you re-run setup successfully.
-                </p>
-            </div>
-        </details>
+  <h2>Onboarding & enrollment</h2>
 
-        <details class="faq" id="enrollment-failed">
-            <summary>Setup says "Enrollment Failed" or hangs on "Enroll This iPhone"</summary>
-            <div class="answer">
-                <p>
-                    Rare but recoverable — same one-click Mac removal works.
-                </p>
-                <ol>
-                    <li><strong>Wait 2 minutes first.</strong> The Mac app
-                        gives iOS up to 2 minutes to complete enrollment over
-                        slow cellular or congested Wi-Fi. If it lands during
-                        that window, you'll see "✓ Enrollment confirmed" in
-                        the Mac app and you can move on.</li>
-                    <li><strong>If 2 minutes pass with no progress,</strong>
-                        the Mac app automatically shows a "REMOVE" button on
-                        the same screen. Tap it — Flipped's supervision is
-                        stripped and your iPhone returns to its normal home
-                        screen.</li>
-                    <li><strong>Keep your iPhone plugged in via USB</strong>
-                        while removal runs. Takes about a minute. Nothing
-                        wiped, nothing lost.</li>
-                </ol>
-                <p>
-                    <strong>Want to try setup again?</strong> Email
-                    <a href="mailto:support@useflipped.com">support@useflipped.com</a>
-                    with a screenshot. Most enrollment failures are server-side
-                    hiccups we can fix in a few minutes — once resolved, your
-                    second attempt usually works clean.
-                </p>
-            </div>
-        </details>
-
-        <details class="faq" id="mac-waiting-forever">
-            <summary>The Mac app says "Waiting for iPhone…" and never moves</summary>
-            <div class="answer">
-                <p>
-                    Setup is paused waiting for the iPhone to respond. Usually
-                    means iOS is confused about trust state or the USB
-                    connection dropped.
-                </p>
-                <ol>
-                    <li><strong>Unlock your iPhone.</strong> Setup tasks pause
-                        if the iPhone is locked.</li>
-                    <li><strong>Check for a "Trust This Computer?" prompt</strong>
-                        on your iPhone. If you see it, tap Trust + enter your
-                        passcode.</li>
-                    <li><strong>Unplug and replug the USB cable</strong> — use
-                        a different port if you have one. Bad cables cause
-                        this more often than anything else.</li>
-                    <li><strong>From the Mac app, tap "Reset Trust"</strong>
-                        (Settings → Get Help → Reset Trust). Clears the Mac's
-                        stored pairing so iOS prompts for trust fresh.</li>
-                    <li>Still hanging after 5 minutes? Email support and we'll
-                        unstick you remotely.</li>
-                </ol>
-            </div>
-        </details>
-
-        <details class="faq" id="mac-cant-see-iphone">
-            <summary>My Mac doesn't see my iPhone over USB</summary>
-            <div class="answer">
-                <p>Almost always a cable or trust-prompt issue.</p>
-                <ol>
-                    <li><strong>Try a different USB cable.</strong> Many cables
-                        are charge-only and don't carry data. The original
-                        Apple cable always works.</li>
-                    <li><strong>Try a different USB port on your Mac.</strong>
-                        Some hubs and USB-C dongles cause issues.</li>
-                    <li><strong>Unlock your iPhone</strong> and look for a
-                        "Trust This Computer?" dialog — your Mac is invisible
-                        to Flipped until you tap Trust.</li>
-                    <li>Open Finder on your Mac. Does your iPhone appear in
-                        the sidebar? If no, the cable or trust state is the
-                        issue. If yes, Flipped should also see it — quit and
-                        reopen Flipped.</li>
-                </ol>
-            </div>
-        </details>
-
-        <div class="section-label">Removing Flipped</div>
-
-        <details class="faq" id="remove-flipped">
-            <summary>I just want to remove Flipped from my iPhone</summary>
-            <div class="answer">
-                <p><strong>30-second clean removal:</strong></p>
-                <ol>
-                    <li>Plug your iPhone into your Mac via USB.</li>
-                    <li>Open Flipped → Settings → tap
-                        <strong>"Remove from iPhone."</strong></li>
-                    <li>Wait ~10 seconds. Your iPhone reboots. Done.</li>
-                </ol>
-                <p>
-                    No factory reset, no data loss. Flipped + the supervision
-                    profile are stripped cleanly; your iPhone returns to
-                    exactly how it was before you installed Flipped.
-                </p>
-            </div>
-        </details>
-
-        <details class="faq" id="removed-mac-iphone-still-has">
-            <summary>I deleted Flipped from my Mac but my iPhone still has it</summary>
-            <div class="answer">
-                <p>
-                    Common mistake — uninstalling the Mac app does NOT remove
-                    the management profile from your iPhone. The iPhone still
-                    thinks it's being managed, but there's no Mac app to
-                    remove that management cleanly.
-                </p>
-                <ol>
-                    <li>Reinstall Flipped on your Mac from
-                        <a href="https://useflipped.com">useflipped.com</a>.</li>
-                    <li>Sign in with the email you used before.</li>
-                    <li>Plug your iPhone in.</li>
-                    <li>Open Flipped → Settings → "Remove from iPhone."</li>
-                    <li>Once your iPhone is cleaned up, you can uninstall the
-                        Mac app for good.</li>
-                </ol>
-            </div>
-        </details>
-
-        <details class="faq" id="factory-reset">
-            <summary>Last resort — factory reset (no Mac available)</summary>
-            <div class="answer">
-                <p>
-                    <strong>You almost certainly don't need this.</strong>
-                    Mac removal works in every situation above. Factory reset
-                    is only the right answer when you genuinely can't reach
-                    your Mac at all — Mac broken, traveling, no charger.
-                </p>
-                <p>
-                    <strong>Before doing this:</strong> make sure you have a
-                    recent iCloud or Mac backup so you can restore.
-                </p>
-                <ol>
-                    <li>On your iPhone:
-                        <strong>Settings → General → Transfer or Reset iPhone
-                        → Erase All Content and Settings.</strong></li>
-                    <li>Confirm. iPhone reboots into the welcome screen.</li>
-                    <li>Set up fresh, or restore from your most recent
-                        backup.</li>
-                </ol>
-                <p>
-                    After the reset, Flipped is fully gone. If you want to
-                    use Flipped again later, walk through setup from your
-                    Mac normally.
-                </p>
-            </div>
-        </details>
-
-        <div class="section-label">Still stuck</div>
-
-        <details class="faq" id="contact-support">
-            <summary>None of the above worked — how do I reach Pete?</summary>
-            <div class="answer">
-                <p>
-                    Email
-                    <a href="mailto:support@useflipped.com">support@useflipped.com</a>.
-                    Include:
-                </p>
-                <ul>
-                    <li>Your Flipped account email</li>
-                    <li>What screen you're stuck on (screenshot helps a lot)</li>
-                    <li>Which steps from above you've already tried</li>
-                </ul>
-                <p>
-                    Pete answers personally. We have admin tools that can
-                    unstick most situations from our end without you doing
-                    anything — so even if everything above failed, email us
-                    before resorting to factory reset.
-                </p>
-            </div>
-        </details>
-
-        <footer>
-            <div>© 2026 FLIPPED</div>
-            <div>
-                <a href="/">HOME</a> ·
-                <a href="privacy.html">PRIVACY</a> ·
-                <a href="terms.html">TERMS</a> ·
-                <a href="mailto:support@useflipped.com">SUPPORT</a>
-            </div>
-        </footer>
+  <details class="faq" id="stuck-on-device-management">
+    <summary>My iPhone is stuck on the "Device Management" screen</summary>
+    <div class="answer">
+      <p>Your iPhone has already been put into supervised mode by the previous step, so iOS is waiting on enrollment. Tapping Back doesn't actually escape it. The fix is one click in the Mac app:</p>
+      <ol>
+        <li>Make sure your iPhone is plugged into your Mac via USB.</li>
+        <li>Open Flipped on your Mac → Settings → tap <strong>"Remove from iPhone."</strong></li>
+        <li>Wait ~30 seconds. Your iPhone reboots back to the normal home screen. No data lost, no factory reset needed.</li>
+      </ol>
+      <p>The Mac app can strip Flipped's supervision even when enrollment is mid-way or failed — same path as the "Remove Flipped & Restore Phone" button that appears inside the onboarding flow after 2 minutes of being stuck.</p>
+      <p><strong>Want to try again?</strong> Email <a href="mailto:support@useflipped.com">support@useflipped.com</a> so we can check whether the enrollment failure was a server-side hiccup — we can usually fix the underlying issue, then you re-run setup successfully.</p>
     </div>
+  </details>
+
+  <details class="faq" id="enrollment-failed">
+    <summary>Setup says "Enrollment Failed" or hangs on "Enroll This iPhone"</summary>
+    <div class="answer">
+      <p>Rare but recoverable — same one-click Mac removal works.</p>
+      <ol>
+        <li><strong>Wait 2 minutes first.</strong> The Mac app gives iOS up to 2 minutes to complete enrollment over slow cellular or congested Wi-Fi. If it lands during that window, you'll see "✓ Enrollment confirmed" in the Mac app and you can move on.</li>
+        <li><strong>If 2 minutes pass with no progress,</strong> the Mac app automatically shows a "REMOVE" button on the same screen. Tap it — Flipped's supervision is stripped and your iPhone returns to its normal home screen.</li>
+        <li><strong>Keep your iPhone plugged in via USB</strong> while removal runs. Takes about a minute. Nothing wiped, nothing lost.</li>
+      </ol>
+      <p><strong>Want to try setup again?</strong> Email <a href="mailto:support@useflipped.com">support@useflipped.com</a> with a screenshot. Most enrollment failures are server-side hiccups we can fix in a few minutes — once resolved, your second attempt usually works clean.</p>
+    </div>
+  </details>
+
+  <details class="faq" id="mac-waiting-forever">
+    <summary>The Mac app says "Waiting for iPhone…" and never moves</summary>
+    <div class="answer">
+      <p>Setup is paused waiting for the iPhone to respond. Usually means iOS is confused about trust state or the USB connection dropped.</p>
+      <ol>
+        <li><strong>Unlock your iPhone.</strong> Setup tasks pause if the iPhone is locked.</li>
+        <li><strong>Check for a "Trust This Computer?" prompt</strong> on your iPhone. If you see it, tap Trust + enter your passcode.</li>
+        <li><strong>Unplug and replug the USB cable</strong> — use a different port if you have one. Bad cables cause this more often than anything else.</li>
+        <li><strong>From the Mac app, tap "Reset Trust"</strong> (Settings → Get Help → Reset Trust). Clears the Mac's stored pairing so iOS prompts for trust fresh.</li>
+        <li>Still hanging after 5 minutes? Email support and we'll unstick you remotely.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="faq" id="mac-cant-see-iphone">
+    <summary>My Mac doesn't see my iPhone over USB</summary>
+    <div class="answer">
+      <p>Almost always a cable or trust-prompt issue.</p>
+      <ol>
+        <li><strong>Try a different USB cable.</strong> Many cables are charge-only and don't carry data. The original Apple cable always works.</li>
+        <li><strong>Try a different USB port on your Mac.</strong> Some hubs and USB-C dongles cause issues.</li>
+        <li><strong>Unlock your iPhone</strong> and look for a "Trust This Computer?" dialog — your Mac is invisible to Flipped until you tap Trust.</li>
+        <li>Open Finder on your Mac. Does your iPhone appear in the sidebar? If no, the cable or trust state is the issue. If yes, Flipped should also see it — quit and reopen Flipped.</li>
+      </ol>
+    </div>
+  </details>
+
+  <h2>Removing Flipped</h2>
+
+  <details class="faq" id="remove-flipped">
+    <summary>I just want to remove Flipped from my iPhone</summary>
+    <div class="answer">
+      <p><strong>30-second clean removal:</strong></p>
+      <ol>
+        <li>Plug your iPhone into your Mac via USB.</li>
+        <li>Open Flipped → Settings → tap <strong>"Remove from iPhone."</strong></li>
+        <li>Wait ~10 seconds. Your iPhone reboots. Done.</li>
+      </ol>
+      <p>No factory reset, no data loss. Flipped + the supervision profile are stripped cleanly; your iPhone returns to exactly how it was before you installed Flipped.</p>
+    </div>
+  </details>
+
+  <details class="faq" id="removed-mac-iphone-still-has">
+    <summary>I deleted Flipped from my Mac but my iPhone still has it</summary>
+    <div class="answer">
+      <p>Common mistake — uninstalling the Mac app does NOT remove the management profile from your iPhone. The iPhone still thinks it's being managed, but there's no Mac app to remove that management cleanly.</p>
+      <ol>
+        <li>Reinstall Flipped on your Mac from <a href="https://useflipped.com">useflipped.com</a>.</li>
+        <li>Sign in with the email you used before.</li>
+        <li>Plug your iPhone in.</li>
+        <li>Open Flipped → Settings → "Remove from iPhone."</li>
+        <li>Once your iPhone is cleaned up, you can uninstall the Mac app for good.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="faq" id="factory-reset">
+    <summary>Last resort — factory reset (no Mac available)</summary>
+    <div class="answer">
+      <p><strong>You almost certainly don't need this.</strong> Mac removal works in every situation above. Factory reset is only the right answer when you genuinely can't reach your Mac at all — Mac broken, traveling, no charger.</p>
+      <p><strong>Before doing this:</strong> make sure you have a recent iCloud or Mac backup so you can restore.</p>
+      <ol>
+        <li>On your iPhone: <strong>Settings → General → Transfer or Reset iPhone → Erase All Content and Settings.</strong></li>
+        <li>Confirm. iPhone reboots into the welcome screen.</li>
+        <li>Set up fresh, or restore from your most recent backup.</li>
+      </ol>
+      <p>After the reset, Flipped is fully gone. If you want to use Flipped again later, walk through setup from your Mac normally.</p>
+    </div>
+  </details>
+
+  <h2>Still stuck</h2>
+
+  <details class="faq" id="contact-support">
+    <summary>None of the above worked — how do I reach Pete?</summary>
+    <div class="answer">
+      <p>Email <a href="mailto:support@useflipped.com">support@useflipped.com</a>. Include:</p>
+      <ul>
+        <li>Your Flipped account email</li>
+        <li>What screen you're stuck on (screenshot helps a lot)</li>
+        <li>Which steps from above you've already tried</li>
+      </ul>
+      <p>Pete answers personally. We have admin tools that can unstick most situations from our end without you doing anything — so even if everything above failed, email us before resorting to factory reset.</p>
+    </div>
+  </details>
+</div>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
 </body>
 </html>

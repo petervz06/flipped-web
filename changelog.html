@@ -1,151 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Changelog — Flipped</title>
-    <link rel="stylesheet" href="styles.css?v=15" />
-    <style>
-        .cl { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
-        .cl h1 { font-size: 28px; margin: 0 0 8px; }
-        .cl .subtitle { color: rgba(255,255,255,0.5);
-                        margin: 0 0 32px; font-size: 13px; }
-        .cl-entry { padding: 18px 0;
-                    border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .cl-entry:last-child { border-bottom: none; }
-        .cl-version { font-family: ui-monospace, monospace;
-                      font-size: 11px; letter-spacing: 2px;
-                      font-weight: 600; color: #fff;
-                      margin-bottom: 4px; }
-        .cl-date { font-family: ui-monospace, monospace;
-                   font-size: 10px; letter-spacing: 1px;
-                   color: rgba(255,255,255,0.4); margin-bottom: 12px; }
-        .cl-section { margin-top: 8px; }
-        .cl-section-label { font-family: ui-monospace, monospace;
-                            font-size: 9px; letter-spacing: 2px;
-                            text-transform: uppercase; font-weight: 600;
-                            color: rgba(255,255,255,0.45); margin-top: 12px;
-                            margin-bottom: 4px; }
-        .cl ul { padding-left: 20px; margin: 4px 0; }
-        .cl li { line-height: 1.6; color: rgba(255,255,255,0.85);
-                 font-size: 13px; margin: 2px 0; }
-        .cl li code { font-family: ui-monospace, monospace;
-                      font-size: 11px; padding: 1px 5px;
-                      background: rgba(255,255,255,0.06);
-                      border-radius: 3px; }
-        .cl a { color: #fff; }
-        .top-link { color: rgba(255,255,255,0.5); font-size: 11px;
-                    text-decoration: none; letter-spacing: 1px;
-                    font-family: ui-monospace, monospace; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Flipped</title>
+  <meta name="description" content="Every Flipped release. Newest first." />
+  <link rel="stylesheet" href="styles.css?v=20" />
+  <style>
+    .cl-entry { padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .cl-entry:last-child { border-bottom: none; }
+    .cl-version {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .cl-date {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--fg-3);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .cl-section-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--fg-3);
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    .cl-entry ul { margin: 4px 0 0 20px; }
+    .cl-entry li { font-size: 14px; line-height: 1.6; margin: 4px 0; color: var(--fg-1); }
+  </style>
 </head>
 <body>
-<div class="cl">
-    <a href="/" class="top-link">← FLIPPED</a>
-    <h1 style="margin-top: 16px;">Changelog</h1>
-    <p class="subtitle">Every release ships through here.  Newest first.</p>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.11</div>
-        <div class="cl-date">May 3, 2026</div>
-        <div class="cl-section-label">Mac app</div>
-        <ul>
-            <li>Sidebar device row is live: countdown of remaining session time, "Online · idle" when free, "Not signed in" when needed.</li>
-            <li>Schedules tab leads with a "Next 7 days" preview strip — every scheduled flip across the upcoming week visible at a glance.</li>
-            <li>End-of-session push notification: "Welcome back — your phone is free" fires from both local-timer expiry and server-poll detection.</li>
-            <li>Real stats wiring: today / week / total flipped seconds all read from the sessions table; no more "week / 7" approximation.</li>
-        </ul>
-    </div>
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="index.html#how" class="nav-link">HOW IT WORKS</a>
+    <a href="pricing.html" class="nav-link">PRICING</a>
+    <a href="help.html" class="nav-link">HELP</a>
+    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
+</nav>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.10</div>
-        <div class="cl-date">May 3, 2026</div>
-        <div class="cl-section-label">Settings → Get Help</div>
-        <ul>
-            <li>"Copy Diagnostics" button puts a structured snapshot (version, device, active session, last error) on the clipboard.  No password / token in the blob.</li>
-            <li>"Send Feedback" textarea — backend logs at WARNING (Sentry-captured) and writes a <code>user.feedback</code> event so the admin timeline shows full context.</li>
-        </ul>
-        <div class="cl-section-label">Settings → Danger</div>
-        <ul>
-            <li>"Export My Data" downloads a JSON of every row tied to your account (GDPR Article 20).</li>
-            <li>"Delete Account" cascades the delete server-side, revokes license keys, removes MDM enrollment (GDPR Article 17).</li>
-        </ul>
-    </div>
+<div class="content-wrap">
+  <h1>Changelog</h1>
+  <p class="top-meta">Every release ships through here. Newest first.</p>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.9</div>
-        <div class="cl-date">May 3, 2026</div>
-        <div class="cl-section-label">Profiles</div>
-        <ul>
-            <li>Sync iPhone button in the Profiles header + auto-sync on app launch and tab open (5-min debounce).  Picker stays fresh without you remembering to tap it.</li>
-            <li>Edit button on every profile.  Editing a preset (Simple / Deep Work / Nomad) auto-clones to a custom — originals untouched as a factory reference.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.11</div>
+    <div class="cl-date">May 3, 2026</div>
+    <div class="cl-section-label">Mac app</div>
+    <ul>
+      <li>Sidebar device row is live: countdown of remaining session time, "Online · idle" when free, "Not signed in" when needed.</li>
+      <li>Schedules tab leads with a "Next 7 days" preview strip — every scheduled flip across the upcoming week visible at a glance.</li>
+      <li>End-of-session push notification: "Welcome back — your phone is free" fires from both local-timer expiry and server-poll detection.</li>
+      <li>Real stats wiring: today / week / total flipped seconds all read from the sessions table; no more "week / 7" approximation.</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.8</div>
-        <div class="cl-date">May 3, 2026</div>
-        <div class="cl-section-label">Onboarding hardening</div>
-        <ul>
-            <li>"DURING SETUP" yellow callout on the Rules card sets the partial-setup expectation BEFORE the destructive flow runs.</li>
-            <li>"Start Installation" gate before the backup/restore phase.  No more surprise iPhone reboots.</li>
-            <li>"Pro tip" on the Done screen: put apps in one folder so flip/unflip cycles don't shuffle the home screen.</li>
-            <li>Active session card shows the actual blocked-apps list (tap "N apps hidden ▼").</li>
-        </ul>
-        <div class="cl-section-label">Settings → Always Allow</div>
-        <ul>
-            <li>Add bundle IDs that survive every flip — fixes web-clip PWAs (Pulse, etc.) that aren't in iOS's app list.</li>
-        </ul>
-        <div class="cl-section-label">Build pipeline</div>
-        <ul>
-            <li>otool guard refuses to ship if any bundled binary references absolute Homebrew paths — auto-prevents the dyld regression that broke the first friend test.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.10</div>
+    <div class="cl-date">May 3, 2026</div>
+    <div class="cl-section-label">Settings → Get Help</div>
+    <ul>
+      <li>"Copy Diagnostics" button puts a structured snapshot (version, device, active session, last error) on the clipboard.  No password / token in the blob.</li>
+      <li>"Send Feedback" textarea — backend logs at WARNING (Sentry-captured) and writes a <code>user.feedback</code> event so the admin timeline shows full context.</li>
+    </ul>
+    <div class="cl-section-label">Settings → Danger</div>
+    <ul>
+      <li>"Export My Data" downloads a JSON of every row tied to your account (GDPR Article 20).</li>
+      <li>"Delete Account" cascades the delete server-side, revokes license keys, removes MDM enrollment (GDPR Article 17).</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.7</div>
-        <div class="cl-date">May 1, 2026</div>
-        <div class="cl-section-label">Account flow</div>
-        <ul>
-            <li>License-redeem fast-path: if the backend already has a supervised device for your account, the Mac app skips the entire setup flow and drops you straight into the main app.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.9</div>
+    <div class="cl-date">May 3, 2026</div>
+    <div class="cl-section-label">Profiles</div>
+    <ul>
+      <li>Sync iPhone button in the Profiles header + auto-sync on app launch and tab open (5-min debounce).  Picker stays fresh without you remembering to tap it.</li>
+      <li>Edit button on every profile.  Editing a preset (Simple / Deep Work / Nomad) auto-clones to a custom — originals untouched as a factory reference.</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.6</div>
-        <div class="cl-date">May 1, 2026</div>
-        <div class="cl-section-label">Simple profile</div>
-        <ul>
-            <li>Expanded from 13 → 25 bundles: now blocks YouTube + YouTube TV + YouTube Studio, Netflix, Hulu, Disney+, HBO Max, Twitch, Peacock, Prime Video, Paramount+ on top of the social media list.  Discord, banking, productivity, music all stay.</li>
-            <li>Sidebar shows the iPhone's actual DeviceName ("Kyle's iPhone") instead of a placeholder.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.8</div>
+    <div class="cl-date">May 3, 2026</div>
+    <div class="cl-section-label">Onboarding hardening</div>
+    <ul>
+      <li>"DURING SETUP" yellow callout on the Rules card sets the partial-setup expectation BEFORE the destructive flow runs.</li>
+      <li>"Start Installation" gate before the backup/restore phase.  No more surprise iPhone reboots.</li>
+      <li>"Pro tip" on the Done screen: put apps in one folder so flip/unflip cycles don't shuffle the home screen.</li>
+      <li>Active session card shows the actual blocked-apps list (tap "N apps hidden ▼").</li>
+    </ul>
+    <div class="cl-section-label">Settings → Always Allow</div>
+    <ul>
+      <li>Add bundle IDs that survive every flip — fixes web-clip PWAs (Pulse, etc.) that aren't in iOS's app list.</li>
+    </ul>
+    <div class="cl-section-label">Build pipeline</div>
+    <ul>
+      <li>otool guard refuses to ship if any bundled binary references absolute Homebrew paths — auto-prevents the dyld regression that broke the first friend test.</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.5</div>
-        <div class="cl-date">May 1, 2026</div>
-        <ul>
-            <li>Onboarding step 6 now explicitly walks through the iOS "Continue with Partial Setup" prompt before Trust + Enroll.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.7</div>
+    <div class="cl-date">May 1, 2026</div>
+    <div class="cl-section-label">Account flow</div>
+    <ul>
+      <li>License-redeem fast-path: if the backend already has a supervised device for your account, the Mac app skips the entire setup flow and drops you straight into the main app.</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.2 — 1.0.4</div>
-        <div class="cl-date">May 1, 2026</div>
-        <div class="cl-section-label">Critical packaging fix</div>
-        <ul>
-            <li>Bundled libimobiledevice tools rewritten with <code>install_name_tool</code> to use <code>@loader_path/...</code> relative paths and properly Developer-ID-signed.  Earlier builds dyld-failed on every Mac that wasn't the build machine — broke the first friend test entirely.</li>
-            <li>Preflight checkboxes are now full tap targets (the 18×18 Button was too tight to hit reliably).</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.6</div>
+    <div class="cl-date">May 1, 2026</div>
+    <div class="cl-section-label">Simple profile</div>
+    <ul>
+      <li>Expanded from 13 → 25 bundles: now blocks YouTube + YouTube TV + YouTube Studio, Netflix, Hulu, Disney+, HBO Max, Twitch, Peacock, Prime Video, Paramount+ on top of the social media list.  Discord, banking, productivity, music all stay.</li>
+      <li>Sidebar shows the iPhone's actual DeviceName ("Kyle's iPhone") instead of a placeholder.</li>
+    </ul>
+  </div>
 
-    <div class="cl-entry">
-        <div class="cl-version">1.0.0 — 1.0.1</div>
-        <div class="cl-date">April 30, 2026</div>
-        <ul>
-            <li>Initial public-beta build with always-manual Home FLIP semantic and the redesigned Profiles + Modes tabs.</li>
-        </ul>
-    </div>
+  <div class="cl-entry">
+    <div class="cl-version">1.0.5</div>
+    <div class="cl-date">May 1, 2026</div>
+    <ul>
+      <li>Onboarding step 6 now explicitly walks through the iOS "Continue with Partial Setup" prompt before Trust + Enroll.</li>
+    </ul>
+  </div>
+
+  <div class="cl-entry">
+    <div class="cl-version">1.0.2 — 1.0.4</div>
+    <div class="cl-date">May 1, 2026</div>
+    <div class="cl-section-label">Critical packaging fix</div>
+    <ul>
+      <li>Bundled libimobiledevice tools rewritten with <code>install_name_tool</code> to use <code>@loader_path/...</code> relative paths and properly Developer-ID-signed.  Earlier builds dyld-failed on every Mac that wasn't the build machine — broke the first friend test entirely.</li>
+      <li>Preflight checkboxes are now full tap targets (the 18×18 Button was too tight to hit reliably).</li>
+    </ul>
+  </div>
+
+  <div class="cl-entry">
+    <div class="cl-version">1.0.0 — 1.0.1</div>
+    <div class="cl-date">April 30, 2026</div>
+    <ul>
+      <li>Initial public-beta build with always-manual Home FLIP semantic and the redesigned Profiles + Modes tabs.</li>
+    </ul>
+  </div>
 </div>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
 </body>
 </html>
