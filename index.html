@@ -1,311 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FLIPPED — flip your phone. get your life back.</title>
-    <meta name="description" content="A screen-time blocker for iPhone with zero workarounds. Currently in open beta — free for testers." />
-    <link rel="stylesheet" href="styles.css?v=16" />
-    <style>
-        /* ── Beta homepage — minimal centered (Variant E) ───────────────────
-           Everything centered. No signup form. One CTA → download. Footer.
-           Designed for beta testers; nothing fake (no testimonials, no
-           pricing, no press logos) until we earn them.
-        ─────────────────────────────────────────────────────────────────── */
-        :root {
-            --mono: "SF Mono", Menlo, monospace;
-            --silver-1: #ffffff;
-            --silver-2: #d8d8d8;
-            --silver-3: #888888;
-        }
-
-        body {
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .topnav-min {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 22px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .topnav-min .brand {
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            background: linear-gradient(to bottom, var(--silver-1), var(--silver-2), var(--silver-3), var(--silver-2), var(--silver-1));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-        }
-
-        main.hero-min {
-            flex: 1 0 auto;
-            text-align: center;
-            padding: 80px 20px 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .beta-pill {
-            display: inline-block;
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 2.5px;
-            color: #999;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 999px;
-            padding: 5px 12px;
-            margin-bottom: 28px;
-        }
-
-        .headline-min {
-            font-size: 44px;
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -1.2px;
-            margin: 0 0 16px;
-            text-align: center;
-        }
-
-        .lede-min {
-            font-size: 14px;
-            color: #999;
-            line-height: 1.6;
-            max-width: 360px;
-            margin: 0 auto 28px;
-            text-align: center;
-        }
-
-        .btn-download {
-            background: #fff;
-            color: #000;
-            border: none;
-            padding: 14px 26px;
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .btn-download:hover { opacity: 0.92; }
-        .btn-download .arrow { margin-right: 6px; }
-        /* Side-by-side Mac + Windows on desktop, stacks on narrow. */
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        /* Secondary download button — same shape but outline-on-dark
-           so the Mac one keeps visual priority while Windows is still
-           legible.  Used today for the "coming Saturday" Windows
-           placeholder; swap to .btn-download when the binary lands. */
-        .btn-download.secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .btn-download.secondary:hover { border-color: rgba(255,255,255,0.6); opacity: 1; }
-        .btn-download.disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        /* Applied via JS when the visitor's user-agent is iPhone, iPad,
-           or Android.  Same shape as the Mac download button so layout
-           doesn't reflow, but click is a no-op (we can't actually serve
-           a .dmg to an iOS/Android device that can do anything with it). */
-        .btn-download.wrong-device {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            cursor: default;
-        }
-        .btn-download.wrong-device:hover { opacity: 1; }
-        .btn-download .sub {
-            display: block;
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.55);
-            margin-top: 4px;
-        }
-        /* On the white Mac button the sub-line needs darker text. */
-        .btn-download:not(.secondary) .sub { color: rgba(0,0,0,0.55); }
-        /* Subtle "Windows coming soon" note under the Mac micro-text.
-           Same mono treatment as .micro-min but slightly dimmer + smaller
-           leading so it reads as secondary information, not a CTA. */
-        .windows-soon {
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            color: #555;
-            margin-top: 8px;
-        }
-
-        .micro-min {
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            color: #666;
-            margin-top: 14px;
-        }
-
-        .how-band {
-            padding: 44px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            text-align: center;
-        }
-        .how-three {
-            max-width: 380px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-        .how-line {
-            font-family: var(--mono);
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: #fff;
-            text-align: center;
-        }
-        .how-line .step {
-            color: #666;
-            margin-right: 10px;
-        }
-        /* Sub-line under the 3-step "how it works" band.  Discloses the
-           USB-once-then-wireless model without front-loading the cable
-           in the daily-use copy above.  Dimmer + smaller so it reads
-           as a footnote, not a step. */
-        .how-sub {
-            margin-top: 16px;
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            color: #555;
-            text-align: center;
-        }
-
-        .footer-min {
-            padding: 28px 20px 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            font-family: var(--mono);
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #666;
-            text-align: center;
-        }
-        .footer-min a {
-            color: #888;
-            text-decoration: none;
-        }
-        .footer-min a:hover { color: #fff; }
-
-        /* Mobile tweaks */
-        @media (max-width: 540px) {
-            main.hero-min { padding: 56px 18px 44px; }
-            .headline-min { font-size: 34px; }
-            .lede-min { font-size: 13px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flipped — Flip your phone. Get your life back.</title>
+  <meta name="description" content="The screen-time tool you can't talk yourself out of. Mac-paired enforcement, no Screen Time bypass, no factory-reset escape. Built for iPhone." />
+  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles-homepage.css?v=20" />
 </head>
 <body>
 
-<!-- ── Centered brand nav ─────────────────────────────────────────── -->
-<nav class="topnav-min">
-    <div class="brand">FLIPPED</div>
+<!-- ─── NAV ───────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">HOW IT WORKS</a>
+    <a href="#pricing" class="nav-link">PRICING</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
 </nav>
 
-<!-- ── Hero — centered, single CTA ───────────────────────────────── -->
-<main class="hero-min">
+<!-- ─── HERO ──────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="eyebrow fade-up">SCREEN-TIME BLOCKER · ZERO WORKAROUNDS</div>
+  <h1 class="h1 fade-up">Flip your phone.<br>Get your life back.</h1>
+  <p class="lede fade-up">
+    The screen-time tool you can't talk yourself out of.<br>
+    Mac-paired. No bypass. No willpower required.
+  </p>
+  <div class="cta-row fade-up">
+    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn primary hero-lift">▼ Download for Mac</a>
+    <a href="#how" class="btn ghost">See how it works ↓</a>
+  </div>
+  <div class="microcopy fade-up">macOS 13+ · iPhone iOS 17+ · 14-day free trial</div>
+</header>
 
-    <div class="beta-pill">OPEN BETA · FREE</div>
-
-    <h1 class="headline-min">
-        Flip your phone.<br>
-        Get your life back.
-    </h1>
-
-    <p class="lede-min">
-        A screen-time blocker for iPhone with zero workarounds.
+<!-- ─── 03 · PRODUCT WALKTHROUGH ─────────────────────────────────── -->
+<section class="walkthrough" id="how">
+  <div class="section-head reveal">
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2 class="h2">One tap on your Mac.<br>Apps disappear from your phone.</h2>
+    <p class="lede">
+      No willpower. No App Store deletes. No Screen Time bypass.
+      The only way to bring them back is back to your Mac.
     </p>
+  </div>
 
-    <!-- Routes through Railway /api/download so we record every click as a
-         user_event + push a real-time ntfy to Pete.  Backend 302-redirects
-         to /downloads/Flipped-latest.dmg on GitHub Pages.  Cross-origin so
-         we drop the `download` attr — Safari/Chrome download anyway because
-         GitHub Pages serves the .dmg with Content-Type:application/octet-stream.
-         Windows variant lives behind the .btn-row / .secondary / .disabled
-         CSS classes above (kept in the stylesheet so the future swap is
-         an HTML-only edit, not a styling pass). -->
-    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn-download">
-        <span class="arrow">▼</span>DOWNLOAD FOR MAC
-    </a>
-
-    <div class="micro-min">macOS 13+ · iPhone iOS 17+</div>
-    <div class="windows-soon">Windows version coming soon</div>
-
-    <!-- Inline UA-sniff: when the visitor is on iPhone / iPad / Android
-         the Mac download is useless (iOS can't mount .dmg, Android
-         can't run Mac binaries).  Rather than letting them download
-         an inert file we swap the button copy + neuter the click.
-         Vanilla JS, runs once at first paint, no framework needed. -->
-    <script>
-        (function () {
-            var ua = navigator.userAgent || '';
-            var isMobile = /(iPhone|iPad|iPod|Android)/i.test(ua);
-            if (!isMobile) return;
-            var btn = document.querySelector('.btn-download');
-            if (!btn) return;
-            btn.classList.add('wrong-device');
-            btn.removeAttribute('href');
-            btn.innerHTML = '<span class="arrow">↗</span>OPEN ON A MAC TO DOWNLOAD';
-            btn.addEventListener('click', function (e) { e.preventDefault(); });
-            var micro = document.querySelector('.micro-min');
-            if (micro) {
-                micro.textContent = 'Flipped installs on a Mac and pairs with your iPhone over USB.  Visit this page from a Mac to install.';
-            }
-        })();
-    </script>
-
-</main>
-
-<!-- ── How it works — 3 single lines, centered.  Pre-2026-05-23 this
-     led with "Plug your iPhone into your Mac" which read as a daily
-     ritual.  Now describes the actual daily ritual; the one-time
-     USB pairing lives in the .how-sub footnote so the cable
-     disclosure is honest without front-loading. ──────────────────── -->
-<section class="how-band">
-    <div class="how-three">
-        <div class="how-line"><span class="step">01</span>Pick a profile</div>
-        <div class="how-line"><span class="step">02</span>Set a timer</div>
-        <div class="how-line"><span class="step">03</span>Tap FLIP · apps disappear</div>
+  <div class="demo-stage reveal" id="demo-stage">
+    <!-- MAC -->
+    <div class="mac">
+      <div class="mac-titlebar">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
+      </div>
+      <div class="mac-body">
+        <aside class="mac-sidebar">
+          <div class="label">DEVICES</div>
+          <div class="device-row">
+            <div class="name">Your iPhone</div>
+            <div class="meta">ONLINE</div>
+          </div>
+          <div class="mac-nav">
+            <span class="active">HOME</span>
+            <span>PROFILES</span>
+            <span>SCHEDULES</span>
+            <span>SETTINGS</span>
+          </div>
+        </aside>
+        <div class="mac-main">
+          <div class="label">ACTIVE PROFILE</div>
+          <div class="profile-name">Deep Focus</div>
+          <div class="session-status">● ACTIVE SESSION · 2H REMAINING</div>
+          <div class="label">DURATION</div>
+          <div class="chips">
+            <span class="chip">30M</span>
+            <span class="chip">1H</span>
+            <span class="chip active">2H</span>
+            <span class="chip">CUSTOM</span>
+          </div>
+          <div class="flip-btn" id="flip-btn">
+            <span class="text-flip">▼ FLIP</span>
+            <span class="text-unflip">▲ UNFLIP</span>
+          </div>
+          <div class="cursor" id="cursor">
+            <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1.4" stroke-linejoin="round">
+              <path d="M4 2 L4 18 L9 14 L12 21 L15 19 L12 13 L19 13 Z" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="how-sub">Set up once with a USB cable. Everything after is wireless.</div>
+
+    <!-- iPHONE -->
+    <div class="iphone">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <div class="iphone-time">9:41</div>
+        <div class="iphone-date">Saturday, May 24</div>
+        <div class="app-grid">
+          <div class="app distracting app-1"></div>
+          <div class="app distracting app-2"></div>
+          <div class="app distracting app-3"></div>
+          <div class="app distracting app-4"></div>
+          <div class="app distracting app-5"></div>
+          <div class="app distracting app-6"></div>
+          <div class="app distracting app-7"></div>
+          <div class="app distracting app-8"></div>
+          <div class="app distracting app-9"></div>
+          <div class="app system-1"></div>
+          <div class="app distracting app-11"></div>
+          <div class="app system-2"></div>
+        </div>
+      </div>
+      <div class="iphone-home"></div>
+    </div>
+  </div>
+
+  <div class="caption-strip reveal">
+    <span><span class="step">① PICK A PROFILE</span></span>
+    <span>→</span>
+    <span><span class="step">② SET A DURATION</span></span>
+    <span>→</span>
+    <span><span class="step">③ FLIP · APPS FLY OFF</span></span>
+    <span>→</span>
+    <span><span class="step">④ ONLY YOUR MAC UNFLIPS</span></span>
+  </div>
 </section>
 
-<!-- ── Footer ───────────────────────────────────────────────────── -->
-<footer class="footer-min">
-    © 2026 FLIPPED ·
-    <a href="privacy.html">PRIVACY</a> ·
-    <a href="terms.html">TERMS</a> ·
-    <a href="mailto:support@useflipped.com">SUPPORT</a>
+<!-- ─── 04 · COMPARISON ──────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-head reveal">
+    <div class="eyebrow">VS. THE COMPETITION</div>
+    <h2 class="h2">Every other blocker has<br>an escape hatch.<br>Except Flipped.</h2>
+    <p class="lede">
+      Other blockers can be deleted from the iPhone, disabled in Screen Time, or escaped with a factory reset.
+      Flipped's only sanctioned unflip is your paired Mac.
+    </p>
+  </div>
+  <div class="table-wrap reveal">
+    <table class="ctable">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Screen Time</th>
+          <th>Opal</th>
+          <th>Brick</th>
+          <th class="flipped-col">Flipped</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Blocks distracting apps</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Can't be deleted from phone</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="check">✓</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Blocks Screen Time bypass</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Survives factory reset</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Initiate FLIP from your phone</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Mac-paired enforcement</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>No hardware required</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="cross">✗</span></td>
+          <td class="flipped-col"><span class="check">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-footnote">Sources: each product's published features as of 2026-05-23. Flipped behavior derives from Mac-paired iOS supervision via Apple's MobileDevice.framework.</p>
+</section>
+
+<!-- ─── 05 · EVERYTHING YOU NEED TO KNOW ─────────────────────────── -->
+<section class="section" id="faq">
+  <div class="section-head reveal">
+    <div class="eyebrow">HONESTY</div>
+    <h2 class="h2">Everything you need to know<br>before using Flipped.</h2>
+    <p class="lede">
+      Flipped is a real commitment. These are the things we'd want you to know before you pay.
+    </p>
+  </div>
+  <div class="disclosure-grid">
+    <div class="card disclosure reveal">
+      <div class="num">01</div>
+      <h3>You need a Mac.</h3>
+      <p>Flipped runs on macOS. The Mac is the only sanctioned way to unflip. Without a paired Mac, you can't use the product.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">02</div>
+      <h3>Only your Mac can unflip.</h3>
+      <p>Once flipped, the only way to get blocked apps back is to plug your iPhone into your paired Mac. That's the whole point.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">03</div>
+      <h3>Time-based expiry is supported.</h3>
+      <p>Commit for 30 minutes, 1 hour, 8 hours, a week — Flipped will auto-unflip when the timer ends. You don't need access to your Mac to ride out a committed session.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">04</div>
+      <h3>Factory reset loses your data, not your flip.</h3>
+      <p>Erasing the iPhone is a nuclear option that wipes all personal data. Supervision persists. Designed this way on purpose.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">05</div>
+      <h3>iPhone-only today.</h3>
+      <p>Android and cross-platform coming. iOS is where the moat is sharpest; we built that first.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">06</div>
+      <h3>Lost-Mac recovery exists.</h3>
+      <p>If you lose access to your paired Mac, contact support — there's a path to recover, but it isn't instant. Mac stays the key by design.</p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">07</div>
+      <h3>We collect minimal data.</h3>
+      <p>Email, device identifier, app-block history. We do not see your messages, your photos, or your screen content. <a href="privacy.html">Read the privacy policy →</a></p>
+    </div>
+    <div class="card disclosure reveal">
+      <div class="num">08</div>
+      <h3>Cancel anytime.</h3>
+      <p>Monthly subscription cancels with one click. Annual: prorated refund within 14 days. Lifetime: 30-day no-questions-asked refund.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 06 · PRICING ─────────────────────────────────────────────── -->
+<section class="section" id="pricing">
+  <div class="section-head reveal">
+    <div class="eyebrow">PRICING</div>
+    <h2 class="h2">Three ways to pay.<br>One product, no upsells.</h2>
+    <p class="lede">Try free for 14 days. Pick the plan that fits — change it anytime.</p>
+  </div>
+  <div class="tiers">
+    <div class="tier reveal">
+      <div class="name">Monthly</div>
+      <div class="price">$12.99<span class="per">/mo</span></div>
+      <div class="equiv">Billed every month</div>
+      <div class="tagline">The flexible option. Cancel anytime.</div>
+      <div class="trial-line">14-DAY FREE TRIAL</div>
+      <button class="btn ghost" data-checkout-plan="monthly">Start free trial</button>
+    </div>
+    <div class="tier featured reveal">
+      <div class="popular">MOST POPULAR</div>
+      <div class="name">Annual</div>
+      <div class="price">$89.99<span class="per">/yr</span></div>
+      <div class="equiv">$7.50/MO · SAVE 42%</div>
+      <div class="tagline">Best value if you're in it for the long haul.</div>
+      <div class="trial-line">14-DAY FREE TRIAL</div>
+      <button class="btn primary" data-checkout-plan="annual">Start free trial</button>
+    </div>
+    <div class="tier reveal">
+      <div class="name">Lifetime</div>
+      <div class="price">$115<span class="per">/once</span></div>
+      <div class="equiv">No subscription. Ever.</div>
+      <div class="tagline">For people allergic to recurring charges.</div>
+      <div class="trial-line">30-DAY MONEY-BACK</div>
+      <button class="btn ghost" data-checkout-plan="lifetime">Buy lifetime</button>
+    </div>
+  </div>
+  <p class="pricing-footnote">Prices in USD · Family plan + team licensing — contact us</p>
+</section>
+
+<!-- ─── 07 · FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
 </footer>
 
+<script src="js/hero.js?v=20"></script>
+<script src="js/observer.js?v=20"></script>
+<script src="js/checkout.js?v=20"></script>
 </body>
 </html>
