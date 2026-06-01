@@ -70,7 +70,11 @@
     timers.push(setTimeout(pressDown,  T_PRESS_DOWN));
     timers.push(setTimeout(pressUp,    T_PRESS_UP));
     timers.push(setTimeout(flipOn,     T_APPS_FLIP));
-    // Cursor stays near button while flipped (no random wandering)
+    // The mega-tile morphs idle→flipped, which can shift the button a few px.
+    // Re-measure so the cursor glides to the UNFLIP button's exact spot
+    // (keeps the second press landing dead-on, not 16px low).
+    timers.push(setTimeout(placeCursorOnButton, T_APPS_FLIP + 1000));
+    // Cursor stays on the button while flipped (no random wandering)
     timers.push(setTimeout(pressDown,  T_PRESS_DOWN_2));
     timers.push(setTimeout(pressUp,    T_PRESS_UP_2));
     timers.push(setTimeout(flipOff,    T_APPS_RETURN));

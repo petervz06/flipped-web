@@ -48,7 +48,7 @@
   </div>
 
   <div class="demo-stage reveal" id="demo-stage">
-    <!-- MAC -->
+    <!-- MAC — matches the real Flipped Home tab (mega-tile design) -->
     <div class="mac">
       <div class="mac-titlebar">
         <span class="dot r"></span>
@@ -57,32 +57,43 @@
       </div>
       <div class="mac-body">
         <aside class="mac-sidebar">
-          <div class="label">DEVICES</div>
-          <div class="device-row">
-            <div class="name">Your iPhone</div>
-            <div class="meta">ONLINE</div>
-          </div>
-          <div class="mac-nav">
-            <span class="active">HOME</span>
-            <span>PROFILES</span>
-            <span>SCHEDULES</span>
-            <span>SETTINGS</span>
-          </div>
+          <div class="sidebar-brand">FLIPPED</div>
+          <nav class="sidebar-nav">
+            <span class="snav active"><span class="em">—</span>Home</span>
+            <span class="snav"><span class="em">—</span>Modes</span>
+            <span class="snav"><span class="em">—</span>Profiles</span>
+            <span class="snav"><span class="em">—</span>Settings</span>
+          </nav>
+          <div class="sidebar-device"><span class="dot-green"></span>YOUR IPHONE</div>
         </aside>
         <div class="mac-main">
-          <div class="label">ACTIVE PROFILE</div>
-          <div class="profile-name">Deep Focus</div>
-          <div class="session-status">● ACTIVE SESSION · 2H REMAINING</div>
-          <div class="label">DURATION</div>
-          <div class="chips">
-            <span class="chip">30M</span>
-            <span class="chip">1H</span>
-            <span class="chip active">2H</span>
-            <span class="chip">CUSTOM</span>
-          </div>
-          <div class="flip-btn" id="flip-btn">
-            <span class="text-flip">▼ FLIP</span>
-            <span class="text-unflip">▲ UNFLIP</span>
+          <div class="mac-wordmark">FLIPPED</div>
+          <div class="mega-tile">
+            <div class="tile-label"><span class="when-idle">STATUS</span><span class="when-flipped">PHONE IS FLIPPED</span></div>
+            <div class="tile-headline"><span class="when-idle">Phone is free</span><span class="when-flipped">Phone is flipped</span></div>
+            <div class="tile-meta"><span class="when-idle">5-day streak · 27 sessions</span><span class="when-flipped">MANUAL · DEEP FOCUS</span></div>
+            <div class="time-regained">
+              <div class="tr-grid">
+                <div class="tr-cell"><div class="tr-num">2</div><div class="tr-lbl">DAYS</div></div>
+                <div class="tr-cell"><div class="tr-num">7</div><div class="tr-lbl">HRS</div></div>
+                <div class="tr-cell"><div class="tr-num">41</div><div class="tr-lbl">MIN</div></div>
+                <div class="tr-cell"><div class="tr-num">18</div><div class="tr-lbl">SEC</div></div>
+              </div>
+              <div class="tr-caption">TIME REGAINED</div>
+            </div>
+            <div class="tile-divider"></div>
+            <div class="active-profile-row">
+              <div>
+                <div class="apr-label">ACTIVE PROFILE</div>
+                <div class="apr-name">◉ Deep Focus</div>
+              </div>
+              <div class="apr-change">CHANGE</div>
+            </div>
+            <div class="tile-divider"></div>
+            <div class="flip-btn" id="flip-btn">
+              <span class="text-flip">▶ FLIP</span>
+              <span class="text-unflip">UNFLIP</span>
+            </div>
           </div>
           <div class="cursor" id="cursor">
             <svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1.4" stroke-linejoin="round">
@@ -119,11 +130,11 @@
   </div>
 
   <div class="caption-strip reveal">
-    <span><span class="step">① PICK A PROFILE</span></span>
+    <span><span class="step">① OPEN FLIPPED ON YOUR MAC</span></span>
     <span>→</span>
-    <span><span class="step">② SET A DURATION</span></span>
+    <span><span class="step">② TAP FLIP</span></span>
     <span>→</span>
-    <span><span class="step">③ FLIP · APPS FLY OFF</span></span>
+    <span><span class="step">③ APPS VANISH FROM YOUR IPHONE</span></span>
     <span>→</span>
     <span><span class="step">④ ONLY YOUR MAC UNFLIPS</span></span>
   </div>
