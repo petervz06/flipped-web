@@ -24,30 +24,41 @@
 
 /* ─── PRODUCT WALKTHROUGH ────────────────────────────────────────── */
 .walkthrough {
-  background: radial-gradient(ellipse at top, #0a0a0a, #000 70%);
+  /* Faint design-canvas grid + radial vignette (SHIFT-style depth cue) */
+  background:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px),
+    radial-gradient(ellipse at top, #0b0b0b, #000 72%);
+  background-size: 48px 48px, 48px 48px, 100% 100%;
   padding: 96px 28px;
 }
-.walkthrough .section-head { margin-bottom: 56px; }
+.walkthrough .section-head { margin-bottom: 64px; }
 
+/* 3D scene: flat Mac as the base layer, iPhone floating + tilted over its
+   bottom-right corner with a strong soft shadow. Perspective on the stage
+   gives the whole scene a shared vanishing point. */
 .demo-stage {
-  max-width: 980px;
+  max-width: 940px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) auto;
-  gap: 32px;
-  align-items: center;
+  position: relative;
+  perspective: 2000px;
+  padding-bottom: 44px;
+  min-height: 470px;
 }
 
 /* Mac window */
 /* Window — matches the real Flipped Mac app: black window, traffic lights,
    then a floating sidebar "island" + content area (mega-tile design). */
 .mac {
+  width: 80%;
   background: #000;
   border: 1px solid var(--border-2);
   border-radius: var(--r-lg);
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  /* deep, soft floor shadow so the window reads as raised off the canvas */
+  box-shadow: 0 44px 88px -24px rgba(0,0,0,0.8), 0 12px 30px rgba(0,0,0,0.45);
   position: relative;
+  z-index: 1;
 }
 .mac-titlebar {
   padding: 11px 14px;
@@ -278,13 +289,23 @@
    (assets/iphone-flip.mp4). Bezel + corner radius are CSS; everything
    inside the screen is the real iOS home screen footage. */
 .iphone {
-  width: 200px;
-  height: 412px;
-  border-radius: 44px;
+  width: 212px;
+  height: 436px;
+  border-radius: 46px;
   border: 8px solid #1a1a1a;
   background: #000;
-  position: relative;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06);
+  /* float over the Mac's bottom-right corner, tilted toward the viewer */
+  position: absolute;
+  right: 6px;
+  bottom: -26px;
+  z-index: 3;
+  transform: rotateY(-16deg) rotateX(4deg);
+  transform-origin: center center;
+  /* directional drop shadow sells the float + the 3D angle */
+  box-shadow:
+    -34px 46px 80px -18px rgba(0,0,0,0.85),
+    inset 0 0 0 1px rgba(255,255,255,0.07),
+    inset 2px 0 4px rgba(255,255,255,0.10);
 }
 .iphone-screen {
   height: 100%;
@@ -506,15 +527,50 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .demo-stage      { grid-template-columns: 1fr; justify-items: center; }
+  /* Flatten the 3D scene: stack Mac over phone, no perspective/overlap */
+  .demo-stage {
+    perspective: none;
+    padding-bottom: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .mac { width: 100%; }
+  .iphone {
+    position: static;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    box-shadow: 0 24px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
   .disclosure-grid { grid-template-columns: 1fr; }
   .tiers           { grid-template-columns: 1fr; }
   .tier.featured   { transform: none; }
 }
 @media (max-width: 540px) {
   .hero { padding: 80px 20px 56px; }
-  .walkthrough { padding: 72px 20px; }
-  .mac-body { grid-template-columns: 120px 1fr; min-height: 320px; }
+  .walkthrough { padding: 72px 18px; overflow: hidden; }
+
+  /* Shrink the Mac UI so its real-app layout fits a phone-width screen.
+     min-width:0 lets the content column shrink below its intrinsic size. */
+  .mac-body { grid-template-columns: 104px 1fr; min-height: 0; }
+  .mac-sidebar { padding: 12px 0; }
+  .sidebar-brand { font-size: 10px; letter-spacing: 3px; padding: 4px 12px 14px; }
+  .snav { padding: 6px 12px; font-size: 11px; }
+  .sidebar-device { padding: 10px 12px 2px; font-size: 8px; }
+  .mac-main { padding: 16px 14px; min-width: 0; gap: 12px; }
+  .mac-wordmark { font-size: 14px; letter-spacing: 4px; }
+  .mega-tile { padding: 16px; gap: 11px; }
+  .tile-headline { font-size: 20px; }
+  .tile-meta { letter-spacing: 0; }
+  .tr-cell { padding: 8px 2px; }
+  .tr-num { font-size: 17px; }
+  .tr-lbl { font-size: 7px; letter-spacing: 1px; }
+  .apr-name { font-size: 12px; }
+  .flip-btn { letter-spacing: 3px; font-size: 12px; }
+
   .ctable { font-size: 12px; }
   .ctable th, .ctable td { padding: 10px 6px; }
   .ctable th:first-child, .ctable td:first-child { padding-left: 14px; }
