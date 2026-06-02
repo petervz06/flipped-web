@@ -24,41 +24,30 @@
 
 /* ─── PRODUCT WALKTHROUGH ────────────────────────────────────────── */
 .walkthrough {
-  /* Faint design-canvas grid + radial vignette (SHIFT-style depth cue) */
-  background:
-    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px),
-    radial-gradient(ellipse at top, #0b0b0b, #000 72%);
-  background-size: 48px 48px, 48px 48px, 100% 100%;
+  background: radial-gradient(ellipse at top, #0a0a0a, #000 70%);
   padding: 96px 28px;
 }
-.walkthrough .section-head { margin-bottom: 64px; }
+.walkthrough .section-head { margin-bottom: 56px; }
 
-/* 3D scene: flat Mac as the base layer, iPhone floating + tilted over its
-   bottom-right corner with a strong soft shadow. Perspective on the stage
-   gives the whole scene a shared vanishing point. */
 .demo-stage {
-  max-width: 940px;
+  max-width: 980px;
   margin: 0 auto;
-  position: relative;
-  perspective: 2000px;
-  padding-bottom: 44px;
-  min-height: 470px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) auto;
+  gap: 32px;
+  align-items: center;
 }
 
 /* Mac window */
 /* Window — matches the real Flipped Mac app: black window, traffic lights,
    then a floating sidebar "island" + content area (mega-tile design). */
 .mac {
-  width: 80%;
   background: #000;
   border: 1px solid var(--border-2);
   border-radius: var(--r-lg);
   overflow: hidden;
-  /* deep, soft floor shadow so the window reads as raised off the canvas */
-  box-shadow: 0 44px 88px -24px rgba(0,0,0,0.8), 0 12px 30px rgba(0,0,0,0.45);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
   position: relative;
-  z-index: 1;
 }
 .mac-titlebar {
   padding: 11px 14px;
@@ -285,41 +274,94 @@
 }
 .cursor svg { width: 100%; height: 100%; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6)); }
 
-/* iPhone — the frame holds a real screen recording of an actual flip
-   (assets/iphone-flip.mp4). Bezel + corner radius are CSS; everything
-   inside the screen is the real iOS home screen footage. */
+/* iPhone */
 .iphone {
-  width: 212px;
-  height: 436px;
-  border-radius: 46px;
-  border: 8px solid #1a1a1a;
+  width: 200px;
+  height: 410px;
+  border-radius: 42px;
+  border: 9px solid #1a1a1a;
   background: #000;
-  /* float over the Mac's bottom-right corner, tilted toward the viewer */
+  padding: 8px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.iphone-notch {
   position: absolute;
-  right: 6px;
-  bottom: -26px;
-  z-index: 3;
-  transform: rotateY(-16deg) rotateX(4deg);
-  transform-origin: center center;
-  /* directional drop shadow sells the float + the 3D angle */
-  box-shadow:
-    -34px 46px 80px -18px rgba(0,0,0,0.85),
-    inset 0 0 0 1px rgba(255,255,255,0.07),
-    inset 2px 0 4px rgba(255,255,255,0.10);
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 22px;
+  background: #000;
+  border-radius: 0 0 16px 16px;
+  z-index: 2;
+}
+.iphone-home {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 5px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 3px;
 }
 .iphone-screen {
+  padding: 38px 8px 24px;
   height: 100%;
-  border-radius: 36px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(120,40,180,0.18), transparent 60%),
+    linear-gradient(180deg, #050816 0%, #0a0a18 100%);
+  border-radius: 32px;
   overflow: hidden;
-  background: #000;
 }
-.iphone-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 36px;
+.iphone-time { text-align: center; font-size: 12px; color: rgba(255,255,255,0.9); font-weight: 300; margin-bottom: 2px; }
+.iphone-date { text-align: center; font-size: 9px; color: rgba(255,255,255,0.55); margin-bottom: 18px; }
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px 8px;
+  padding: 0 6px;
 }
+.app {
+  aspect-ratio: 1;
+  border-radius: 11px;
+  transition: opacity 280ms ease, transform 280ms ease, filter 280ms ease;
+}
+.app.distracting { transition-property: opacity, transform, filter; }
+.demo-stage.is-flipped .app.distracting {
+  opacity: 0;
+  transform: translateY(-14px) scale(0.7) rotate(-6deg);
+  filter: blur(2px);
+}
+.app-1  { background: linear-gradient(135deg,#1da1f2,#0d8bd9); }
+.app-2  { background: linear-gradient(135deg,#e1306c,#fd1d1d,#fdcb52); }
+.app-3  { background: linear-gradient(135deg,#3b5998,#1877f2); }
+.app-4  { background: linear-gradient(135deg,#ff0050,#000); }
+.app-5  { background: linear-gradient(135deg,#5865f2,#7289da); }
+.app-6  { background: linear-gradient(135deg,#ff4500,#ff8717); }
+.app-7  { background: linear-gradient(135deg,#00aff0,#0078d7); }
+.app-8  { background: linear-gradient(135deg,#fb6a30,#fa4659); }
+.app-9  { background: linear-gradient(135deg,#ff9500,#ff5e3a); }
+.app-10 { background: linear-gradient(135deg,#9b59b6,#8e44ad); }
+.app-11 { background: linear-gradient(135deg,#03a9f4,#0288d1); }
+.app-12 { background: linear-gradient(135deg,#e74c3c,#c0392b); }
+
+.app.system-1 { background: linear-gradient(135deg,#34c759,#1f9d40); }
+.app.system-2 { background: linear-gradient(135deg,#00b6f0,#0086c3); }
+
+/* Per-app stagger when fading out. Only applies during is-flipped. */
+.demo-stage.is-flipped .app.distracting:nth-child(1)  { transition-delay: 0ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(2)  { transition-delay: 60ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(3)  { transition-delay: 120ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(4)  { transition-delay: 180ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(5)  { transition-delay: 240ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(6)  { transition-delay: 300ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(7)  { transition-delay: 360ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(8)  { transition-delay: 420ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(9)  { transition-delay: 480ms; }
+.demo-stage.is-flipped .app.distracting:nth-child(11) { transition-delay: 540ms; }
 
 .caption-strip {
   display: flex;
@@ -527,50 +569,15 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  /* Flatten the 3D scene: stack Mac over phone, no perspective/overlap */
-  .demo-stage {
-    perspective: none;
-    padding-bottom: 0;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
-  }
-  .mac { width: 100%; }
-  .iphone {
-    position: static;
-    right: auto;
-    bottom: auto;
-    transform: none;
-    box-shadow: 0 24px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.06);
-  }
+  .demo-stage      { grid-template-columns: 1fr; justify-items: center; }
   .disclosure-grid { grid-template-columns: 1fr; }
   .tiers           { grid-template-columns: 1fr; }
   .tier.featured   { transform: none; }
 }
 @media (max-width: 540px) {
   .hero { padding: 80px 20px 56px; }
-  .walkthrough { padding: 72px 18px; overflow: hidden; }
-
-  /* Shrink the Mac UI so its real-app layout fits a phone-width screen.
-     min-width:0 lets the content column shrink below its intrinsic size. */
-  .mac-body { grid-template-columns: 104px 1fr; min-height: 0; }
-  .mac-sidebar { padding: 12px 0; }
-  .sidebar-brand { font-size: 10px; letter-spacing: 3px; padding: 4px 12px 14px; }
-  .snav { padding: 6px 12px; font-size: 11px; }
-  .sidebar-device { padding: 10px 12px 2px; font-size: 8px; }
-  .mac-main { padding: 16px 14px; min-width: 0; gap: 12px; }
-  .mac-wordmark { font-size: 14px; letter-spacing: 4px; }
-  .mega-tile { padding: 16px; gap: 11px; }
-  .tile-headline { font-size: 20px; }
-  .tile-meta { letter-spacing: 0; }
-  .tr-cell { padding: 8px 2px; }
-  .tr-num { font-size: 17px; }
-  .tr-lbl { font-size: 7px; letter-spacing: 1px; }
-  .apr-name { font-size: 12px; }
-  .flip-btn { letter-spacing: 3px; font-size: 12px; }
-
+  .walkthrough { padding: 72px 20px; }
+  .mac-body { grid-template-columns: 120px 1fr; min-height: 320px; }
   .ctable { font-size: 12px; }
   .ctable th, .ctable td { padding: 10px 6px; }
   .ctable th:first-child, .ctable td:first-child { padding-left: 14px; }
