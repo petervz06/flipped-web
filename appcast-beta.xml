@@ -6,6 +6,32 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.68</title>
+      <pubDate>Tue, 02 Jun 2026 19:16:50 +0000</pubDate>
+      <sparkle:version>1.0.68</sparkle:version>
+      <sparkle:shortVersionString>1.0.68</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Faster, more honest flip status + profile fixes.
+
+Flip status now snaps: when you flip, the screen
+updates to "Phone is flipped" the moment your apps
+actually disappear, and shows "Applying... keep your
+iPhone unlocked" only while it is still landing. No
+more lag between the apps going and the UI catching up.
+
+Profiles: building a custom profile now shows the
+right category counts (they match the apps in each
+category), and the app list is sorted A-Z.
+
+Modes: Focus and Unplug now show which profile they
+will block, with a CHANGE shortcut. Your custom
+profiles are no longer hidden on those screens.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.68.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="KKYzjBUc27hLq46S6tm22DGdoUQkCdvTEGiOcCJ1fL2lRIlkt4JtItPW8gsyR7GeVfbWicTmAJlwh1YLAMoTDQ==" length="23332458" />
+    </item>
+    <item>
       <title>Version 1.0.67</title>
       <pubDate>Tue, 02 Jun 2026 18:24:07 +0000</pubDate>
       <sparkle:version>1.0.67</sparkle:version>
