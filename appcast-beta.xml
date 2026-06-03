@@ -6,6 +6,27 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.69</title>
+      <pubDate>Wed, 03 Jun 2026 17:22:31 +0000</pubDate>
+      <sparkle:version>1.0.69</sparkle:version>
+      <sparkle:shortVersionString>1.0.69</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Reliability: schedules + offline catch-up.
+
+Scheduled flips now use your selected profile — the same
+apps a manual flip blocks. If Simple is selected, a
+schedule blocks your Simple apps and nothing more.
+
+Flip while your iPhone is off or locked: Flipped keeps
+retrying and applies the moment your phone is back —
+with a "Retrying… unlock your iPhone" countdown so you
+know what's happening.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.69.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="MG7TptGQ01nFKZRTZBNiM1rig5JELdZB0v3FJXKSl+cFooOTAQGvGlKwXNJ4n6tWTFGF1Tqk1pKPwfPbPpQCAA==" length="23337354" />
+    </item>
+    <item>
       <title>Version 1.0.68</title>
       <pubDate>Tue, 02 Jun 2026 19:16:50 +0000</pubDate>
       <sparkle:version>1.0.68</sparkle:version>
