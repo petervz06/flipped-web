@@ -32,7 +32,7 @@ Design system + all 9 public pages, on a single shared `styles.css`:
 | Page | State |
 |---|---|
 | `index.html` | Full 7-section homepage (nav · hero · product walkthrough · comparison table · "everything you need to know" · pricing · footer) |
-| `pricing.html` | 3-tier ($8.99/mo · $89.99/yr featured · $149 lifetime) + FAQ |
+| `pricing.html` | 3-tier ($8.99/mo · $89.99/yr featured · $149.99 lifetime) + FAQ |
 | `help.html`, `getting-started.html` | Restyled, copy preserved |
 | `privacy.html`, `terms.html` | Restyled, legal copy verbatim |
 | `press.html` | Restyled, fake press logos pruned |
@@ -64,18 +64,14 @@ Shared system: `styles.css` (tokens, nav, buttons, cards, footer, content-page +
 
 ## What's LEFT
 
-1. **Stripe** (separate plan `2026-05-26-stripe-checkout-integration.md`):
-   - Backend code is DONE on worktree branch `feat/stripe-multi-price`
-     (`~/Flipped/.claude/worktrees/stripe-multi-price`, 3 commits, 5 unit tests pass):
-     3 named price IDs in config + `plan` param + 14-day trial + sub/payment mode switch.
-   - **Pete's Phase 1 (≈45 min, not done):** create Stripe account + 3 Products/Prices, configure
-     webhook → `…/api/billing/webhook`, set Railway env vars
-     (`STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_MONTHLY|ANNUAL|LIFETIME`, `STRIPE_WEBHOOK_SECRET`,
-     `STRIPE_SUCCESS_URL`, `STRIPE_CANCEL_URL`). Steps are in the plan.
-   - Then: deploy backend branch, run Phase 3 test-mode smoke (monthly/annual/lifetime/portal),
-     Phase 5 live-mode + $1 promo-code smoke.
-   - Until Stripe envs are set, the pricing buttons show a graceful "checkout launching soon"
-     fallback (503-handled in `js/checkout.js`).
+1. **Stripe** (separate plan `2026-05-26-stripe-checkout-integration.md`). **Pricing: $8.99/mo · $89.99/yr · $149.99 lifetime** (site matched to these). Backend code DONE on worktree `feat/stripe-multi-price` (`~/Flipped/.claude/worktrees/stripe-multi-price`, 3 commits, 5 tests): 3 named price IDs + `plan` param + 14-day trial + sub/payment switch.
+
+   **Phase 1 progress (2026-06-04, Pete resumes tonight):**
+   - ✅ **3 Products created in Stripe TEST mode** — Flipped Monthly $8.99/mo, Annual $89.99/yr, Lifetime $149.99 once. (Each shows "Managed Payments: Needs info" = Stripe account-activation; fine for test, REQUIRED before live.)
+   - ⬜ **Webhook** — Developers → Webhooks → endpoint `https://flipped-production-79b3.up.railway.app/api/billing/webhook`, 5 events (`checkout.session.completed`, `customer.subscription.created|updated|deleted`, `invoice.payment_failed`); copy `whsec_` secret.
+   - ⬜ **7 Railway env vars** on the backend service: `STRIPE_SECRET_KEY` (sk_test_…), `STRIPE_PRICE_ID_MONTHLY|ANNUAL|LIFETIME` (the 3 price IDs), `STRIPE_WEBHOOK_SECRET` (whsec_…), `STRIPE_SUCCESS_URL=https://useflipped.com/billing/success`, `STRIPE_CANCEL_URL=https://useflipped.com/billing/cancel`.
+
+   **Then (Claude, once webhook + envs confirmed):** merge/deploy `feat/stripe-multi-price` → prod (Pete approves the push), Phase 3 test-mode smoke (monthly/annual/lifetime + customer portal), then Phase 5 live-mode + ~$1.49 promo-code smoke. Until the envs are set + code deploys, pricing buttons show a graceful "checkout launching soon" 503 fallback (`js/checkout.js`).
 2. **Final review** — Pete walks the live preview; any copy/visual tweaks.
 3. **Go live** — merge `redesign-2026-05` → `main`, push (GitHub Pages, ~30s). **Pete's call.**
    Also delete the now-redundant `billing-landing-pages` branch.
