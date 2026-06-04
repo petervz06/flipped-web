@@ -32,7 +32,7 @@ Design system + all 9 public pages, on a single shared `styles.css`:
 | Page | State |
 |---|---|
 | `index.html` | Full 7-section homepage (nav · hero · product walkthrough · comparison table · "everything you need to know" · pricing · footer) |
-| `pricing.html` | 3-tier ($12.99/mo · $89.99/yr featured · $115 lifetime) + FAQ |
+| `pricing.html` | 3-tier ($8.99/mo · $89.99/yr featured · $149 lifetime) + FAQ |
 | `help.html`, `getting-started.html` | Restyled, copy preserved |
 | `privacy.html`, `terms.html` | Restyled, legal copy verbatim |
 | `press.html` | Restyled, fake press logos pruned |
