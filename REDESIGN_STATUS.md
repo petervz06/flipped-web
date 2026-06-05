@@ -62,19 +62,25 @@ Shared system: `styles.css` (tokens, nav, buttons, cards, footer, content-page +
   wants a relabel ("GET FLIPPED").
 - **Mobile:** Mac UI shrinks to fit <540px; demo stacks vertically.
 
-## What's LEFT
+## Stripe — TEST MODE ✅ DONE + VERIFIED (2026-06-05 late night)
 
-1. **Stripe** (separate plan `2026-05-26-stripe-checkout-integration.md`). **Pricing: $8.99/mo · $89.99/yr · $149.99 lifetime** (site matched to these). Backend code DONE on worktree `feat/stripe-multi-price` (`~/Flipped/.claude/worktrees/stripe-multi-price`, 3 commits, 5 tests): 3 named price IDs + `plan` param + 14-day trial + sub/payment switch.
+**Pricing: $8.99/mo · $89.99/yr · $149.99 lifetime** (site matched). The whole integration is built, deployed, and end-to-end verified in Stripe **test (sandbox)** mode:
+- ✅ Backend code **shipped to prod** — `flipped-backend` repo, branch `prod` at **`672f72f`** (pushed + deployed; `/version` confirms). config.py 3 named price IDs + billing.py `plan` param / `_price_id_for_plan` / subscription-vs-payment + 14-day trial. NOTE: this is the **backend deploy repo** (`~/Flipped/backend`, separate from the Mac repo) — the earlier worktree commits in the Mac repo do NOT deploy; the live code is the `672f72f` commit here.
+- ✅ 3 Products in Stripe sandbox; webhook → `…/api/billing/webhook` (5 events, Snapshot payload); 7 test env vars set on the Railway **web** service.
+- ✅ **Verified live:** all 3 plans return real `cs_test_` checkout pages; completed a test purchase (card 4242) → webhook fired → `subscription_status: trialing` on Pete's account. (Pete's test account now has a throwaway test "trialing" sub — harmless test data.)
+- ⚠️ **Tiny follow-up (non-blocking):** webhook caches `subscription_current_period_end` from `data_object.get("current_period_end")`, but Stripe API `2026-05-27.dahlia` moved that off the subscription top-level (now per-item). So period_end stays null; `subscription_status` is correct + Stripe is source of truth. Fix later: read period_end from the subscription item / invoice.
+- ⚠️ Customer-portal endpoint (`/api/billing/portal-session`) not yet smoke-tested (same wiring; deferred).
+- Security: Pete's `sk_test_` was shown in a screenshot — fine (test), can "Roll key" anytime. Never screenshot the LIVE key.
 
-   **Phase 1 progress (2026-06-04, Pete resumes tonight):**
-   - ✅ **3 Products created in Stripe TEST mode** — Flipped Monthly $8.99/mo, Annual $89.99/yr, Lifetime $149.99 once. (Each shows "Managed Payments: Needs info" = Stripe account-activation; fine for test, REQUIRED before live.)
-   - ⬜ **Webhook** — Developers → Webhooks → endpoint `https://flipped-production-79b3.up.railway.app/api/billing/webhook`, 5 events (`checkout.session.completed`, `customer.subscription.created|updated|deleted`, `invoice.payment_failed`); copy `whsec_` secret.
-   - ⬜ **7 Railway env vars** on the backend service: `STRIPE_SECRET_KEY` (sk_test_…), `STRIPE_PRICE_ID_MONTHLY|ANNUAL|LIFETIME` (the 3 price IDs), `STRIPE_WEBHOOK_SECRET` (whsec_…), `STRIPE_SUCCESS_URL=https://useflipped.com/billing/success`, `STRIPE_CANCEL_URL=https://useflipped.com/billing/cancel`.
+## What's LEFT (Pete resumes — launch sequence, IN ORDER)
 
-   **Then (Claude, once webhook + envs confirmed):** merge/deploy `feat/stripe-multi-price` → prod (Pete approves the push), Phase 3 test-mode smoke (monthly/annual/lifetime + customer portal), then Phase 5 live-mode + ~$1.49 promo-code smoke. Until the envs are set + code deploys, pricing buttons show a graceful "checkout launching soon" 503 fallback (`js/checkout.js`).
-2. **Final review** — Pete walks the live preview; any copy/visual tweaks.
-3. **Go live** — merge `redesign-2026-05` → `main`, push (GitHub Pages, ~30s). **Pete's call.**
-   Also delete the now-redundant `billing-landing-pages` branch.
+1. **Stripe LIVE mode** (do NOT push the site before this — else real visitors hit test checkout and "buy" for free):
+   - Pete: complete Stripe **account activation** ("Managed Payments: Needs info" → business + bank details).
+   - Recreate the 3 Products + the webhook in **LIVE** mode (different IDs); grab the live `sk_live_…`, live price IDs, live `whsec_…`.
+   - Swap the 7 Railway env vars to the **live** values (same names).
+   - Smoke: one real $1-ish purchase via a 99%-off promo code (plan `2026-05-26-stripe-checkout-integration.md` Phase 5), then refund + delete the promo.
+2. **Push the redesigned site** — merge `redesign-2026-05` → `main`, push (GitHub Pages ~30s). Brings the new site + working pricing buttons + `billing-success`/`cancel` pages live. **Pete's OK** (public). Then delete the redundant `billing-landing-pages` branch.
+3. **(optional) Final review** + the period_end webhook tweak above.
 
 ## Commits on `redesign-2026-05` (newest first)
 
