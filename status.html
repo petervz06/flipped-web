@@ -1,39 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Status — Flipped</title>
-    <!-- Moved 2026-05-21: the live status page is hosted by BetterStack
-         at status.useflipped.com.  Meta-refresh + JS for instant redirect;
-         noscript link below as the fallback path.  GitHub Pages can't do
-         true 301s, so this is the standard "redirect from a static page"
-         pattern. -->
-    <meta http-equiv="refresh" content="0; url=https://status.useflipped.com/">
-    <link rel="canonical" href="https://status.useflipped.com/">
-    <script>window.location.replace("https://status.useflipped.com/");</script>
-    <style>
-        body { background: #0a0a0a; color: #e0e0e0;
-               font-family: -apple-system, "Inter", system-ui, sans-serif;
-               display: flex; align-items: center; justify-content: center;
-               min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
-        .wrap { max-width: 480px; }
-        h1 { font-size: 18px; letter-spacing: 3px; margin: 0 0 12px;
-             text-transform: uppercase; }
-        p { color: rgba(255,255,255,0.6); font-size: 14px;
-            line-height: 1.5; margin: 0 0 18px; }
-        a { color: #ffba6e; text-decoration: none; font-family: ui-monospace, monospace;
-            font-size: 12px; letter-spacing: 1px; }
-        a:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status — Flipped</title>
+  <!-- Live status lives at status.useflipped.com (BetterStack-hosted).
+       This page is a branded transitional redirect; if the meta-refresh
+       and JS both fail the noscript link below is the manual fallback. -->
+  <meta http-equiv="refresh" content="0; url=https://status.useflipped.com/" />
+  <link rel="canonical" href="https://status.useflipped.com/" />
+  <script>window.location.replace("https://status.useflipped.com/");</script>
+  <link rel="stylesheet" href="styles.css?v=20" />
+  <style>
+    .status-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 120px 28px;
+      text-align: center;
+    }
+    .status-wrap .eyebrow { margin-bottom: 18px; }
+    .status-wrap .h2 { margin-bottom: 18px; }
+    .status-wrap .lede { margin-bottom: 32px; }
+  </style>
 </head>
 <body>
-    <noscript>
-        <div class="wrap">
-            <h1>Status page moved</h1>
-            <p>Flipped's live status now lives at status.useflipped.com.</p>
-            <a href="https://status.useflipped.com/">GO TO STATUS.USEFLIPPED.COM →</a>
-        </div>
-    </noscript>
+
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="index.html#how" class="nav-link">HOW IT WORKS</a>
+    <a href="pricing.html" class="nav-link">PRICING</a>
+    <a href="help.html" class="nav-link">HELP</a>
+    <a href="pricing.html" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
+</nav>
+
+<div class="status-wrap">
+  <div class="eyebrow">STATUS</div>
+  <h2 class="h2">Live status moved.</h2>
+  <p class="lede">Flipped's live status now lives at status.useflipped.com — taking you there now.</p>
+  <a href="https://status.useflipped.com/" class="btn primary">Go to status.useflipped.com →</a>
+  <noscript>
+    <p style="margin-top: 28px;">Click the button above — your browser blocked the automatic redirect.</p>
+  </noscript>
+</div>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
 </body>
 </html>

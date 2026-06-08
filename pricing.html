@@ -1,156 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pricing — Flipped</title>
-    <link rel="stylesheet" href="styles.css?v=15" />
-    <style>
-        .pr { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
-        .pr h1 { font-size: 36px; margin: 0 0 8px; text-align: center; }
-        .pr .subtitle { color: rgba(255,255,255,0.55);
-                        text-align: center; font-size: 15px;
-                        margin: 0 auto 40px; max-width: 480px;
-                        line-height: 1.6; }
-        .tiers { display: grid; gap: 16px;
-                 grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                 margin-bottom: 40px; }
-        .tier { padding: 28px 24px;
-                border: 1px solid rgba(255,255,255,0.12);
-                border-radius: 10px;
-                background: rgba(255,255,255,0.02);
-                display: flex; flex-direction: column; }
-        .tier.featured { border-color: #fff;
-                         background: linear-gradient(180deg,
-                                       rgba(255,255,255,0.06),
-                                       rgba(255,255,255,0.01)); }
-        .tier-name { font-family: ui-monospace, monospace;
-                     font-size: 11px; letter-spacing: 2px;
-                     text-transform: uppercase;
-                     color: rgba(255,255,255,0.5); }
-        .tier-price { font-size: 40px; font-weight: 700;
-                      margin: 8px 0; color: #fff; line-height: 1; }
-        .tier-price .per { font-size: 14px; font-weight: 400;
-                           color: rgba(255,255,255,0.5); }
-        .tier-pitch { font-size: 13px; color: rgba(255,255,255,0.7);
-                      margin: 0 0 16px; line-height: 1.5; }
-        .tier ul { padding-left: 16px; margin: 0 0 20px;
-                   color: rgba(255,255,255,0.85); font-size: 13px;
-                   line-height: 1.7; flex: 1; }
-        .tier li.locked { color: rgba(255,255,255,0.4); }
-        .tier-cta { display: block; padding: 12px 20px;
-                    text-align: center; border-radius: 6px;
-                    text-decoration: none;
-                    font-family: ui-monospace, monospace;
-                    font-weight: 600; font-size: 12px; letter-spacing: 2px;
-                    text-transform: uppercase; }
-        .tier-cta.primary { background: #fff; color: #000; }
-        .tier-cta.ghost { background: transparent;
-                          border: 1px solid rgba(255,255,255,0.4);
-                          color: #fff; }
-        .top-link { color: rgba(255,255,255,0.5); font-size: 11px;
-                    text-decoration: none; letter-spacing: 1px;
-                    font-family: ui-monospace, monospace; }
-        .footnote { color: rgba(255,255,255,0.4); font-size: 12px;
-                    text-align: center; margin-top: 24px; line-height: 1.7; }
-        .faq { margin-top: 60px; }
-        .faq h2 { font-size: 18px; margin: 0 0 16px;
-                  letter-spacing: 1px; text-transform: uppercase;
-                  font-family: ui-monospace, monospace;
-                  color: rgba(255,255,255,0.55); }
-        .faq dt { color: #fff; font-weight: 600; margin-top: 16px;
-                  font-size: 14px; }
-        .faq dd { color: rgba(255,255,255,0.7); margin: 4px 0 0;
-                  line-height: 1.6; font-size: 14px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Flipped</title>
+  <meta name="description" content="$8.99/mo, $89.99/yr (2 months free), or $149.99 lifetime. 14-day free trial. Cancel anytime." />
+  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles-homepage.css?v=20" />
 </head>
 <body>
-<div class="pr">
-    <a href="/" class="top-link">← FLIPPED</a>
-    <h1 style="margin-top: 16px;">Simple pricing.</h1>
-    <p class="subtitle">
-        During beta, Flipped is free.  When the paid tier launches,
-        early users get the lowest grandfathered rate forever.
-    </p>
 
-    <div class="tiers">
-        <div class="tier">
-            <div class="tier-name">FREE</div>
-            <div class="tier-price">$0<span class="per">/forever</span></div>
-            <p class="tier-pitch">
-                The full product, with one ceiling: 30 flips per rolling 24 hours.
-                Plenty for normal use.
-            </p>
-            <ul>
-                <li>Unlimited iPhones (1 per Mac)</li>
-                <li>All preset profiles + custom profiles</li>
-                <li>Schedules, modes, web flip page</li>
-                <li>Always-Allow override list</li>
-                <li class="locked">30 flips / 24h cap</li>
-            </ul>
-            <a href="/" class="tier-cta ghost">SIGN UP →</a>
-        </div>
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="index.html#how" class="nav-link">HOW IT WORKS</a>
+    <a href="index.html#faq" class="nav-link">FAQ</a>
+    <a href="help.html" class="nav-link">HELP</a>
+    <a href="#pricing" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
+</nav>
 
-        <div class="tier featured">
-            <div class="tier-name">PRO  ·  COMING SOON</div>
-            <div class="tier-price">$5<span class="per">/month</span></div>
-            <p class="tier-pitch">
-                Everything in Free, no caps, plus the focus features power
-                users have asked for.  Cancel anytime.
-            </p>
-            <ul>
-                <li>Unlimited flips per day</li>
-                <li>Multi-device per account (family)</li>
-                <li>Cloud sync of custom profiles</li>
-                <li>Weekly summary email + insights</li>
-                <li>Priority support replies</li>
-            </ul>
-            <a href="mailto:pete@useflipped.com?subject=Pro%20waitlist"
-               class="tier-cta primary">JOIN WAITLIST</a>
-        </div>
-
-        <div class="tier">
-            <div class="tier-name">FOREVER  ·  LATER</div>
-            <div class="tier-price">$49<span class="per">/once</span></div>
-            <p class="tier-pitch">
-                Lifetime license.  Pay once, own forever.  For people
-                allergic to subscriptions.
-            </p>
-            <ul>
-                <li>Everything in Pro</li>
-                <li>Lifetime updates</li>
-                <li>No recurring charge</li>
-                <li class="locked">Limited to first 500 buyers</li>
-            </ul>
-            <a href="mailto:pete@useflipped.com?subject=Forever%20waitlist"
-               class="tier-cta ghost">JOIN WAITLIST</a>
-        </div>
+<section class="section" id="pricing">
+  <div class="section-head">
+    <div class="eyebrow">PRICING</div>
+    <h2 class="h2">Three ways to pay.<br>One product, no upsells.</h2>
+    <p class="lede">Try free for 14 days. Pick the plan that fits — change it anytime.</p>
+  </div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="name">Monthly</div>
+      <div class="price">$8.99<span class="per">/mo</span></div>
+      <div class="equiv">Billed every month</div>
+      <div class="tagline">The flexible option. Cancel anytime.</div>
+      <div class="trial-line">14-DAY FREE TRIAL</div>
+      <button class="btn ghost" data-checkout-plan="monthly">Start free trial</button>
     </div>
-
-    <p class="footnote">
-        Pricing is provisional — final numbers may shift before launch.
-        Beta users keep whatever rate they got at signup, forever.
-    </p>
-
-    <div class="faq">
-        <h2>FAQ</h2>
-        <dl>
-            <dt>What does the 30 flips / 24h cap actually mean?</dt>
-            <dd>You can start up to 30 sessions in any rolling 24-hour window.  Most users average 1-3 / day; the cap is there to prevent abuse, not real usage.</dd>
-
-            <dt>Will my friend-test access change?</dt>
-            <dd>No.  Beta users keep the free tier forever, with no cap.  You'll never wake up with your account suddenly limited.</dd>
-
-            <dt>Can I cancel anytime?</dt>
-            <dd>Yes.  Pro is month-to-month, cancel any time, immediate effect.  No retention dark patterns.</dd>
-
-            <dt>Refund policy?</dt>
-            <dd>Pro: prorated refund within 14 days.  Forever: 30-day no-questions-asked refund.  Email <a href="mailto:support@useflipped.com">support@useflipped.com</a>.</dd>
-
-            <dt>Why so cheap?</dt>
-            <dd>It's a one-person company with low fixed costs.  Pro at $5 covers infra + lets me work on Flipped full-time once enough people sign up.</dd>
-        </dl>
+    <div class="tier featured">
+      <div class="popular">MOST POPULAR</div>
+      <div class="name">Annual</div>
+      <div class="price">$89.99<span class="per">/yr</span></div>
+      <div class="equiv">$7.50/MO · 2 MONTHS FREE</div>
+      <div class="tagline">Best value if you're in it for the long haul.</div>
+      <div class="trial-line">14-DAY FREE TRIAL</div>
+      <button class="btn primary" data-checkout-plan="annual">Start free trial</button>
     </div>
-</div>
+    <div class="tier">
+      <div class="name">Lifetime</div>
+      <div class="price">$149.99<span class="per">/once</span></div>
+      <div class="equiv">No subscription. Ever.</div>
+      <div class="tagline">For people allergic to recurring charges.</div>
+      <div class="trial-line">30-DAY MONEY-BACK</div>
+      <button class="btn ghost" data-checkout-plan="lifetime">Buy lifetime</button>
+    </div>
+  </div>
+  <p class="pricing-footnote">Prices in USD · Family plan + team licensing — contact us</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div class="eyebrow">PRICING FAQ</div>
+    <h2 class="h2">Questions you might have.</h2>
+  </div>
+  <div style="max-width: 760px; margin: 0 auto;">
+    <details class="faq">
+      <summary>Is the 14-day free trial real?</summary>
+      <div class="answer">
+        <p>Yes. Monthly and Annual plans both start with a 14-day free trial — no charge until day 15. Cancel any time in the first 14 days and you won't be billed.</p>
+      </div>
+    </details>
+    <details class="faq">
+      <summary>What's the cancellation policy?</summary>
+      <div class="answer">
+        <p>Monthly: cancel with one click in the customer portal — applies at the end of your billing period.</p>
+        <p>Annual: prorated refund within 14 days of the renewal (so you can cancel + recover most of your money even after the free trial ends).</p>
+        <p>Lifetime: 30-day no-questions-asked refund. Email <a href="mailto:support@useflipped.com">support@useflipped.com</a>.</p>
+      </div>
+    </details>
+    <details class="faq">
+      <summary>Why is the Annual plan cheaper per month?</summary>
+      <div class="answer">
+        <p>Paying yearly removes the churn-rate guesswork and lowers our payment-processing overhead. That saving — about two months free vs paying monthly — passes back to you. We'd rather have you committed than re-selling you every month.</p>
+      </div>
+    </details>
+    <details class="faq">
+      <summary>Is Lifetime really lifetime?</summary>
+      <div class="answer">
+        <p>Yes. One $149.99 payment, no subscription, includes every future update to Flipped. If the company shuts down (which we don't intend), you keep access for as long as Apple's iOS supervision channel keeps working — the moat is in the OS, not on our servers.</p>
+      </div>
+    </details>
+    <details class="faq">
+      <summary>Can I change plans later?</summary>
+      <div class="answer">
+        <p>Yes. Monthly → Annual upgrade is prorated. Lifetime is a one-way one-time purchase; if you start Monthly or Annual and later want Lifetime, email support and we'll credit your most recent payment toward the upgrade.</p>
+      </div>
+    </details>
+    <details class="faq">
+      <summary>Family plan? Team licensing?</summary>
+      <div class="answer">
+        <p>Not on the self-serve checkout yet — email <a href="mailto:support@useflipped.com">support@useflipped.com</a>. Family plans run roughly $5/seat/month and team licenses are negotiated case by case.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
+<script src="js/checkout.js?v=20"></script>
 </body>
 </html>

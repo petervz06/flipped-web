@@ -1,170 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Privacy Policy — Flipped</title>
-    <link rel="stylesheet" href="styles.css?v=15" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Flipped</title>
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
-    <div class="brand">FLIPPED</div>
 
-    <div class="legal">
-        <h1>Privacy Policy</h1>
-        <p class="updated">Last updated: May 14, 2026</p>
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="index.html#how" class="nav-link">HOW IT WORKS</a>
+    <a href="pricing.html" class="nav-link">PRICING</a>
+    <a href="help.html" class="nav-link">HELP</a>
+    <a href="pricing.html" class="btn-nav">▼ DOWNLOAD</a>
+  </div>
+</nav>
 
-        <p>
-            Flipped is a Mac desktop application that helps you reduce phone
-            distraction by temporarily hiding apps and blocking distracting
-            websites on your iPhone. To do this, the Mac app supervises your
-            iPhone via USB and our server sends restriction profiles to your
-            iPhone over Apple's Push Notification service.
-        </p>
-        <p>
-            By installing Flipped you agree to this privacy policy and to
-            having your iPhone managed (a standard iOS feature called Mobile
-            Device Management) while Flipped is active. You can remove this
-            management at any time — see the Device Management Disclosure
-            section below.
-        </p>
+<div class="content-wrap">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: May 14, 2026</p>
 
-        <h2>What we collect</h2>
+  <p>
+    Flipped is a Mac desktop application that helps you reduce phone
+    distraction by temporarily hiding apps and blocking distracting
+    websites on your iPhone. To do this, the Mac app supervises your
+    iPhone via USB and our server sends restriction profiles to your
+    iPhone over Apple's Push Notification service.
+  </p>
+  <p>
+    By installing Flipped you agree to this privacy policy and to
+    having your iPhone managed (a standard iOS feature called Mobile
+    Device Management) while Flipped is active. You can remove this
+    management at any time — see the Device Management Disclosure
+    section below.
+  </p>
 
-        <h3>From your Flipped account</h3>
-        <ul>
-            <li><strong>Email address</strong> — to identify you, send a 6-digit sign-in code when you log in, and send account-related notices (security alerts, billing receipts if you're on a paid plan).</li>
-            <li><strong>Sign-in codes</strong> — when you sign in via Mac or web, we email you a 6-digit code that's valid for 10 minutes. We store these as SHA-256 hashes; they're consumed on first use and never reused.</li>
-            <li><strong>Session tokens</strong> — short-lived JWTs we issue after you sign in, so the Mac and web can talk to our backend without re-prompting for a code every time. Stored on your device; refresh tokens are stored on our server only as SHA-256 hashes.</li>
-            <li><strong>Active profile and "Always allow" bundle list</strong> — your selected block profile (which apps go away during a flip) and any per-app exceptions you've added. We store these against your account so they follow you across Mac reinstalls and so the web flip page (useflipped.com/flip) honours your customizations.</li>
-            <li><strong>Account timestamps</strong> — when you created your account, signed in, and triggered sessions.</li>
-        </ul>
+  <h2>What we collect</h2>
 
-        <h3>From your iPhone (via MDM)</h3>
-        <ul>
-            <li><strong>Unique Device Identifier (UDID)</strong> — Apple's iPhone-unique ID, required by iOS for MDM enrollment.</li>
-            <li><strong>Device serial, model, iOS version</strong> — for compatibility.</li>
-            <li><strong>APNs push token + push magic</strong> — tokens Apple issues that let us send MDM commands. These can only be used to deliver MDM commands, not to read your personal data.</li>
-            <li><strong>App classifications you choose</strong> — which apps you've decided to block, allow, or toggle per session.</li>
-            <li><strong>Session history</strong> — which focus modes you've started, when, and when they ended.</li>
-        </ul>
+  <h3>From your Flipped account</h3>
+  <ul>
+    <li><strong>Email address</strong> — to identify you, send a 6-digit sign-in code when you log in, and send account-related notices (security alerts, billing receipts if you're on a paid plan).</li>
+    <li><strong>Sign-in codes</strong> — when you sign in via Mac or web, we email you a 6-digit code that's valid for 10 minutes. We store these as SHA-256 hashes; they're consumed on first use and never reused.</li>
+    <li><strong>Session tokens</strong> — short-lived JWTs we issue after you sign in, so the Mac and web can talk to our backend without re-prompting for a code every time. Stored on your device; refresh tokens are stored on our server only as SHA-256 hashes.</li>
+    <li><strong>Active profile and "Always allow" bundle list</strong> — your selected block profile (which apps go away during a flip) and any per-app exceptions you've added. We store these against your account so they follow you across Mac reinstalls and so the web flip page (useflipped.com/flip) honours your customizations.</li>
+    <li><strong>Account timestamps</strong> — when you created your account, signed in, and triggered sessions.</li>
+  </ul>
 
-        <h3>What we do NOT collect</h3>
-        <ul>
-            <li>Contents of anything on your iPhone (photos, messages, files, browsing history, location). MDM restricts apps and URLs — it cannot read their contents.</li>
-            <li>Keystrokes, screen contents, microphone or camera data.</li>
-            <li>Any data from apps on your iPhone.</li>
-        </ul>
+  <h3>From your iPhone (via MDM)</h3>
+  <ul>
+    <li><strong>Unique Device Identifier (UDID)</strong> — Apple's iPhone-unique ID, required by iOS for MDM enrollment.</li>
+    <li><strong>Device serial, model, iOS version</strong> — for compatibility.</li>
+    <li><strong>APNs push token + push magic</strong> — tokens Apple issues that let us send MDM commands. These can only be used to deliver MDM commands, not to read your personal data.</li>
+    <li><strong>App classifications you choose</strong> — which apps you've decided to block, allow, or toggle per session.</li>
+    <li><strong>Session history</strong> — which focus modes you've started, when, and when they ended.</li>
+  </ul>
 
-        <h2>How we use your data</h2>
-        <ul>
-            <li><strong>To provide the service</strong> — MDM data is used to push restriction profiles to your iPhone when you start a session and remove them when you end.</li>
-            <li><strong>Account management</strong> — email + password for login, password reset, device management.</li>
-            <li><strong>Analytics</strong> — we use Sentry to capture application errors so we can fix bugs. Sentry receives error stack traces and minimal request context (user ID, timestamps). We do NOT send Sentry your iPhone contents, APNs tokens, or any sensitive identifiers.</li>
-            <li><strong>Email</strong> — transactional emails only (password reset, security notices). No marketing unless you opt in.</li>
-        </ul>
+  <h3>What we do NOT collect</h3>
+  <ul>
+    <li>Contents of anything on your iPhone (photos, messages, files, browsing history, location). MDM restricts apps and URLs — it cannot read their contents.</li>
+    <li>Keystrokes, screen contents, microphone or camera data.</li>
+    <li>Any data from apps on your iPhone.</li>
+  </ul>
 
-        <h2>Who we share with (subprocessors)</h2>
-        <ul>
-            <li><strong>Apple</strong> — Apple's Push Notification service relays MDM commands to your iPhone. Apple sees that a command is being sent but not its contents. (Flipped is not affiliated with or endorsed by Apple Inc.; we use standard iOS supervision APIs available to developers.)</li>
-            <li><strong>Railway</strong> (<a href="https://railway.com/legal/privacy" target="_blank" rel="noopener">privacy policy</a>) — hosting; runs our backend and database under their own commitments.</li>
-            <li><strong>Resend</strong> (<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">privacy policy</a>) — sends transactional emails (sign-in codes, security notices).</li>
-            <li><strong>Sentry</strong> (<a href="https://sentry.io/privacy/" target="_blank" rel="noopener">privacy policy</a>) — error reports for engineering debugging. Receives stack traces and minimal context (user ID, timestamps).</li>
-            <li><strong>Stripe</strong> (<a href="https://stripe.com/privacy" target="_blank" rel="noopener">privacy policy</a>, when we monetize) — payment details per their privacy policy; we never see or store full card numbers.</li>
-        </ul>
-        <p>We do not sell your data, share it with advertisers, or use it for marketing profiles.</p>
+  <h2>How we use your data</h2>
+  <ul>
+    <li><strong>To provide the service</strong> — MDM data is used to push restriction profiles to your iPhone when you start a session and remove them when you end.</li>
+    <li><strong>Account management</strong> — email + password for login, password reset, device management.</li>
+    <li><strong>Analytics</strong> — we use Sentry to capture application errors so we can fix bugs. Sentry receives error stack traces and minimal request context (user ID, timestamps). We do NOT send Sentry your iPhone contents, APNs tokens, or any sensitive identifiers.</li>
+    <li><strong>Email</strong> — transactional emails only (password reset, security notices). No marketing unless you opt in.</li>
+  </ul>
 
-        <h2>Children's privacy</h2>
-        <p>
-            Flipped is not intended for children under 13. We do not knowingly
-            collect personal information from anyone under 13. If you believe
-            a child has signed up for Flipped, email
-            <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>
-            and we'll delete the account and associated data.
-        </p>
-        <p>
-            Users aged 13–17 should have a parent or guardian review this
-            policy before signing up.
-        </p>
+  <h2>Who we share with (subprocessors)</h2>
+  <ul>
+    <li><strong>Apple</strong> — Apple's Push Notification service relays MDM commands to your iPhone. Apple sees that a command is being sent but not its contents. (Flipped is not affiliated with or endorsed by Apple Inc.; we use standard iOS supervision APIs available to developers.)</li>
+    <li><strong>Railway</strong> (<a href="https://railway.com/legal/privacy" target="_blank" rel="noopener">privacy policy</a>) — hosting; runs our backend and database under their own commitments.</li>
+    <li><strong>Resend</strong> (<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">privacy policy</a>) — sends transactional emails (sign-in codes, security notices).</li>
+    <li><strong>Sentry</strong> (<a href="https://sentry.io/privacy/" target="_blank" rel="noopener">privacy policy</a>) — error reports for engineering debugging. Receives stack traces and minimal context (user ID, timestamps).</li>
+    <li><strong>Stripe</strong> (<a href="https://stripe.com/privacy" target="_blank" rel="noopener">privacy policy</a>, when we monetize) — payment details per their privacy policy; we never see or store full card numbers.</li>
+  </ul>
+  <p>We do not sell your data, share it with advertisers, or use it for marketing profiles.</p>
 
-        <h2>International users</h2>
-        <p>
-            Flipped is operated from the United States. By using Flipped from
-            outside the US, you consent to the transfer of your data to the
-            US for processing. We honor data-rights requests (access,
-            deletion, export) from all users regardless of jurisdiction —
-            email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>.
-        </p>
+  <h2>Children's privacy</h2>
+  <p>
+    Flipped is not intended for children under 13. We do not knowingly
+    collect personal information from anyone under 13. If you believe
+    a child has signed up for Flipped, email
+    <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>
+    and we'll delete the account and associated data.
+  </p>
+  <p>
+    Users aged 13–17 should have a parent or guardian review this
+    policy before signing up.
+  </p>
 
-        <h2>Cookies and analytics on useflipped.com</h2>
-        <p>
-            Our website uses only essential storage (your sign-in code session,
-            your selected active profile). We do not use third-party
-            advertising cookies, behavioral tracking, or marketing analytics
-            scripts on useflipped.com.
-        </p>
+  <h2>International users</h2>
+  <p>
+    Flipped is operated from the United States. By using Flipped from
+    outside the US, you consent to the transfer of your data to the
+    US for processing. We honor data-rights requests (access,
+    deletion, export) from all users regardless of jurisdiction —
+    email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>.
+  </p>
 
-        <h2>Device Management Disclosure</h2>
-        <p>
-            When you supervise your iPhone with Flipped, your iPhone enters
-            a state called "Supervised" with Flipped as the organization.
-            This allows Flipped to:
-        </p>
-        <ul>
-            <li>Hide and un-hide apps from your home screen</li>
-            <li>Filter URLs in Safari and other browsers</li>
-            <li>Enable Apple's built-in adult-content filter during sessions</li>
-        </ul>
-        <p>Flipped cannot:</p>
-        <ul>
-            <li>Read your messages, photos, emails, browsing history, or files</li>
-            <li>Track your location</li>
-            <li>Listen to your microphone or camera</li>
-            <li>Install or remove apps beyond hiding them</li>
-            <li>Modify system settings beyond the restrictions above</li>
-        </ul>
+  <h2>Cookies and analytics on useflipped.com</h2>
+  <p>
+    Our website uses only essential storage (your sign-in code session,
+    your selected active profile). We do not use third-party
+    advertising cookies, behavioral tracking, or marketing analytics
+    scripts on useflipped.com.
+  </p>
 
-        <h3>Removing Flipped's management</h3>
-        <p>You can remove Flipped's management at any time:</p>
-        <ol>
-            <li>Run the Mac app's "Remove Management" command, OR</li>
-            <li>On your iPhone, open Settings → General → VPN &amp; Device Management, tap the Flipped profile, and tap "Remove Management."</li>
-        </ol>
+  <h2>Device Management Disclosure</h2>
+  <p>
+    When you supervise your iPhone with Flipped, your iPhone enters
+    a state called "Supervised" with Flipped as the organization.
+    This allows Flipped to:
+  </p>
+  <ul>
+    <li>Hide and un-hide apps from your home screen</li>
+    <li>Filter URLs in Safari and other browsers</li>
+    <li>Enable Apple's built-in adult-content filter during sessions</li>
+  </ul>
+  <p>Flipped cannot:</p>
+  <ul>
+    <li>Read your messages, photos, emails, browsing history, or files</li>
+    <li>Track your location</li>
+    <li>Listen to your microphone or camera</li>
+    <li>Install or remove apps beyond hiding them</li>
+    <li>Modify system settings beyond the restrictions above</li>
+  </ul>
 
-        <h2>Data retention</h2>
-        <ul>
-            <li><strong>Account data</strong> — kept as long as your account exists. Delete your account to remove it.</li>
-            <li><strong>MDM enrollment data</strong> — kept while your iPhone is enrolled. Automatically cleared when you remove management.</li>
-            <li><strong>Session history</strong> — kept for the lifetime of your account.</li>
-            <li><strong>Error logs / analytics</strong> — 30 days in Sentry.</li>
-        </ul>
+  <h3>Removing Flipped's management</h3>
+  <p>You can remove Flipped's management at any time:</p>
+  <ol>
+    <li>Run the Mac app's "Remove Management" command, OR</li>
+    <li>On your iPhone, open Settings → General → VPN &amp; Device Management, tap the Flipped profile, and tap "Remove Management."</li>
+  </ol>
 
-        <h2>Your rights</h2>
-        <ul>
-            <li><strong>Access</strong> — see your account data by logging in.</li>
-            <li><strong>Deletion</strong> — email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>. We complete deletions within 30 days.</li>
-            <li><strong>Export</strong> — on request, we'll provide your data in machine-readable form.</li>
-            <li><strong>Correction</strong> — update email and password from the app.</li>
-        </ul>
+  <h2>Data retention</h2>
+  <ul>
+    <li><strong>Account data</strong> — kept as long as your account exists. Delete your account to remove it.</li>
+    <li><strong>MDM enrollment data</strong> — kept while your iPhone is enrolled. Automatically cleared when you remove management.</li>
+    <li><strong>Session history</strong> — kept for the lifetime of your account.</li>
+    <li><strong>Error logs / analytics</strong> — 30 days in Sentry.</li>
+  </ul>
 
-        <h2>Security</h2>
-        <ul>
-            <li>All traffic is HTTPS (TLS 1.2+).</li>
-            <li>Passwords are bcrypt-hashed.</li>
-            <li>Refresh tokens are stored only as SHA-256 hashes.</li>
-            <li>Login is rate-limited; accounts lock after 10 failed attempts.</li>
-        </ul>
+  <h2>Your rights</h2>
+  <ul>
+    <li><strong>Access</strong> — see your account data by logging in.</li>
+    <li><strong>Deletion</strong> — email <a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a>. We complete deletions within 30 days.</li>
+    <li><strong>Export</strong> — on request, we'll provide your data in machine-readable form.</li>
+    <li><strong>Correction</strong> — update email and password from the app.</li>
+  </ul>
 
-        <h2>Contact</h2>
-        <p><a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a></p>
-    </div>
+  <h2>Security</h2>
+  <ul>
+    <li>All traffic is HTTPS (TLS 1.2+).</li>
+    <li>Passwords are bcrypt-hashed.</li>
+    <li>Refresh tokens are stored only as SHA-256 hashes.</li>
+    <li>Login is rate-limited; accounts lock after 10 failed attempts.</li>
+  </ul>
 
-    <footer>
-        <div>© 2026 FLIPPED</div>
-        <div>
-            <a href="/">HOME</a> ·
-            <a href="terms.html">TERMS</a> ·
-            <a href="mailto:support@useflipped.com">SUPPORT</a>
-        </div>
-    </footer>
+  <h2>Contact</h2>
+  <p><a href="mailto:privacy@useflipped.com">privacy@useflipped.com</a></p>
+</div>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="privacy.html">PRIVACY</a> ·
+  <a href="terms.html">TERMS</a> ·
+  <a href="changelog.html">CHANGELOG</a> ·
+  <a href="status.html">STATUS</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
 </body>
 </html>
