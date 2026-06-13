@@ -6,10 +6,10 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
-      <title>Version 1.0.71</title>
-      <pubDate>Sat, 13 Jun 2026 19:11:23 +0000</pubDate>
-      <sparkle:version>1.0.71</sparkle:version>
-      <sparkle:shortVersionString>1.0.71</sparkle:shortVersionString>
+      <title>Version 1.0.72</title>
+      <pubDate>Sat, 13 Jun 2026 20:43:23 +0000</pubDate>
+      <sparkle:version>1.0.72</sparkle:version>
+      <sparkle:shortVersionString>1.0.72</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[<pre>A cleaner update prompt + stronger commitment.
 
@@ -25,9 +25,9 @@ unflip first.
 
 Calmer, clearer wording during setup.</pre>]]></description>
       <enclosure
-        url="https://useflipped.com/downloads/Flipped-1.0.71.dmg"
+        url="https://useflipped.com/downloads/Flipped-1.0.72.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="QW1a4uI7kHPbBz7ycH72OxnqjshPVjtdsqTq9VYEksyBqlCJU6s1H9UuZua04LO/CeUe5LDnf7arLQNchoCsAw==" length="24085746" />
+        sparkle:edSignature="yPHSXqZKcFAL6x0gRBmiQhHbUAN3bUjXUjohM3Ri2Dz+lKVB9r5lYY6wcRaobNTFX8++2BxIEyS/jbCqcgTkAQ==" length="24087262" />
     </item>
     <item>
       <title>Version 1.0.70</title>
