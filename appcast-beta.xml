@@ -6,6 +6,26 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.73</title>
+      <pubDate>Sat, 13 Jun 2026 21:05:05 +0000</pubDate>
+      <sparkle:version>1.0.73</sparkle:version>
+      <sparkle:shortVersionString>1.0.73</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>You found the new update prompt.
+
+This is it — bottom-left of the sidebar, sticky, hard to
+miss. That's the whole point: you'll always know when an
+update is ready without hunting through menus.
+
+Nothing else changed from 1.0.72 — this build exists just
+so you could see the new prompt in action. Tap update and
+you're current.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.73.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="bi+dzPlfNjpBMW4nHhYcehIssW1oY9y+Lh7HRXP4pUAXzoOH74FpkVNA+tsY4HEX4cq9urGozG1pMayhrLmECA==" length="24087567" />
+    </item>
+    <item>
       <title>Version 1.0.72</title>
       <pubDate>Sat, 13 Jun 2026 20:43:23 +0000</pubDate>
       <sparkle:version>1.0.72</sparkle:version>
