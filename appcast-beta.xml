@@ -6,6 +6,28 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.70</title>
+      <pubDate>Sat, 13 Jun 2026 17:55:51 +0000</pubDate>
+      <sparkle:version>1.0.70</sparkle:version>
+      <sparkle:shortVersionString>1.0.70</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Stronger commitment. Fewer escape hatches.
+
+The menu-bar icon now shows your live session —
+"Focus · 2h 14m left" — and won't unflip a committed
+session from the menu bar. Only manual flips unflip there.
+
+Removing Flipped is now locked while your phone is
+flipped. Unflip first (or wait out a committed session),
+then remove.
+
+Clearer, calmer wording during setup.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.70.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="Z7EUSwczj2Gfeg8JbVjyA7uqgaTS8oZRKL8KqV2tR6ESI3Q3lFK6W8tRNYYFrwxi06xHY+uXDdeAd90bpKXkDg==" length="24089512" />
+    </item>
+    <item>
       <title>Version 1.0.69</title>
       <pubDate>Wed, 03 Jun 2026 17:22:31 +0000</pubDate>
       <sparkle:version>1.0.69</sparkle:version>
