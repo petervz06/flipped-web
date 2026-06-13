@@ -6,6 +6,24 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.75</title>
+      <pubDate>Sat, 13 Jun 2026 21:32:32 +0000</pubDate>
+      <sparkle:version>1.0.75</sparkle:version>
+      <sparkle:shortVersionString>1.0.75</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>This is the new update experience.
+
+No popup — just the pill in the bottom-left. It downloaded
+in the background already, so one click installs and
+relaunches. That's it.
+
+(Throwaway build so you could see the new flow in action.)</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.75.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="laZYQKxtqrLsVdwuEgwIWeoEDTVGu5LajRPTT8NcrCl9vSyzyQzc9I1ypqYUv31d5NVHsLJcX5nKGG3XzOAODg==" length="24088727" />
+    </item>
+    <item>
       <title>Version 1.0.74</title>
       <pubDate>Sat, 13 Jun 2026 21:24:10 +0000</pubDate>
       <sparkle:version>1.0.74</sparkle:version>
