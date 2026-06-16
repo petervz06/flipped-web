@@ -6,6 +6,26 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.76</title>
+      <pubDate>Tue, 16 Jun 2026 01:02:54 +0000</pubDate>
+      <sparkle:version>1.0.76</sparkle:version>
+      <sparkle:shortVersionString>1.0.76</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Setup reliability fix.
+
+If linking your iPhone to your account ever failed, setup
+used to march on to the final screen anyway and the FLIP
+button did nothing. Now it shows the real reason and a
+Retry, so you're never stranded.
+
+Plus removal-flow polish (one less confirmation pop-up,
+accurate timing, cleaner success screen).</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.76.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="PE92xUaV2M5LSKFqZDQxsPnDZZTCm2kX5wNqRPC6NZC/tvdxPDJRIQV4OBz4id/kk1NeEswLr2m8mZlzr6q7BQ==" length="24107254" />
+    </item>
+    <item>
       <title>Version 1.0.75</title>
       <pubDate>Sat, 13 Jun 2026 21:32:32 +0000</pubDate>
       <sparkle:version>1.0.75</sparkle:version>
