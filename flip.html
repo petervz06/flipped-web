@@ -1224,6 +1224,12 @@ function renderActiveSession(session) {
         : null;
     const checkInWindowOpen = checkInActiveUntil && checkInActiveUntil > now;
     const checkInUsed = !!session.last_check_in_at;
+    // HONEST flip state: claim "FLIPPED" ONLY when the block is actually installed
+    // on the phone right now.  profile_installed_at is the backend's Ack-stamped
+    // "block is live" signal (now cleared whenever apps are made visible).  Null
+    // => the install (or the re-block after a check-in) is still in flight — never
+    // say FLIPPED (Cal 2026-06-18: panel said FLIPPED while the apps were open).
+    const blockApplied = !!session.profile_installed_at;
     const showCheckInButton = !!session.check_in_enabled && !checkInUsed && !checkInWindowOpen;
     const checkInBlock = checkInWindowOpen
         ? `<div class="check-in-active">
@@ -1283,16 +1289,33 @@ function renderActiveSession(session) {
            </div>`
         : '';
 
+    // Header reflects the REAL phone state, not just "is there a session".
+    const headerMeta = blockApplied
+        ? `PHONE IS FLIPPED · MODE: ${(session.mode || '').toUpperCase()}`
+        : (checkInWindowOpen
+            ? `CHECK-IN ACTIVE · APPS ARE BACK`
+            : `◐ APPLYING — UNLOCK YOUR IPHONE`);
+    const headerStyle = blockApplied ? '' : ' style="color:#e0a83a"';
+    // Only say apps are "hidden" when the block is actually installed.  While it's
+    // applying (or a re-block is catching up), tell the truth instead of lying.
+    const blockStateHTML = blockApplied
+        ? blockedHTML
+        : (checkInWindowOpen
+            ? ''
+            : `<div class="locked-applying" style="margin-top:14px; font-size:13px; line-height:1.55; color:var(--muted,#9aa6b2);">
+                   Your apps aren't hidden yet.  Unlock your iPhone and keep it on for a few seconds so the block can finish applying — this switches to <strong style="color:var(--text,#fff)">PHONE IS FLIPPED</strong> the instant it lands.
+               </div>`);
+
     return `
     <h1 class="h1">In session</h1>
     <p class="h-meta">${hasTimer
         ? 'Timer running.  You can take your check-in or use your monthly emergency unflip below.'
         : 'Manual session.  Only your Mac can end this.'}</p>
     <div class="card">
-        <div class="locked-meta">PHONE IS FLIPPED · MODE: ${(session.mode || '').toUpperCase()}</div>
+        <div class="locked-meta"${headerStyle}>${headerMeta}</div>
         <div class="locked-time">${hasTimer ? fmtRemaining(session) : '∞'}</div>
         <div class="locked-meta">${hasTimer ? 'REMAINING' : 'MANUAL · NO TIMER'}</div>
-        ${blockedHTML}
+        ${blockStateHTML}
         ${controlsHTML}
         <div class="locked-tip">${tipBody}</div>
     </div>
