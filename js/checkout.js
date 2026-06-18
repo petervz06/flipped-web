@@ -1,5 +1,5 @@
 /* Pricing CTAs:
-   <button class="btn primary" data-checkout-plan="annual">Start free trial</button>
+   <button class="btn primary" data-checkout-plan="annual">Get started</button>
    On click: POST {plan} → backend returns { url }; window.location = url.
 
    On error: button reverts + alert. Backend feature-gating may return 503
