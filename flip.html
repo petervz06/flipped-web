@@ -1055,12 +1055,17 @@ function renderApp() {
                 <span>Modes</span>
             </div>
             <div class="device-row">
-                <span class="dot ${state.deviceId ? '' : 'warn'}"></span>
+                <span class="dot ${
+                    (!state.deviceId || (session && !session.profile_installed_at)) ? 'warn' : ''
+                }"></span>
                 <span class="device-meta">
                     ${state.deviceId ? 'iPhone' : 'No device'}
                     <span class="sub">
-                        ${session ? 'Flipped · ' + fmtRemaining(session)
-                                  : (state.deviceId ? 'Online · idle' : 'Not paired')}
+                        ${session
+                            ? (session.profile_installed_at
+                                ? 'Flipped · ' + fmtRemaining(session)
+                                : 'Applying…')
+                            : (state.deviceId ? 'Online · idle' : 'Not paired')}
                     </span>
                 </span>
             </div>
