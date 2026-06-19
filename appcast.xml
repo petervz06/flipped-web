@@ -6,6 +6,24 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.78</title>
+      <pubDate>Fri, 19 Jun 2026 20:00:00 +0000</pubDate>
+      <sparkle:version>1.0.78</sparkle:version>
+      <sparkle:shortVersionString>1.0.78</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Your blocklist has a floor now.
+
+Social and entertainment are always blocked when you flip —
+you can add more apps on top, but you can't remove the core
+set. Every profile you make starts from that floor.
+
+No more talking yourself out of it one app at a time.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.78.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="3sDscJ8ROdTKxjsugUNJO0kPZy+oahCqVRZK8NaDbWFihQdVZ+bUHMJci14Mu6P8qQ4NYhQIV8kFtNXF1RkuDg==" length="23371111" />
+    </item>
+    <item>
       <title>Version 1.0.69</title>
       <pubDate>Wed, 03 Jun 2026 17:22:31 +0000</pubDate>
       <sparkle:version>1.0.69</sparkle:version>
