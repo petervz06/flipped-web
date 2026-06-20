@@ -6,6 +6,24 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.79</title>
+      <pubDate>Sat, 20 Jun 2026 17:00:00 +0000</pubDate>
+      <sparkle:version>1.0.79</sparkle:version>
+      <sparkle:shortVersionString>1.0.79</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Delete profiles, and a tighter removal flow.
+
+You can now delete any profile you made — a trash button on
+your custom profiles.  And removing Flipped is locked while
+you're flipped (no uninstalling your way out of a session),
+with one last check that Find My and Stolen Device Protection
+are off before removal runs.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.79.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="z82/4+Jz0k53uteDPo08q4F2y5mhP+4PIP26PKWDtw49YR8C1k26tGwAuCAgEVut8IE1488FSG4IHKR/ADmhDw==" length="23380001" />
+    </item>
+    <item>
       <title>Version 1.0.78</title>
       <pubDate>Fri, 19 Jun 2026 20:00:00 +0000</pubDate>
       <sparkle:version>1.0.78</sparkle:version>
