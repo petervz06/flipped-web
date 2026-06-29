@@ -27,6 +27,15 @@
   function go(btn) {
     var plan = btn.getAttribute('data-checkout-plan');
     if (!plan) return;
+
+    // Meta: stash the plan so billing-success can attribute Purchase value, and
+    // fire InitiateCheckout. Guarded — never blocks or alters the checkout below.
+    try { localStorage.setItem('flipped_pending_plan', plan); } catch (e) {}
+    if (window.fbqTrack) {
+      var v = window.FLIPPED_PLANS && window.FLIPPED_PLANS[plan];
+      window.fbqTrack('InitiateCheckout', { content_name: plan, value: v, currency: 'USD' });
+    }
+
     setBusy(btn, true);
     fetch(ENDPOINT, {
       method: 'POST',
