@@ -409,6 +409,18 @@
   font-weight: 700;
   background: rgba(255,255,255,0.04);
 }
+
+/* "their escape hatch" annotation under each competitor name */
+.th-escape {
+  display: block;
+  margin-top: 4px;
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  color: var(--fg-4);
+}
+.ctable th.flipped-col .th-escape { color: var(--fg-2); }
 .ctable td {
   padding: 14px 10px;
   text-align: center;
