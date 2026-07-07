@@ -410,6 +410,26 @@
   background: rgba(255,255,255,0.04);
 }
 
+/* ─── FOUNDER STORY ──────────────────────────────────────────────── */
+.story-body {
+  max-width: 620px;
+  margin: 0 auto;
+}
+.story-body p {
+  font-size: 17px;
+  color: var(--fg-1);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+.story-body p em { color: var(--fg); font-style: normal; font-weight: 600; }
+.story-sig {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  color: var(--fg-3);
+  margin-top: 28px;
+}
+
 /* "their escape hatch" annotation under each competitor name */
 .th-escape {
   display: block;
