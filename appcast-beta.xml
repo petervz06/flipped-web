@@ -6,6 +6,25 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.81</title>
+      <pubDate>Wed, 08 Jul 2026 23:30:00 +0000</pubDate>
+      <sparkle:version>1.0.81</sparkle:version>
+      <sparkle:shortVersionString>1.0.81</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Schedules got simpler, and the app says what's blocked.
+
+Pick schedule times from a clean dropdown — no more fiddly
+time fields — and the Focus/Unplug choice is gone from
+scheduling (it never belonged there).  Your session card and
+profiles now say what's blocked (Socials + Entertainment)
+instead of counting apps.  The removal screen always has a
+way back.  And the app no longer calls itself a beta.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.81.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="ILonWiY1tU+U3JHr/j8Yq+4e8Q4gV2L4wB3RcCrQ/8KIAvg/WN6f5ly92g0jTnZfDtGYgFiyL++xDMH+i1/GCg==" length="23399931" />
+    </item>
+    <item>
       <title>Version 1.0.80</title>
       <pubDate>Wed, 08 Jul 2026 21:15:00 +0000</pubDate>
       <sparkle:version>1.0.80</sparkle:version>
