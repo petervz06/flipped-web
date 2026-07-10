@@ -6,6 +6,24 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.82</title>
+      <pubDate>Fri, 10 Jul 2026 15:00:00 +0000</pubDate>
+      <sparkle:version>1.0.82</sparkle:version>
+      <sparkle:shortVersionString>1.0.82</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>The lock lives in your menu bar now — for good.
+
+Quit Flipped and the menu bar lock stays: status and FLIP
+are always one glance away, no app open.  Flipped opens
+with your Mac after every restart.  Option-click Quit to
+exit completely.  Also: a quieter update pill, and
+Privacy &amp; Terms in Settings.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.82.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="KIqpxatcBkg7ccZ0BcRY1eYbA5mrC2WqLpJWRhc5WzvpdK3/t3zlYMmVKT/GtDuoEkHZm850G5ouAQLJpYIEDw==" length="23427307" />
+    </item>
+    <item>
       <title>Version 1.0.81</title>
       <pubDate>Wed, 08 Jul 2026 23:30:00 +0000</pubDate>
       <sparkle:version>1.0.81</sparkle:version>
