@@ -6,6 +6,24 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.85</title>
+      <pubDate>Fri, 10 Jul 2026 19:30:00 +0000</pubDate>
+      <sparkle:version>1.0.85</sparkle:version>
+      <sparkle:shortVersionString>1.0.85</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Check-ins pause the clock.
+
+Your session timer freezes during a 15-minute check-in
+and resumes when the phone re-locks — a 4-hour focus is
+now 4 hours of blocked time, with the check-in added on
+top.  Plus the honest CHECK-IN — APPS ARE BACK status
+from 1.0.84.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.85.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="aiWxJQpqb45RlhGRAu4SdwVtt7dMq+Ew6KEExDmleYTEZ4qtt2bJ1gy+tjvwTWRTiBkV1KyWW+p+CEu1v5bqAg==" length="23430740" />
+    </item>
+    <item>
       <title>Version 1.0.84</title>
       <pubDate>Fri, 10 Jul 2026 18:00:00 +0000</pubDate>
       <sparkle:version>1.0.84</sparkle:version>
