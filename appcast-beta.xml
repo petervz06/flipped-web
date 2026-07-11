@@ -6,6 +6,24 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.84</title>
+      <pubDate>Fri, 10 Jul 2026 18:00:00 +0000</pubDate>
+      <sparkle:version>1.0.84</sparkle:version>
+      <sparkle:shortVersionString>1.0.84</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Check-ins tell the truth.
+
+During a 15-minute check-in the app now says
+CHECK-IN — APPS ARE BACK instead of claiming it's
+retrying to re-lock your phone.  When the window ends
+and the phone genuinely re-locks, the usual
+Applying → Flipped flow returns.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.84.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="3eJxunrGkziGPH5RqkJ+VCyIcZsY4pZCPcWeULXNn5i63vcIjeWFbeG+hp0FCRYHCfNnYvLFUKCngomXwIS4Dg==" length="23430923" />
+    </item>
+    <item>
       <title>Version 1.0.83</title>
       <pubDate>Fri, 10 Jul 2026 16:30:00 +0000</pubDate>
       <sparkle:version>1.0.83</sparkle:version>
