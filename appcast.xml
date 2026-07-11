@@ -6,6 +6,22 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.83</title>
+      <pubDate>Fri, 10 Jul 2026 16:30:00 +0000</pubDate>
+      <sparkle:version>1.0.83</sparkle:version>
+      <sparkle:shortVersionString>1.0.83</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>The update pill now tells the truth.
+
+While an update is still downloading the pill reads
+GETTING x.y.z… — one click installs the moment it flips
+to UPDATE.  No more clicks that seem to do nothing.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.83.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="nOeo3QB07pznnJieurHE3qmacyb+ykucqHW+lXwODRigvWCFRCSIh+7uXep1XJp6XD20lat3FOk7Yj8PsUvcCQ==" length="23429699" />
+    </item>
+    <item>
       <title>Version 1.0.82</title>
       <pubDate>Fri, 10 Jul 2026 15:00:00 +0000</pubDate>
       <sparkle:version>1.0.82</sparkle:version>
