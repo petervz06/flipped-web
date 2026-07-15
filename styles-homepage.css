@@ -609,7 +609,11 @@
 @media (max-width: 540px) {
   .hero { padding: 80px 20px 56px; }
   .walkthrough { padding: 72px 20px; }
-  .mac-body { grid-template-columns: 120px 1fr; min-height: 320px; }
+  /* .mac-body is a FLEX container — the old grid-template-columns rule
+     here was dead, leaving the 150px sidebar squeezing the demo on
+     phones.  Shrink the sidebar the flex way instead. */
+  .mac-body { min-height: 320px; padding: 8px; gap: 8px; }
+  .mac-sidebar { width: 104px; }
   .ctable { font-size: 12px; }
   .ctable th, .ctable td { padding: 10px 6px; }
   .ctable th:first-child, .ctable td:first-child { padding-left: 14px; }
