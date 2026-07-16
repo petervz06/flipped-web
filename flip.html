@@ -262,63 +262,27 @@
             margin-top: 12px;
         }
 
-        /* ─── Duration slider (Home) ────────────────────────────────────── */
-        .dur-readout {
-            font-family: var(--mono);
-            font-weight: 700;
-            font-size: 40px;
-            text-align: center;
-            margin: 14px 0 2px;
-            font-variant-numeric: tabular-nums;
-        }
-        .dur-sub {
-            font-family: var(--mono);
-            font-size: 9px;
+        /* ─── Duration buttons (Home) ───────────────────────────────────── */
+        .btn-mode.big {
+            padding: 18px 8px;
+            font-size: 13px;
             letter-spacing: 2px;
-            color: var(--text-faint);
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 14px;
         }
-        input[type="range"].dur-slider {
-            -webkit-appearance: none;
-            appearance: none;
+        .custom-dur {
+            margin-top: 10px;
+        }
+        .custom-dur select {
             width: 100%;
-            height: 44px;             /* generous touch target */
-            background: transparent;
-            margin: 0;
-        }
-        input[type="range"].dur-slider::-webkit-slider-runnable-track {
-            height: 2px;
-            background: var(--border-up);
-            border-radius: 1px;
-        }
-        input[type="range"].dur-slider::-webkit-slider-thumb {
+            padding: 14px;
+            font-family: var(--mono);
+            font-size: 16px;  /* iOS Safari auto-zooms inputs <16px */
+            text-align: center;
+            background: var(--surface);
+            color: var(--text);
+            border: var(--hairline) solid var(--border-up);
+            border-radius: var(--radius-sm);
             -webkit-appearance: none;
             appearance: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--text);
-            border: none;
-            margin-top: -12px;
-        }
-        input[type="range"].dur-slider::-moz-range-track {
-            height: 2px;
-            background: var(--border-up);
-        }
-        input[type="range"].dur-slider::-moz-range-thumb {
-            width: 26px; height: 26px; border-radius: 50%;
-            background: var(--text); border: none;
-        }
-        .dur-ends {
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 1.5px;
-            color: var(--text-faint);
-            margin-top: 2px;
         }
 
         /* ─── Status / error pills ──────────────────────────────────────── */
@@ -719,29 +683,39 @@ const PROFILES = {
 };
 
 // Home FLIP: MANUAL (no end date, only quittable from the Mac — the old
-// Home behavior) or a committed FOCUS/UNPLUG with the duration picked on
-// a slider.  Focus = hours, Unplug = days.  Check-in auto-enables at 4h+,
-// matching the Mac.
-const FOCUS_STEPS = [
-    { label: '30M', seconds:  30 * 60 },
-    { label: '1H',  seconds:  60 * 60 },
-    { label: '2H',  seconds:   2 * 3600 },
-    { label: '4H',  seconds:   4 * 3600 },
-    { label: '6H',  seconds:   6 * 3600 },
-    { label: '8H',  seconds:   8 * 3600 },
-    { label: '12H', seconds:  12 * 3600 },
-    { label: '24H', seconds:  24 * 3600 },
+// Home behavior) or a committed FOCUS/UNPLUG.  Four big preset buttons per
+// mode + CUSTOM (native picker: hours for focus, days for unplug).
+// Check-in auto-enables at 4h+, matching the Mac.
+const FOCUS_PRESETS = [
+    { label: '1H', seconds:      3600 },
+    { label: '2H', seconds:  2 * 3600 },
+    { label: '4H', seconds:  4 * 3600 },
+    { label: '8H', seconds:  8 * 3600 },
 ];
-const UNPLUG_STEPS = [
-    { label: '1D',  seconds:        24 * 3600 },
-    { label: '2D',  seconds:    2 * 24 * 3600 },
-    { label: '3D',  seconds:    3 * 24 * 3600 },
-    { label: '7D',  seconds:    7 * 24 * 3600 },
-    { label: '14D', seconds:   14 * 24 * 3600 },
-    { label: '30D', seconds:   30 * 24 * 3600 },
-    { label: '90D', seconds:   90 * 24 * 3600 },
-    { label: '1Y',  seconds:  365 * 24 * 3600 },
+const UNPLUG_PRESETS = [
+    { label: '1D',  seconds:       86400 },
+    { label: '3D',  seconds:   3 * 86400 },
+    { label: '7D',  seconds:   7 * 86400 },
+    { label: '30D', seconds:  30 * 86400 },
 ];
+// CUSTOM options: focus = 30 min + every hour to 24; unplug = every day
+// to 365.  Native <select> so iOS shows its wheel — the most familiar
+// "pick a length" control on the platform.
+const CUSTOM_FOCUS_OPTIONS = [
+    { label: '30 MIN', seconds: 1800 },
+    ...Array.from({length: 24}, (_, i) => ({
+        label: `${i + 1} HOUR${i ? 'S' : ''}`, seconds: (i + 1) * 3600,
+    })),
+];
+const CUSTOM_UNPLUG_OPTIONS = Array.from({length: 365}, (_, i) => ({
+    label: `${i + 1} DAY${i ? 'S' : ''}`, seconds: (i + 1) * 86400,
+}));
+
+function fmtSecLabel(sec) {
+    if (sec < 3600) return `${Math.round(sec / 60)}M`;
+    if (sec < 86400) return sec % 3600 === 0 ? `${sec / 3600}H` : `${Math.floor(sec / 3600)}H+`;
+    return sec % 86400 === 0 ? `${sec / 86400}D` : `${Math.floor(sec / 86400)}D+`;
+}
 // Schedule durations are backend-capped at 7 days (10080 min).
 const SCHED_DURATIONS = [
     { label: '30M', minutes:  30 },
@@ -760,11 +734,12 @@ let state = {
     profileId:    localStorage.getItem(LS.profile) || 'preset-simple',
     tab:          localStorage.getItem(LS.tab)     || 'home',
     activeSession: null,
-    // Home flip mode + slider positions.  Persisted (one JSON blob) so the
-    // app reopens on the user's usual commitment.
+    // Home flip mode + per-mode duration.  Persisted (one JSON blob) so
+    // the app reopens on the user's usual commitment.
     homeMode: 'manual',        // 'manual' | 'focus' | 'unplug'
-    focusIdx: 3,               // slider index into FOCUS_STEPS (default 4H)
-    unplugIdx: 0,              // slider index into UNPLUG_STEPS (default 1D)
+    focusSec: 4 * 3600,        // committed focus length (default 4H)
+    unplugSec: 86400,          // committed unplug length (default 1D)
+    customOpen: false,         // CUSTOM picker revealed for the active mode
     // Schedules tab
     schedules:    null,   // null = not loaded yet; [] = loaded, empty
     schedError:   null,
@@ -786,12 +761,16 @@ let state = {
 if (state.tab === 'modes' || !['home', 'schedules', 'profiles', 'settings'].includes(state.tab)) {
     state.tab = 'home';
 }
-// Restore the Home commitment picker (mode + slider positions).
+// Restore the Home commitment picker (mode + per-mode durations).
 try {
     const saved = JSON.parse(localStorage.getItem(LS.duration) || '{}');
     if (['manual', 'focus', 'unplug'].includes(saved.mode)) state.homeMode = saved.mode;
-    if (Number.isInteger(saved.focusIdx) && FOCUS_STEPS[saved.focusIdx]) state.focusIdx = saved.focusIdx;
-    if (Number.isInteger(saved.unplugIdx) && UNPLUG_STEPS[saved.unplugIdx]) state.unplugIdx = saved.unplugIdx;
+    if (Number.isFinite(saved.focusSec) && saved.focusSec >= 1800 && saved.focusSec <= 86400) {
+        state.focusSec = saved.focusSec;
+    }
+    if (Number.isFinite(saved.unplugSec) && saved.unplugSec >= 86400 && saved.unplugSec <= 365 * 86400) {
+        state.unplugSec = saved.unplugSec;
+    }
 } catch (_) { /* stale/legacy value — defaults stand */ }
 
 function $(id) { return document.getElementById(id); }
@@ -1103,10 +1082,10 @@ async function startCommittedFlip(mode, durationSec) {
 }
 
 // One FLIP button, two paths: MANUAL starts an open-ended session (Mac
-// ends it); FOCUS/UNPLUG commit to the slider's duration.
+// ends it); FOCUS/UNPLUG commit to the picked duration.
 function selectedHomeDuration() {
-    if (state.homeMode === 'focus')  return FOCUS_STEPS[state.focusIdx].seconds;
-    if (state.homeMode === 'unplug') return UNPLUG_STEPS[state.unplugIdx].seconds;
+    if (state.homeMode === 'focus')  return state.focusSec;
+    if (state.homeMode === 'unplug') return state.unplugSec;
     return null;
 }
 function flipNow() {
@@ -1115,22 +1094,30 @@ function flipNow() {
 }
 function persistHomePicker() {
     persist('duration', JSON.stringify({
-        mode: state.homeMode, focusIdx: state.focusIdx, unplugIdx: state.unplugIdx,
+        mode: state.homeMode, focusSec: state.focusSec, unplugSec: state.unplugSec,
     }));
 }
-function setHomeMode(m) { state.homeMode = m; persistHomePicker(); render(); }
-// Slider drag: update state + the readout/check-in text in place — a full
-// render() mid-drag would recreate the <input> and drop the gesture.
-function onDurSlide(value) {
-    const idx = Number(value);
-    if (state.homeMode === 'focus') state.focusIdx = idx;
-    else state.unplugIdx = idx;
+function setHomeMode(m) {
+    state.homeMode = m;
+    state.customOpen = false;
     persistHomePicker();
-    const step = state.homeMode === 'focus' ? FOCUS_STEPS[idx] : UNPLUG_STEPS[idx];
-    const readout = document.getElementById('dur-readout');
-    if (readout) readout.textContent = step.label;
-    const checkin = document.getElementById('checkin-note');
-    if (checkin) checkin.style.visibility = step.seconds >= 14400 ? 'visible' : 'hidden';
+    render();
+}
+function setHomeSec(sec) {
+    if (state.homeMode === 'focus') state.focusSec = sec;
+    else state.unplugSec = sec;
+    state.customOpen = false;
+    persistHomePicker();
+    render();
+}
+function openCustomDuration() { state.customOpen = true; render(); }
+function onCustomDuration(value) {
+    const sec = Number(value);
+    if (!Number.isFinite(sec) || sec <= 0) return;
+    if (state.homeMode === 'focus') state.focusSec = sec;
+    else state.unplugSec = sec;
+    persistHomePicker();
+    render();
 }
 
 // ─── Schedules (CRUD against /api/schedules) ────────────────────────────
@@ -1550,18 +1537,19 @@ function renderNoDevice() {
 }
 
 // Home = the flip screen.  MANUAL / FOCUS / UNPLUG segments; committed
-// modes pick their duration on a slider (Pete's redline 2026-07-16 —
-// slider over pills, explicit mode over derived).
+// modes pick from four big preset buttons + CUSTOM (native picker) —
+// Pete's redline 2026-07-16: buttons over slider.
 function renderHome() {
     const profile = resolveFlipProfile(state.profileId);
     const profileName = profile.name
         || (state.macActiveProfile && state.macActiveProfile.name)
         || 'Simple';
     const mode = state.homeMode;
-    const steps = mode === 'unplug' ? UNPLUG_STEPS : FOCUS_STEPS;
-    const idx = mode === 'unplug' ? state.unplugIdx : state.focusIdx;
-    const step = steps[Math.min(idx, steps.length - 1)];
+    const presets = mode === 'unplug' ? UNPLUG_PRESETS : FOCUS_PRESETS;
+    const customOptions = mode === 'unplug' ? CUSTOM_UNPLUG_OPTIONS : CUSTOM_FOCUS_OPTIONS;
     const sec = selectedHomeDuration();
+    const isPreset = presets.some(p => p.seconds === sec);
+    const customActive = state.customOpen || !isPreset;
     const checkInIncluded = sec != null && sec >= 14400;
     const microCopy = mode === 'manual'
         ? 'MANUAL — UNFLIP ANYTIME FROM YOUR MAC'
@@ -1570,12 +1558,26 @@ function renderHome() {
         ? `<p class="muted" style="margin-top: 14px;">No timer.  Your apps stay
                hidden until you open Flipped on your Mac and unflip.</p>`
         : `
-        <div class="dur-readout" id="dur-readout">${step.label}</div>
-        <div class="dur-sub">${mode === 'focus' ? 'FOCUS — HOURS' : 'UNPLUG — DAYS'}</div>
-        <input type="range" class="dur-slider"
-               min="0" max="${steps.length - 1}" step="1" value="${idx}"
-               oninput="onDurSlide(this.value)" />
-        <div class="dur-ends"><span>${steps[0].label}</span><span>${steps[steps.length - 1].label}</span></div>
+        <div class="picker-grid" style="margin-top: 10px; grid-template-columns: 1fr 1fr;">
+            ${presets.map(p => `
+                <button class="btn-mode big ${!customActive && sec === p.seconds ? 'active' : ''}"
+                        onclick="setHomeSec(${p.seconds})">${p.label}</button>
+            `).join('')}
+        </div>
+        <div class="picker-grid" style="margin-top: 8px; grid-template-columns: 1fr;">
+            <button class="btn-mode big ${customActive ? 'active' : ''}"
+                    onclick="openCustomDuration()">
+                CUSTOM${customActive && !isPreset ? ` — ${fmtSecLabel(sec)}` : '…'}
+            </button>
+        </div>
+        ${customActive ? `
+        <div class="custom-dur">
+            <select onchange="onCustomDuration(this.value)">
+                ${customOptions.map(o => `
+                    <option value="${o.seconds}" ${o.seconds === sec ? 'selected' : ''}>${o.label}</option>
+                `).join('')}
+            </select>
+        </div>` : ''}
         <p class="muted" id="checkin-note"
            style="margin-top: 12px; font-size: 12px; visibility: ${checkInIncluded ? 'visible' : 'hidden'};">
             Includes one 15-min check-in — 4h+ flips always do.</p>`;
