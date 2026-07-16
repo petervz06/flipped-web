@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>FLIPPED — flip your phone, anywhere</title>
     <meta name="description" content="One-tap commitment flips from any browser, any device.  No Mac required." />
+    <!-- PWA: installable to the iPhone Home Screen — real icon, full-screen,
+         no Safari chrome.  Unflip still lives on the Mac; this is the
+         flip-only surface. -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Flipped" />
+    <meta name="theme-color" content="#000000" />
     <link rel="stylesheet" href="styles.css?v=15" />
     <style>
         /* ─── Theme tokens, mirroring the Mac app's UITheme2026 ─────────── */
@@ -36,6 +47,12 @@
                extend past 100vw, the body clips it.  No horizontal
                scrollbar should ever appear on /flip. */
             overflow-x: hidden;
+        }
+        html {
+            /* Kill the iOS rubber-band flash: no overscroll chaining, and
+               the canvas behind any bounce is the same black as the app. */
+            overscroll-behavior-y: none;
+            background: #000;
         }
 
         body {
@@ -141,6 +158,9 @@
             font-size: 22px;
             font-weight: 700;
             margin: 6px 0 4px;
+            /* styles.css sets a marketing-hero -2.2px on h1 — sized for
+               46px+ heroes, unreadable at app scale.  Undo it here. */
+            letter-spacing: -0.3px;
         }
         .h-meta {
             color: var(--text-dim);
@@ -364,6 +384,99 @@
             text-transform: uppercase;
         }
 
+        /* ─── Bottom tab bar (phone only — desktop keeps the sidebar) ───── */
+        .tabbar {
+            display: none;
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            z-index: 10;
+            background: rgba(0,0,0,0.92);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-top: var(--hairline) solid var(--border);
+            /* Clear the iPhone home indicator. */
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+        }
+        .tabbar .tab {
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tabbar .tab .g { font-size: 13px; color: var(--text-faint); line-height: 1; }
+        .tabbar .tab .t {
+            font-family: var(--mono);
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        .tabbar .tab.active .g, .tabbar .tab.active .t { color: var(--text); }
+
+        /* ─── Shared row/list vocabulary for the new tabs ────────────────── */
+        .list-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: var(--hairline) solid var(--border);
+        }
+        .list-row:last-child { border-bottom: none; }
+        .list-row .primary { font-size: 14px; font-weight: 600; }
+        .list-row .sub {
+            display: block;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+        .rowbtn {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            cursor: pointer;
+            padding: 6px 8px;
+            white-space: nowrap;
+        }
+        .rowbtn:hover { color: var(--text); }
+        .rowbtn.ok { color: var(--ok); }
+        .rowbtn.danger:hover { color: var(--warn); }
+        .tag-chip {
+            font-family: var(--mono);
+            font-size: 8px;
+            letter-spacing: 1.5px;
+            color: var(--ok);
+            border: var(--hairline) solid var(--border-up);
+            border-radius: 999px;
+            padding: 3px 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .day-select { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+        .day-select .btn-mode { min-width: 0; padding: 8px 0; flex: 1; }
+        .time-selects { display: flex; gap: 8px; margin-top: 10px; }
+        .time-selects select {
+            flex: 1;
+            padding: 12px;
+            font-family: var(--mono);
+            font-size: 16px;  /* iOS Safari auto-zooms inputs <16px */
+            background: var(--surface);
+            color: var(--text);
+            border: var(--hairline) solid var(--border-up);
+            border-radius: var(--radius-sm);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
         /* ─── License-key sign-in card (shown only when not signed in) ──── */
         .signin-shell {
             max-width: 440px;
@@ -388,13 +501,15 @@
             border-color: var(--text);
         }
 
-        /* ─── Mobile (sidebar collapses to top bar) ──────────────────────── */
+        /* ─── Mobile (sidebar → slim top bar + bottom tab bar) ───────────── */
         @media (max-width: 720px) {
             .shell {
                 flex-direction: column;
                 padding: 10px;
                 gap: 10px;
                 max-width: 100%;
+                /* Clear the fixed bottom tab bar (+ home indicator). */
+                padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
             }
             .sidebar {
                 width: auto;
@@ -403,15 +518,19 @@
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 10px 16px;
+                /* Respect the notch when running as an installed app
+                   (black-translucent status bar overlays the page). */
+                margin-top: env(safe-area-inset-top, 0px);
             }
-            /* Brand wordmark sits left, nav rows compact next to it */
+            /* Brand wordmark sits left, device status right.  Nav moves to
+               the bottom tab bar; sign-out moves to the Settings tab. */
             .wordmark {
                 margin-bottom: 0;
                 font-size: 13px;
                 letter-spacing: 3px;
             }
-            .nav-row { padding: 4px 6px; }
-            /* Device row + sign-out wrap below the brand on a narrow row */
+            .sidebar .nav-row { display: none; }
+            .sidebar .signout { display: none; }
             .device-row {
                 margin: 0 0 0 auto;
                 padding: 0;
@@ -419,16 +538,7 @@
                 gap: 8px;
             }
             .device-meta { font-size: 11px; }
-            .signout {
-                margin: 0;
-                font-size: 10px;
-                letter-spacing: 2px;
-                padding: 6px 10px;
-                border: var(--hairline) solid var(--border-up);
-                border-radius: 6px;
-                color: var(--text-dim);
-            }
-            .signout:hover { color: var(--warn); border-color: var(--warn); }
+            .tabbar { display: flex; }
             /* Cards: tighter padding, smaller hero copy */
             .card { padding: 20px 18px; }
             .h1 { font-size: 19px; }
@@ -461,10 +571,11 @@
 <script>
 const API = 'https://flipped-production-79b3.up.railway.app';
 const LS = {
-    token:   'flipped.web.token',
-    device:  'flipped.web.deviceId',
-    profile: 'flipped.web.activeProfile',
-    tab:     'flipped.web.tab',
+    token:    'flipped.web.token',
+    device:   'flipped.web.deviceId',
+    profile:  'flipped.web.activeProfile',
+    tab:      'flipped.web.tab',
+    duration: 'flipped.web.homeDuration',
 };
 
 // Profiles mirror BlockProfile.swift presets — keep in lockstep when the
@@ -548,25 +659,37 @@ const PROFILES = {
     },
 };
 
-// Home FLIP starts a *manual* session — no end date, only quittable from
-// the Mac app.  Modes tab is for committing to a fixed duration (Focus or
-// Unplug), matching the Mac app's ModesView structure exactly.
-const FOCUS_DURATIONS = [
-    { label: '30 min',  seconds:  30 * 60 },
-    { label: '1 hour',  seconds:  60 * 60 },
-    { label: '2 hours', seconds:   2 * 3600 },
-    { label: '4 hours', seconds:   4 * 3600 },
-    { label: '8 hours', seconds:   8 * 3600 },
-    { label: '24 hours',seconds:  24 * 3600 },
+// Home FLIP durations.  MANUAL = no end date, only quittable from the Mac
+// app (the old Home behavior).  Timed pills are the old Modes tab folded
+// in: mode is derived from the duration (< 24h → focus, ≥ 24h → unplug)
+// so the user never has to learn the distinction.  Check-in auto-enables
+// at 4h+, matching the Mac.
+const HOME_DURATIONS = [
+    { label: 'MANUAL', seconds: null },
+    { label: '30M',    seconds:  30 * 60 },
+    { label: '1H',     seconds:  60 * 60 },
+    { label: '4H',     seconds:   4 * 3600 },
+    { label: '8H',     seconds:   8 * 3600 },
 ];
-const UNPLUG_DURATIONS = [
-    { label: '1 day',   seconds:        24 * 3600 },
-    { label: '3 days',  seconds:    3 * 24 * 3600 },
-    { label: '7 days',  seconds:    7 * 24 * 3600 },
-    { label: '14 days', seconds:   14 * 24 * 3600 },
-    { label: '30 days', seconds:   30 * 24 * 3600 },
-    { label: '1 year',  seconds:  365 * 24 * 3600 },
+const MORE_DURATIONS = [
+    { label: '1D',  seconds:        24 * 3600 },
+    { label: '3D',  seconds:    3 * 24 * 3600 },
+    { label: '7D',  seconds:    7 * 24 * 3600 },
+    { label: '14D', seconds:   14 * 24 * 3600 },
+    { label: '30D', seconds:   30 * 24 * 3600 },
+    { label: '1Y',  seconds:  365 * 24 * 3600 },
 ];
+// Schedule durations are backend-capped at 7 days (10080 min).
+const SCHED_DURATIONS = [
+    { label: '30M', minutes:  30 },
+    { label: '1H',  minutes:  60 },
+    { label: '2H',  minutes: 120 },
+    { label: '4H',  minutes: 240 },
+    { label: '8H',  minutes: 480 },
+    { label: '12H', minutes: 720 },
+    { label: '1D',  minutes: 1440 },
+];
+const DAY_LABELS = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];  // Python convention: Mon=0
 
 let state = {
     token:        localStorage.getItem(LS.token)   || null,
@@ -574,16 +697,34 @@ let state = {
     profileId:    localStorage.getItem(LS.profile) || 'preset-simple',
     tab:          localStorage.getItem(LS.tab)     || 'home',
     activeSession: null,
-    // Modes sub-tab: 'focus' or 'unplug'
-    modeTab:      'focus',
-    focusDuration: 60 * 60,
-    unplugDuration: 24 * 3600,
+    // Home duration pill.  null = MANUAL.  Persisted so the app reopens on
+    // the user's usual commitment length.
+    homeDuration: (() => {
+        const raw = localStorage.getItem(LS.duration);
+        return raw === null || raw === 'manual' ? null : Number(raw) || null;
+    })(),
+    showMoreDurations: false,
+    // Schedules tab
+    schedules:    null,   // null = not loaded yet; [] = loaded, empty
+    schedError:   null,
+    schedForm:    null,   // null = closed; draft object while creating
+    // Profiles tab
+    expandedProfile: null,
+    // Settings tab (each null until fetched)
+    me:           null,
+    billing:      null,
+    stats:        null,
     error:        null,
     busy:         false,
     // Sign-in flow: 'email' (initial) → 'code' (after we email a 6-digit code)
     signInPhase:  'email',
     signInEmail:  null,
 };
+// The Modes tab folded into Home (2026-07-16 phone-app redesign) — remap
+// any stored 'modes' tab so returning users don't land on a dead tab.
+if (state.tab === 'modes' || !['home', 'schedules', 'profiles', 'settings'].includes(state.tab)) {
+    state.tab = 'home';
+}
 
 function $(id) { return document.getElementById(id); }
 function persist(key, value) {
@@ -893,6 +1034,197 @@ async function startCommittedFlip(mode, durationSec) {
     }
 }
 
+// One FLIP button, two paths: the selected duration pill decides whether
+// this is a manual session (null → Mac ends it) or a committed one.
+function flipNow() {
+    const sec = state.homeDuration;
+    if (sec == null) return startManualFlip(state.profileId);
+    // Mode is derived, not chosen: < 24h reads as a focus block, ≥ 24h is
+    // an unplug.  Same payload contract as the retired Modes tab.
+    return startCommittedFlip(sec >= 86400 ? 'unplug' : 'focus', sec);
+}
+
+// ─── Schedules (CRUD against /api/schedules) ────────────────────────────
+// The backend stores fire time in UTC (hour/minute + weekday set, Mon=0).
+// We convert at the edge, both directions, INCLUDING the weekday shift
+// when the local↔UTC conversion crosses midnight (9 PM PDT Mon = 4 AM UTC
+// Tue).  Known limit shared with the Mac: the stored UTC time is fixed, so
+// the local fire time drifts an hour across DST changes.
+
+// JS getDay()/getUTCDay() are Sun=0; the backend is Mon=0.
+function jsDayToPy(jsDay) { return (jsDay + 6) % 7; }
+
+// For a chosen local weekday (Mon=0) + local h:m, find the UTC weekday +
+// h:m by materialising a concrete date this week and reading its UTC parts.
+function localScheduleToUtc(pyDayLocal, hourLocal, minuteLocal) {
+    const now = new Date();
+    const todayPy = jsDayToPy(now.getDay());
+    const d = new Date(now);
+    d.setDate(now.getDate() + ((pyDayLocal - todayPy + 7) % 7));
+    d.setHours(hourLocal, minuteLocal, 0, 0);
+    return {
+        day:    jsDayToPy(d.getUTCDay()),
+        hour:   d.getUTCHours(),
+        minute: d.getUTCMinutes(),
+    };
+}
+
+// Reverse: stored UTC weekday + h:m → local weekday + h:m for display.
+function utcScheduleToLocal(pyDayUtc, hourUtc, minuteUtc) {
+    const now = new Date();
+    const todayPyUtc = jsDayToPy(now.getUTCDay());
+    const d = new Date(now);
+    d.setUTCDate(now.getUTCDate() + ((pyDayUtc - todayPyUtc + 7) % 7));
+    d.setUTCHours(hourUtc, minuteUtc, 0, 0);
+    return {
+        day:    jsDayToPy(d.getDay()),
+        hour:   d.getHours(),
+        minute: d.getMinutes(),
+    };
+}
+
+function fmtLocalTime(hour, minute) {
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+}
+
+// Human summary of a schedule row, in the USER'S timezone.
+function describeSchedule(s) {
+    if (!s.recurring || !Array.isArray(s.days_of_week) || s.days_of_week.length === 0) {
+        const t = utcScheduleToLocal(0, s.fire_hour_utc, s.fire_minute_utc);
+        return `${s.fire_date || 'ONE-OFF'} · ${fmtLocalTime(t.hour, t.minute)} · ${fmtDurationMin(s.duration_minutes)}`;
+    }
+    const locals = s.days_of_week.map(d => utcScheduleToLocal(d, s.fire_hour_utc, s.fire_minute_utc));
+    const days = locals.map(l => l.day).sort((a, b) => a - b);
+    const dayStr = days.length === 7 ? 'EVERY DAY'
+        : (days.join(',') === '0,1,2,3,4' ? 'WEEKDAYS'
+        : (days.join(',') === '5,6' ? 'WEEKENDS'
+        : days.map(d => DAY_LABELS[d]).join(' ')));
+    return `${dayStr} · ${fmtLocalTime(locals[0].hour, locals[0].minute)} · ${fmtDurationMin(s.duration_minutes)}`;
+}
+
+function fmtDurationMin(min) {
+    if (min < 60) return `${min}M`;
+    if (min < 1440) return min % 60 === 0 ? `${min / 60}H` : `${Math.floor(min / 60)}H${min % 60}M`;
+    return min % 1440 === 0 ? `${min / 1440}D` : `${Math.floor(min / 1440)}D+`;
+}
+
+async function loadSchedules() {
+    try {
+        state.schedules = await api('/api/schedules');
+        state.schedError = null;
+    } catch (e) {
+        state.schedError = e.message || 'Couldn\'t load schedules.';
+    }
+    render();
+}
+
+function openScheduleForm() {
+    state.schedForm = {
+        name: '',
+        days: [0, 1, 2, 3, 4],          // local weekdays, Mon=0 — weekdays default
+        hour: 21, minute: 0,            // local
+        durationMin: 480,
+    };
+    render();
+}
+function closeScheduleForm() { state.schedForm = null; render(); }
+function schedToggleDay(d) {
+    const f = state.schedForm; if (!f) return;
+    f.days = f.days.includes(d) ? f.days.filter(x => x !== d) : [...f.days, d].sort();
+    render();
+}
+function schedSetDuration(min) { if (state.schedForm) { state.schedForm.durationMin = min; render(); } }
+function schedSetTime() {
+    const f = state.schedForm; if (!f) return;
+    const h = document.getElementById('sched-hour');
+    const m = document.getElementById('sched-min');
+    if (h) f.hour = Number(h.value);
+    if (m) f.minute = Number(m.value);
+}
+
+async function saveSchedule() {
+    const f = state.schedForm;
+    if (!f) return;
+    schedSetTime();
+    const nameEl = document.getElementById('sched-name');
+    if (nameEl) f.name = nameEl.value;
+    if (f.days.length === 0) { state.schedError = 'Pick at least one day.'; render(); return; }
+    if (!state.deviceId) { state.schedError = 'No iPhone on this account yet.'; render(); return; }
+    state.busy = true; state.schedError = null; render();
+    try {
+        // Each selected local day converts independently — the UTC weekday
+        // can differ per day, but hour/minute are the same for all of them.
+        const utcDays = f.days.map(d => localScheduleToUtc(d, f.hour, f.minute));
+        await api('/api/schedules', {
+            method: 'POST',
+            body: {
+                device_id: state.deviceId,
+                mode: f.durationMin * 60 >= 86400 ? 'unplug' : 'focus',
+                recurring: true,
+                days_of_week: [...new Set(utcDays.map(u => u.day))].sort(),
+                fire_hour_utc: utcDays[0].hour,
+                fire_minute_utc: utcDays[0].minute,
+                duration_minutes: f.durationMin,
+                name: (f.name || '').trim() || null,
+            },
+        });
+        state.schedForm = null;
+        await loadSchedules();
+    } catch (e) {
+        state.schedError = e.message || 'Couldn\'t save the schedule.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+async function toggleSchedule(id, enable) {
+    state.busy = true; render();
+    try {
+        await api(`/api/schedules/${id}`, { method: 'PATCH', body: { enabled: enable } });
+        await loadSchedules();
+    } catch (e) {
+        state.schedError = e.message || 'Couldn\'t update the schedule.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+async function deleteSchedule(id) {
+    if (!confirm('Delete this schedule?')) return;
+    state.busy = true; render();
+    try {
+        await api(`/api/schedules/${id}`, { method: 'DELETE' });
+        await loadSchedules();
+    } catch (e) {
+        state.schedError = e.message || 'Couldn\'t delete the schedule.';
+    } finally {
+        state.busy = false; render();
+    }
+}
+
+// ─── Settings data (account · billing · stats) ──────────────────────────
+async function loadSettingsData() {
+    const [me, billing, stats] = await Promise.all([
+        api('/api/me').catch(() => null),
+        api('/api/billing/status').catch(() => null),
+        api('/api/me/stats').catch(() => null),
+    ]);
+    state.me = me; state.billing = billing; state.stats = stats;
+    render();
+}
+
+// Detect "already installed" so the ADD TO HOME SCREEN hint disappears
+// once the user is running the real app.
+function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+}
+
+function fmtHours(totalSeconds) {
+    const h = Math.floor((totalSeconds || 0) / 3600);
+    return h >= 1000 ? `${Math.round(h / 100) / 10}K` : String(h);
+}
+
 // ─── In-session controls (web parity with Mac) ──────────────────────────
 // Both buttons hit the same endpoints as the Mac app.  Server enforces the
 // once-per-session + 30-day-per-user limits; we hide the buttons after use
@@ -938,11 +1270,25 @@ function fmtRemaining(session) {
     return `${h}h ${m % 60}m`;
 }
 
-function setTab(t) { state.tab = t; persist('tab', t); render(); }
+function setTab(t) {
+    state.tab = t; persist('tab', t);
+    // Lazy-load per-tab data on first visit; refresh settings each visit
+    // (subscription state can change out from under a long-lived app).
+    if (t === 'schedules' && state.schedules === null && state.token) loadSchedules();
+    if (t === 'settings' && state.token) loadSettingsData();
+    render();
+}
 function setProfile(id) { state.profileId = id; persist('profile', id); render(); }
-function setModeTab(m) { state.modeTab = m; render(); }
-function setFocusDuration(s) { state.focusDuration = s; render(); }
-function setUnplugDuration(s) { state.unplugDuration = s; render(); }
+function setHomeDuration(s) {
+    state.homeDuration = s;
+    persist('duration', s == null ? 'manual' : String(s));
+    render();
+}
+function toggleMoreDurations() { state.showMoreDurations = !state.showMoreDurations; render(); }
+function toggleProfileExpand(id) {
+    state.expandedProfile = state.expandedProfile === id ? null : id;
+    render();
+}
 
 // ─── Render ─────────────────────────────────────────────────────────────
 function render() {
@@ -1038,22 +1384,34 @@ function escapeHtml(s) {
         ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
 
+const TABS = [
+    { id: 'home',      label: 'Home',      glyph: '●' },
+    { id: 'schedules', label: 'Schedules', glyph: '◐' },
+    { id: 'profiles',  label: 'Profiles',  glyph: '▤' },
+    { id: 'settings',  label: 'Settings',  glyph: '◯' },
+];
+
 function renderApp() {
     const session = state.activeSession;
+    // The active session lives on the Home tab; the other tabs stay
+    // reachable mid-flip (schedule tomorrow while today is locked).
+    const main =
+        state.tab === 'schedules' ? renderSchedules()
+      : state.tab === 'profiles'  ? renderProfiles()
+      : state.tab === 'settings'  ? renderSettings()
+      : (session ? renderActiveSession(session)
+                 : (!state.deviceId ? renderNoDevice() : renderHome()));
     return `
     <div class="shell">
         <aside class="sidebar">
             <div class="wordmark">FLIPPED</div>
-            <div class="nav-row ${state.tab === 'home' ? 'active' : ''}"
-                 onclick="setTab('home')">
-                <span class="mark">—</span>
-                <span>Home</span>
-            </div>
-            <div class="nav-row ${state.tab === 'modes' ? 'active' : ''}"
-                 onclick="setTab('modes')">
-                <span class="mark">—</span>
-                <span>Modes</span>
-            </div>
+            ${TABS.map(t => `
+                <div class="nav-row ${state.tab === t.id ? 'active' : ''}"
+                     onclick="setTab('${t.id}')">
+                    <span class="mark">—</span>
+                    <span>${t.label}</span>
+                </div>
+            `).join('')}
             <div class="device-row">
                 <span class="dot ${
                     (!state.deviceId || (session && !session.profile_installed_at)) ? 'warn' : ''
@@ -1072,10 +1430,16 @@ function renderApp() {
             <button class="signout" onclick="signOut()">— Sign out</button>
         </aside>
         <main class="main">
-            ${session ? renderActiveSession(session)
-                      : (!state.deviceId ? renderNoDevice()
-                      : (state.tab === 'home' ? renderHome() : renderModes()))}
+            ${main}
         </main>
+        <nav class="tabbar">
+            ${TABS.map(t => `
+                <div class="tab ${state.tab === t.id ? 'active' : ''}" onclick="setTab('${t.id}')">
+                    <div class="g">${t.glyph}</div>
+                    <div class="t">${t.label}</div>
+                </div>
+            `).join('')}
+        </nav>
     </div>
     `;
 }
@@ -1102,87 +1466,269 @@ function renderNoDevice() {
     `;
 }
 
+// Home = the flip screen.  Absorbs the old Modes tab: the duration pill
+// decides manual vs committed, mode (focus/unplug) is derived from length.
 function renderHome() {
-    const profile = PROFILES[state.profileId] || PROFILES['preset-simple'];
+    const profile = resolveFlipProfile(state.profileId);
+    const profileName = profile.name
+        || (state.macActiveProfile && state.macActiveProfile.name)
+        || 'Simple';
+    const sec = state.homeDuration;
+    const selectedInMore = MORE_DURATIONS.some(d => d.seconds === sec);
+    const pills = state.showMoreDurations || selectedInMore
+        ? [...HOME_DURATIONS, ...MORE_DURATIONS]
+        : HOME_DURATIONS;
+    const checkInIncluded = sec != null && sec >= 14400;
+    const microCopy = sec == null
+        ? 'MANUAL — UNFLIP ANYTIME FROM YOUR MAC'
+        : `COMMITTED — ENDS WHEN THE TIMER DOES`;
     return `
     <h1 class="h1">Flip your phone</h1>
-    <p class="h-meta">One tap — flips immediately, ends when you say so.</p>
+    <p class="h-meta">Pick how long, tap FLIP.  Unflipping early takes your Mac — that's the point.</p>
     <div class="card">
-        <div class="label">STATUS</div>
-        <div class="display">Phone is free</div>
-        <p class="muted">Tapping FLIP starts a manual session — your iPhone
-            hides distractions right away.  Open Flipped on your Mac to end
-            it whenever you're ready.  Use Modes for a fixed-duration commit.</p>
+        <div class="label">PHONE STATUS</div>
+        <div class="display">Ready to flip.</div>
+        <p class="muted">Your iPhone is supervised and listening.  One tap hides
+            every app in the active profile.</p>
         <div class="divider"></div>
         <div class="active-profile">
             <div>
                 <div class="label">ACTIVE PROFILE</div>
-                <div class="name">${profile.name}</div>
+                <div class="name">${escapeHtml(profileName)}</div>
             </div>
-            <button class="change" onclick="setTab('modes')">CHANGE →</button>
+            <button class="change" onclick="setTab('profiles')">CHANGE →</button>
         </div>
         <div class="divider"></div>
+        <div class="label">DURATION</div>
+        <div class="picker-grid" style="margin-top: 10px;">
+            ${pills.map(d => `
+                <button class="btn-mode ${sec === d.seconds ? 'active' : ''}"
+                        onclick="setHomeDuration(${d.seconds})">
+                    ${d.label}
+                </button>
+            `).join('')}
+            ${!state.showMoreDurations && !selectedInMore
+                ? `<button class="btn-mode" onclick="toggleMoreDurations()">MORE…</button>`
+                : ''}
+        </div>
+        ${checkInIncluded
+            ? `<p class="muted" style="margin-top: 12px; font-size: 12px;">
+                   Includes one 15-min check-in — 4h+ flips always do.</p>`
+            : ''}
+        <div class="divider"></div>
         <button class="btn-flip" ${state.busy ? 'disabled' : ''}
-                onclick="startManualFlip('${profile.id}')">
+                onclick="flipNow()">
             ${state.busy ? 'STARTING…' : '▶ FLIP'}
         </button>
+        <div class="locked-meta" style="margin: 10px 0 0; font-size: 9px;">${microCopy}</div>
         ${state.error ? `<div class="status warn">${state.error}</div>` : ''}
     </div>
     `;
 }
 
-function renderModes() {
-    const isFocus = state.modeTab === 'focus';
-    const blurb = isFocus
-        ? 'Lock in for a few hours.  Quittable from the Mac app once a month — that\'s your one escape.'
-        : 'Long-haul commitment.  Days to a year.  Quittable from the Mac app, but the longer you go, the harder it gets.';
-    const durations = isFocus ? FOCUS_DURATIONS : UNPLUG_DURATIONS;
-    const selected  = isFocus ? state.focusDuration : state.unplugDuration;
-    const setter    = isFocus ? 'setFocusDuration' : 'setUnplugDuration';
+// ─── Schedules tab ──────────────────────────────────────────────────────
+function renderSchedules() {
+    const s = state.schedules;
+    const body =
+        s === null && !state.schedError
+            ? `<p class="muted">Loading…</p>`
+      : state.schedError && s === null
+            ? `<p class="muted" style="color: var(--warn)">${escapeHtml(state.schedError)}</p>`
+      : (s || []).length === 0 && !state.schedForm
+            ? `<p class="muted">No schedules yet.  A schedule flips your phone
+                   automatically — same time, same days, no willpower required.</p>`
+      : `<div>${(s || []).map(row => `
+            <div class="list-row">
+                <div>
+                    <div class="primary">${escapeHtml(row.name || 'Schedule')}</div>
+                    <span class="sub">${describeSchedule(row)}</span>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <button class="rowbtn ${row.enabled ? 'ok' : ''}"
+                            ${state.busy ? 'disabled' : ''}
+                            onclick="toggleSchedule('${row.id}', ${!row.enabled})">
+                        ${row.enabled ? '● ON' : '◯ OFF'}
+                    </button>
+                    <button class="rowbtn danger" ${state.busy ? 'disabled' : ''}
+                            onclick="deleteSchedule('${row.id}')">✕</button>
+                </div>
+            </div>
+        `).join('')}</div>`;
     return `
-    <h1 class="h1">Modes</h1>
-    <p class="h-meta">Pick a duration to commit.  Profile decides what gets blocked.</p>
-
+    <h1 class="h1">Schedules</h1>
+    <p class="h-meta">Automatic flips.  They fire even when you'd rather they didn't — that's the point.</p>
     <div class="card">
-        <div class="picker-grid" style="grid-template-columns: 1fr 1fr; margin: 0 0 18px;">
-            <button class="btn-mode ${isFocus ? 'active' : ''}"
-                    onclick="setModeTab('focus')">FOCUS</button>
-            <button class="btn-mode ${!isFocus ? 'active' : ''}"
-                    onclick="setModeTab('unplug')">UNPLUG</button>
-        </div>
-        <p class="muted">${blurb}</p>
+        ${body}
+        ${state.schedForm ? renderScheduleForm() : `
+            <div class="divider"></div>
+            <button class="btn-flip" onclick="openScheduleForm()">+ NEW SCHEDULE</button>
+        `}
+        ${state.schedError && s !== null ? `<div class="status warn">${escapeHtml(state.schedError)}</div>` : ''}
+    </div>
+    `;
+}
 
-        <div class="divider"></div>
-        <div class="label">PROFILE</div>
-        <div class="picker-grid" style="margin-top: 10px;">
-            ${Object.values(PROFILES).map(p => `
-                <button class="btn-mode ${state.profileId === p.id ? 'active' : ''}"
-                        onclick="setProfile('${p.id}')">
-                    ${p.name.toUpperCase()}
-                </button>
-            `).join('')}
-        </div>
-        <p class="muted" style="margin-top: 12px; font-size: 12px;">
-            ${PROFILES[state.profileId].tagline}
-        </p>
+function renderScheduleForm() {
+    const f = state.schedForm;
+    const hours = Array.from({length: 24}, (_, h) => h);
+    const minutes = [0, 15, 30, 45];
+    return `
+    <div class="divider"></div>
+    <div class="label">NEW SCHEDULE</div>
+    <input id="sched-name" class="signin-input" type="text" maxlength="100"
+           placeholder="Name (optional) — e.g. Weeknights"
+           value="${escapeHtml(f.name)}" />
+    <div class="label">DAYS</div>
+    <div class="day-select">
+        ${DAY_LABELS.map((lbl, d) => `
+            <button class="btn-mode ${f.days.includes(d) ? 'active' : ''}"
+                    onclick="schedToggleDay(${d})">${lbl}</button>
+        `).join('')}
+    </div>
+    <div class="label" style="margin-top: 14px; display: block;">STARTS AT (YOUR TIME)</div>
+    <div class="time-selects">
+        <select id="sched-hour" onchange="schedSetTime()">
+            ${hours.map(h => `<option value="${h}" ${h === f.hour ? 'selected' : ''}>${String(h).padStart(2, '0')}:00</option>`).join('')}
+        </select>
+        <select id="sched-min" onchange="schedSetTime()">
+            ${minutes.map(m => `<option value="${m}" ${m === f.minute ? 'selected' : ''}>:${String(m).padStart(2, '0')}</option>`).join('')}
+        </select>
+    </div>
+    <div class="label" style="margin-top: 14px; display: block;">FLIPPED FOR</div>
+    <div class="picker-grid" style="margin-top: 10px;">
+        ${SCHED_DURATIONS.map(d => `
+            <button class="btn-mode ${f.durationMin === d.minutes ? 'active' : ''}"
+                    onclick="schedSetDuration(${d.minutes})">${d.label}</button>
+        `).join('')}
+    </div>
+    <div class="divider"></div>
+    <button class="btn-flip" ${state.busy ? 'disabled' : ''} onclick="saveSchedule()">
+        ${state.busy ? 'SAVING…' : 'SAVE SCHEDULE'}
+    </button>
+    <button class="btn-secondary" style="margin-top: 8px;" onclick="closeScheduleForm()">CANCEL</button>
+    `;
+}
 
-        <div class="divider"></div>
-        <div class="label">DURATION</div>
-        <div class="picker-grid" style="margin-top: 10px;">
-            ${durations.map(d => `
-                <button class="btn-mode ${selected === d.seconds ? 'active' : ''}"
-                        onclick="${setter}(${d.seconds})">
-                    ${d.label.toUpperCase()}
-                </button>
-            `).join('')}
+// ─── Profiles tab ───────────────────────────────────────────────────────
+// Pick-only for now: custom profiles are created on the Mac (server-side
+// profile store is Phase 2).  Selecting here decides what the next flip
+// blocks — same resolveFlipProfile contract as before.
+function renderProfiles() {
+    const synced = state.macActiveProfile;
+    const syncedCard = synced && Array.isArray(synced.bundle_ids) ? `
+        <div class="list-row" onclick="setProfile('${escapeHtml(synced.slug || 'synced')}')" style="cursor:pointer;">
+            <div>
+                <div class="primary">${escapeHtml(synced.name || 'Your Mac profile')}</div>
+                <span class="sub">${synced.bundle_ids.length} APPS ·
+                    <span class="rowbtn" style="padding:0" onclick="event.stopPropagation(); toggleProfileExpand('synced')">
+                        ${state.expandedProfile === 'synced' ? 'HIDE' : 'SEE LIST'}</span></span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span class="tag-chip">FROM YOUR MAC</span>
+                ${isProfileSelected(synced.slug) ? '<span class="rowbtn ok">● ACTIVE</span>' : '<span class="rowbtn">SELECT</span>'}
+            </div>
         </div>
-
+        ${state.expandedProfile === 'synced' ? renderBundleList(synced.bundle_ids) : ''}
+    ` : '';
+    return `
+    <h1 class="h1">Profiles</h1>
+    <p class="h-meta">What disappears when you flip.  Pick one — it sticks until you change it.</p>
+    <div class="card">
+        <div>
+        ${syncedCard}
+        ${Object.values(PROFILES).map(p => `
+            <div class="list-row" onclick="setProfile('${p.id}')" style="cursor:pointer;">
+                <div>
+                    <div class="primary">${escapeHtml(p.name)}</div>
+                    <span class="sub">${p.bundleIds.length} APPS ·
+                        <span class="rowbtn" style="padding:0" onclick="event.stopPropagation(); toggleProfileExpand('${p.id}')">
+                            ${state.expandedProfile === p.id ? 'HIDE' : 'SEE LIST'}</span></span>
+                </div>
+                ${isProfileSelected(p.id) ? '<span class="rowbtn ok">● ACTIVE</span>' : '<span class="rowbtn">SELECT</span>'}
+            </div>
+            ${state.expandedProfile === p.id ? renderBundleList(p.bundleIds) : ''}
+        `).join('')}
+        </div>
         <div class="divider"></div>
-        <button class="btn-flip" ${state.busy ? 'disabled' : ''}
-                onclick="startCommittedFlip('${isFocus ? 'focus' : 'unplug'}', ${selected})">
-            ${state.busy ? 'STARTING…' : (isFocus ? '▶ START FOCUS' : '▶ UNPLUG')}
-        </button>
-        ${state.error ? `<div class="status warn">${state.error}</div>` : ''}
+        <p class="muted" style="font-size: 12px;">Create and edit custom profiles in
+            Flipped on your Mac — they sync here automatically.</p>
+    </div>
+    `;
+}
+
+function isProfileSelected(id) {
+    if (!id) return false;
+    if (state.profileId === id) return true;
+    // A synced custom slug the presets don't know about resolves to the
+    // Mac profile (see resolveFlipProfile) — mark the synced card active.
+    const synced = state.macActiveProfile;
+    return !!(synced && synced.slug === id && !PROFILES[state.profileId]);
+}
+
+function renderBundleList(bundleIds) {
+    const items = (bundleIds || []).map(friendlyAppName);
+    return `
+    <div class="blocked-list" style="justify-content: flex-start; padding: 8px 0 12px;">
+        ${items.map((name, i) => `
+            <span class="item">${escapeHtml(name)}</span>${i < items.length - 1 ? '<span class="sep">·</span>' : ''}
+        `).join('')}
+    </div>`;
+}
+
+// ─── Settings tab ───────────────────────────────────────────────────────
+function renderSettings() {
+    const me = state.me, billing = state.billing, stats = state.stats;
+    const subLabel = billing
+        ? escapeHtml((billing.label || '').toUpperCase() || 'UNKNOWN')
+        : '…';
+    const subOk = !!(billing && billing.entitled);
+    const hoursFlipped = stats ? fmtHours(stats.total_seconds_flipped) : null;
+    return `
+    <h1 class="h1">Settings</h1>
+    <p class="h-meta">Account, subscription, this iPhone.</p>
+    <div class="card">
+        <div>
+        <div class="list-row">
+            <div>
+                <div class="primary">Account</div>
+                <span class="sub">${me ? escapeHtml(me.email) : 'LOADING…'}</span>
+            </div>
+        </div>
+        <div class="list-row">
+            <div>
+                <div class="primary">Subscription</div>
+                <span class="sub" style="color: ${subOk ? 'var(--ok)' : 'var(--warn)'}">${subLabel}</span>
+            </div>
+            ${billing && !subOk
+                ? `<a class="rowbtn" href="pricing.html" style="text-decoration:none;">SUBSCRIBE →</a>`
+                : ''}
+        </div>
+        <div class="list-row">
+            <div>
+                <div class="primary">iPhone</div>
+                <span class="sub">${state.deviceId ? 'PAIRED · SUPERVISED' : 'NOT PAIRED — SET UP FROM YOUR MAC'}</span>
+            </div>
+        </div>
+        ${stats ? `
+        <div class="list-row">
+            <div>
+                <div class="primary">Your record</div>
+                <span class="sub">${stats.current_streak_days}-DAY STREAK · ${hoursFlipped}H FLIPPED ALL-TIME</span>
+            </div>
+        </div>` : ''}
+        ${!isStandalone() ? `
+        <div class="list-row">
+            <div>
+                <div class="primary">Put Flipped on your Home Screen</div>
+                <span class="sub">SHARE ▲ → ADD TO HOME SCREEN — FULL-SCREEN, REAL ICON</span>
+            </div>
+        </div>` : ''}
+        </div>
+        <div class="divider"></div>
+        <button class="btn-secondary" onclick="signOut()">SIGN OUT</button>
+        <p class="muted" style="font-size: 11px; margin-top: 14px;">
+            Unflipping early always takes your Mac — that's the deal you made
+            with yourself.  Questions: support@useflipped.com</p>
     </div>
     `;
 }
@@ -1337,11 +1883,22 @@ function renderActiveSession(session) {
         }
     }
     render();
+    // The app can reopen on a persisted tab — hydrate that tab's data the
+    // same way setTab() would have.
+    if (state.token && state.tab === 'schedules') loadSchedules();
+    if (state.token && state.tab === 'settings') loadSettingsData();
     // Refresh active session every 5s, matching the Mac app's poll cadence.
     // Keeps the web view in sync with sessions started or ended on the Mac
     // (or vice versa) within the same window users perceive as "instant."
+    // Skip the re-render while the user is mid-form (schedule editor, or
+    // any focused input) — innerHTML replacement would eat their typing.
     setInterval(() => {
-        if (state.token) refreshActiveSession().then(render);
+        if (!state.token) return;
+        refreshActiveSession().then(() => {
+            const el = document.activeElement;
+            const typing = el && ['INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName);
+            if (!state.schedForm && !typing) render();
+        });
     }, 5000);
 })();
 </script>
