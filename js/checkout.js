@@ -49,7 +49,7 @@
       '    <input class="fpc-email" type="email" autocomplete="email" placeholder="you@example.com" />' +
       '    <div class="fpc-err" style="display:none;">That doesn’t look like an email &mdash; mind checking it?</div>' +
       '    <button class="fpc-go">CONTINUE TO CHECKOUT →</button>' +
-      '    <div class="fpc-micro">THIS EMAIL BECOMES YOUR ACCOUNT &middot; MACOS 13+ &middot; IPHONE IOS 17+</div>' +
+      '    <div class="fpc-micro">THIS EMAIL BECOMES YOUR ACCOUNT &middot; MACOS 14+ &middot; IPHONE IOS 17+</div>' +
       '  </div>' +
       '</div>';
     var style = document.createElement('style');
