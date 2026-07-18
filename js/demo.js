@@ -18,20 +18,20 @@
   var video  = document.getElementById('demo-video');
   if (!stage || !btn || !cursor || !video) return;
 
-  // In-clip timeline (seconds), FRAME-MEASURED against the footage
-  // (2026-07-18 dense-frame pass): apps visibly start vanishing at ~2.0s
-  // and materializing at ~10.8s.  Each press releases 0.2s before its
-  // effect — press, THEN pixels move, never a dead beat between (Pete's
-  // redline on v1, whose press fired a full second early).
+  // In-clip timeline (seconds), FRAME-MEASURED against the footage.
+  // The clip is a 9.5s splice (5s of static flipped-hold cut out — Pete:
+  // "time between flip and unflip should be ~4"): apps vanish at ~2.0s,
+  // materialize at ~5.8s.  Each press releases 0.2s before its effect —
+  // press, THEN pixels move.  Press-to-press = 3.8s.
   var T = {
     cursorToButton: 0.30,
     pressDown:      1.55,
     pressUp:        1.82,
     flipOn:         1.85,   // tile morphs at release; first apps lift ~2.0
     remeasure:      3.20,   // tile morph can shift the button a few px
-    pressDown2:     10.35,
-    pressUp2:       10.62,
-    flipOff:        10.65   // apps materialize ~10.8
+    pressDown2:     5.35,
+    pressUp2:       5.62,
+    flipOff:        5.65    // apps materialize ~5.8
   };
 
   function placeCursorOnButton() {
