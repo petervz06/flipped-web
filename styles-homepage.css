@@ -618,3 +618,58 @@
   .ctable th, .ctable td { padding: 10px 6px; }
   .ctable th:first-child, .ctable td:first-child { padding-left: 14px; }
 }
+
+/* ─── REAL-FOOTAGE DEMO (2026-07-18) — Shift-style depth composition ────
+   The CSS iPhone mock is replaced by Pete's real screen recording.  The
+   phone OVERLAPS the Mac window (Pete: "I like the depth… instead of the
+   phone just right beside the ui animation") so cause (FLIP on Mac) and
+   effect (apps vanishing) share one glance — the old stacked layout hid
+   the story on mobile entirely. */
+.demo-stage {
+  display: block;
+  position: relative;
+  /* Reserve room for the overlapping phone's overhang on the right. */
+  padding: 26px 0 46px;
+}
+.demo-stage .mac {
+  max-width: 700px;
+  margin-right: 190px;   /* phone overlap zone */
+}
+.real-iphone {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(2.5deg);
+  width: 252px;
+  border-radius: 40px;
+  border: 9px solid #1b1b1e;
+  background: #000;
+  overflow: hidden;
+  box-shadow: 0 34px 90px rgba(0,0,0,0.75), 0 6px 18px rgba(0,0,0,0.5);
+  z-index: 3;
+}
+.real-iphone video { display: block; width: 100%; height: auto; }
+
+@media (max-width: 860px) {
+  .demo-stage .mac { margin-right: 0; }
+  .real-iphone {
+    /* Mobile depth: phone rides the Mac window's lower-right corner —
+       both devices visible in ONE viewport, finally. */
+    width: 164px;
+    right: -14px;
+    top: auto;
+    bottom: -44px;
+    transform: rotate(2.5deg);
+    border-width: 7px;
+    border-radius: 30px;
+  }
+  .demo-stage { padding-bottom: 60px; }
+}
+
+@media (max-width: 540px) {
+  /* The sidebar is decoration at phone width — hiding it lets the
+     mega-tile (the actual story: status → FLIP) use the full window.
+     Without this the tile overflow-clips at ~250px. */
+  .demo-stage .mac-sidebar { display: none; }
+  .demo-stage .mac { max-width: none; }
+}

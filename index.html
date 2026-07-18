@@ -8,7 +8,7 @@
   <title>Flipped — Flip your phone. Get your life back.</title>
   <meta name="description" content="The screen-time tool you can't talk yourself out of. Pair your iPhone with your Mac, flip, and distracting apps disappear until you say so. Zero workarounds." />
   <link rel="stylesheet" href="styles.css?v=21" />
-  <link rel="stylesheet" href="styles-homepage.css?v=25" />
+  <link rel="stylesheet" href="styles-homepage.css?v=27" />
 </head>
 <body>
 
@@ -102,28 +102,14 @@
       </div>
     </div>
 
-    <!-- iPHONE -->
-    <div class="iphone">
-      <div class="iphone-notch"></div>
-      <div class="iphone-screen">
-        <div class="iphone-time">9:41</div>
-        <div class="iphone-date">Saturday, May 24</div>
-        <div class="app-grid">
-          <div class="app distracting app-1"></div>
-          <div class="app distracting app-2"></div>
-          <div class="app distracting app-3"></div>
-          <div class="app distracting app-4"></div>
-          <div class="app distracting app-5"></div>
-          <div class="app distracting app-6"></div>
-          <div class="app distracting app-7"></div>
-          <div class="app distracting app-8"></div>
-          <div class="app distracting app-9"></div>
-          <div class="app system-1"></div>
-          <div class="app distracting app-11"></div>
-          <div class="app system-2"></div>
-        </div>
-      </div>
-      <div class="iphone-home"></div>
+    <!-- iPHONE — real footage (Pete's 2026-07-18 recording).  The video is
+         the demo's CLOCK: demo.js drives the Mac mock's cursor/press/tile
+         states off video.currentTime so the FLIP press lands exactly when
+         the real apps vanish (~0:01) and UNFLIP when they return (~0:10). -->
+    <div class="real-iphone">
+      <video id="demo-video" muted loop playsinline autoplay preload="metadata">
+        <source src="media/flip-cycle.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 
