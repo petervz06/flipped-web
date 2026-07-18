@@ -18,17 +18,20 @@
   var video  = document.getElementById('demo-video');
   if (!stage || !btn || !cursor || !video) return;
 
-  // In-clip timeline (seconds).  Apps visibly vanish starting ~1.0s —
-  // the press completes a beat earlier so cause precedes effect.
+  // In-clip timeline (seconds), FRAME-MEASURED against the footage
+  // (2026-07-18 dense-frame pass): apps visibly start vanishing at ~2.0s
+  // and materializing at ~10.8s.  Each press releases 0.2s before its
+  // effect — press, THEN pixels move, never a dead beat between (Pete's
+  // redline on v1, whose press fired a full second early).
   var T = {
-    cursorToButton: 0.25,
-    pressDown:      0.70,
-    pressUp:        0.92,
-    flipOn:         0.95,   // tile morphs as the first apps lift off
-    remeasure:      2.30,   // tile morph can shift the button a few px
-    pressDown2:     9.30,
-    pressUp2:       9.55,
-    flipOff:        9.60    // apps start returning ~9.9
+    cursorToButton: 0.30,
+    pressDown:      1.55,
+    pressUp:        1.82,
+    flipOn:         1.85,   // tile morphs at release; first apps lift ~2.0
+    remeasure:      3.20,   // tile morph can shift the button a few px
+    pressDown2:     10.35,
+    pressUp2:       10.62,
+    flipOff:        10.65   // apps materialize ~10.8
   };
 
   function placeCursorOnButton() {
@@ -42,25 +45,19 @@
     cursor.style.top  = '24px';
   }
 
-  var phase = -1;  // last applied phase, so each state applies once per loop
+  var phase = -1;  // last applied phase, so state applies once per change
   function applyPhase(p) {
     if (p === phase) return;
     phase = p;
-    switch (p) {
-      case 0:  // loop start: reset
-        placeCursorAtRest();
-        btn.classList.remove('is-pressed');
-        stage.classList.remove('is-flipped');
-        break;
-      case 1: placeCursorOnButton(); break;
-      case 2: btn.classList.add('is-pressed'); break;
-      case 3: btn.classList.remove('is-pressed'); break;
-      case 4: stage.classList.add('is-flipped'); break;
-      case 5: placeCursorOnButton(); break;   // post-morph re-aim
-      case 6: btn.classList.add('is-pressed'); break;
-      case 7: btn.classList.remove('is-pressed'); break;
-      case 8: stage.classList.remove('is-flipped'); break;
-    }
+    // ABSOLUTE state per phase — never incremental.  Sparse clocks skip
+    // phases (timeupdate fires ~4Hz in iOS low-power mode; seeks jump
+    // arbitrarily), so a transition-based switch could strand a pressed
+    // button or miss the flip entirely.  Each phase fully describes the
+    // world; skipping intermediate phases costs nothing.
+    btn.classList.toggle('is-pressed', p === 2 || p === 6);
+    stage.classList.toggle('is-flipped', p >= 4 && p < 8);
+    if (p === 0) placeCursorAtRest();
+    else placeCursorOnButton();  // covers the post-morph re-aim too
   }
 
   function phaseFor(t) {
@@ -76,17 +73,28 @@
   }
 
   var rafId = null;
+  var active = false;
+  function sync() { applyPhase(phaseFor(video.currentTime)); }
   function tick() {
-    applyPhase(phaseFor(video.currentTime));
+    sync();
     rafId = requestAnimationFrame(tick);
   }
 
+  // The video's own events are the BASELINE clock — they fire wherever the
+  // video actually plays, including contexts that suspend or throttle rAF
+  // (iOS low-power mode, embedded panes).  rAF just makes it frame-smooth
+  // where available.  applyPhase is idempotent so double-driving is free.
+  video.addEventListener('timeupdate', function () { if (active) sync(); });
+  video.addEventListener('seeked',     function () { if (active) sync(); });
+
   function start() {
-    if (rafId) return;
+    if (active) return;
+    active = true;
     video.play().catch(function () {});
     rafId = requestAnimationFrame(tick);
   }
   function stop() {
+    active = false;
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     video.pause();
   }
@@ -95,6 +103,11 @@
     new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
     }, { threshold: 0.25 }).observe(stage);
+    // Belt-and-braces: if the stage is already on-screen at load (anchor
+    // landing on #how, or an environment whose IO withholds the initial
+    // callback), don't wait for the observer to notice.
+    var r = stage.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) start();
   } else {
     start();
   }
@@ -117,4 +130,8 @@
     stage.classList.add('is-flipped');
     video.currentTime = 6;  // mid-hold: home screen with socials gone
   }
+
+  // Console debug handle: __flippedDemo.sync() applies the phase for the
+  // video's current position; start()/stop() drive the loop manually.
+  window.__flippedDemo = { start: start, stop: stop, sync: sync };
 })();
