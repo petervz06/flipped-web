@@ -29,18 +29,9 @@
       font-family: ui-monospace, Menlo, monospace;
       font-size: 11px; letter-spacing: 2px; color: var(--fg-2, #999);
     }
-    /* PiP on wider screens: Mac mock behind-left (reused from index), phone front-right */
-    @media (min-width: 721px) {
-      .demo-stage-v2 .mac { max-width: 620px; margin: 0; opacity: 0.98; }
-      .demo-stage-v2 .real-iphone {
-        position: absolute; right: 4%; bottom: -20px; margin: 0;
-      }
-    }
-    /* Mobile: phone video is the hero, Mac peeks above it */
-    @media (max-width: 720px) {
-      .demo-stage-v2 .mac { transform: scale(0.94); transform-origin: top center; }
-      .demo-stage-v2 .real-iphone { margin-top: -60px; position: relative; z-index: 2; }
-    }
+    /* Preview page has no Mac window yet — phone stays centered at every
+       width.  (The PiP pairing arrives when the Mac side joins it.) */
+    .demo-stage-v2 { text-align: center; }
   </style>
 </head>
 <body>
