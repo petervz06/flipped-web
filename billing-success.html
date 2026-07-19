@@ -41,12 +41,21 @@
   </div>
   <div class="microcopy" style="margin-top:20px;">macOS 14+ · iPhone iOS 17+</div>
 
-  <p id="phone-note" class="lede" style="display:none; max-width:440px; margin:28px auto 0; font-size:15px;">
-    📱 On your phone right now? One 10-second thing: find the email we just
-    sent ("Your Flipped download") and <strong>star it</strong> — it'll be
-    sitting on top when you open your Mac. We'll also send one reminder
-    tomorrow if setup hasn't happened. Everything waits.
-  </p>
+  <div id="phone-note" style="display:none; max-width:440px; margin:28px auto 0;">
+    <p class="lede" style="font-size:15px; margin:0 0 18px;">
+      📱 On your phone right now? Two ways to be flipped tonight:
+    </p>
+    <a id="sms-self" href="#" class="btn primary" style="display:inline-block; margin-bottom:14px;">💬 Text it to yourself</a>
+    <p class="lede" style="font-size:13px; margin:0 0 18px; color:var(--muted,#9aa6b2);">
+      It lands in Messages on your Mac — waiting with a blue badge when you
+      sit down.
+    </p>
+    <p class="lede" style="font-size:14px; margin:0;">
+      Or <strong>star the email</strong> we just sent ("Your Flipped
+      download") so it's on top when you open your Mac. Either way — 5
+      minutes there and your phone answers to you.
+    </p>
+  </div>
   <script>
     // The 60 seconds after checkout are peak intent — don't spend them
     // sending a Mac buyer to their inbox (2026-07-19 funnel: 41 paid →
@@ -56,6 +65,16 @@
     var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
     if (isPhone) {
       document.getElementById('phone-note').style.display = 'block';
+      // iMessage is the phone→Mac bridge every Apple buyer already has:
+      // one tap texts the setup link to THEMSELVES, and it's waiting in
+      // Messages on the Mac with a blue badge.  sms: with only a body
+      // opens the compose sheet; the buyer picks their own thread.
+      var body = encodeURIComponent(
+        'Flipped setup — open this on your Mac: ' +
+        'https://flipped-production-79b3.up.railway.app/api/download'
+      );
+      document.getElementById('sms-self').href =
+        (/iPhone|iPad/.test(navigator.userAgent) ? 'sms:&body=' : 'sms:?body=') + body;
     } else if (/Macintosh/.test(navigator.userAgent)) {
       setTimeout(function () {
         document.getElementById('auto-dl-status').style.display = 'block';
