@@ -58,7 +58,9 @@
   if (isPhone) {
     document.getElementById('phone-visitor').style.display = 'block';
     document.getElementById('mac-headline').textContent = 'This one’s for your Mac.';
-  } else {
+  } else if (!sessionStorage.getItem('flipped-autodl')) {
+    // Once per browser session — revisits use the manual button.
+    sessionStorage.setItem('flipped-autodl', '1');
     setTimeout(function () {
       document.getElementById('auto-dl-status').style.display = 'block';
       var f = document.createElement('iframe');
@@ -66,6 +68,8 @@
       f.src = document.getElementById('dl-btn').href;
       document.body.appendChild(f);
     }, 700);
+  } else {
+    document.getElementById('auto-dl-status').style.display = 'block';
   }
 </script>
 

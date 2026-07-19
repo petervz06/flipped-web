@@ -66,13 +66,21 @@
     if (isPhone) {
       document.getElementById('phone-note').style.display = 'block';
     } else if (/Macintosh/.test(navigator.userAgent)) {
-      setTimeout(function () {
+      // Auto-fire ONCE per browser session — revisits/reloads shouldn't
+      // re-prompt (Save-As users) or pile up Flipped-latest-2.dmg copies.
+      // The button covers intentional re-downloads.
+      if (!sessionStorage.getItem('flipped-autodl')) {
+        sessionStorage.setItem('flipped-autodl', '1');
+        setTimeout(function () {
+          document.getElementById('auto-dl-status').style.display = 'block';
+          var f = document.createElement('iframe');
+          f.style.display = 'none';
+          f.src = document.getElementById('dl-btn').href;
+          document.body.appendChild(f);
+        }, 900);
+      } else {
         document.getElementById('auto-dl-status').style.display = 'block';
-        var f = document.createElement('iframe');
-        f.style.display = 'none';
-        f.src = document.getElementById('dl-btn').href;
-        document.body.appendChild(f);
-      }, 900);
+      }
     }
   </script>
 </section>
