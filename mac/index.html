@@ -53,7 +53,8 @@
   // told "on your Mac, type useflipped.com/mac" — this page starts the
   // download on arrival.  Phones that open it out of curiosity get
   // pointed back at the Mac instead of a dead DMG.
-  var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent)
+      || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);  // iPadOS masquerades as a Mac
   if (isPhone) {
     document.getElementById('phone-visitor').style.display = 'block';
     document.getElementById('mac-headline').textContent = 'This one’s for your Mac.';

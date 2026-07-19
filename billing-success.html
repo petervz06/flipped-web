@@ -66,7 +66,8 @@
     // 6 email clicks).  Macs: auto-start the download right here, button
     // stays as the manual fallback.  Phones: the DMG is a dead end — give
     // one concrete action (star the email) + the nudge promise instead.
-    var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent)
+      || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);  // iPadOS masquerades as a Mac
     if (isPhone) {
       document.getElementById('phone-note').style.display = 'block';
       // iMessage is the phone→Mac bridge every Apple buyer already has:
