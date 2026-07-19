@@ -33,20 +33,37 @@
     <div class="setup-step"><span class="setup-num">3</span><span>Plug in your iPhone with its cable and follow the steps. About 5 minutes.</span></div>
   </div>
 
+  <div id="auto-dl-status" class="microcopy" style="display:none; color:var(--success); margin-bottom:14px;">
+    ● YOUR DOWNLOAD IS STARTING — CHECK YOUR DOWNLOADS FOLDER
+  </div>
   <div style="display:inline-flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center;">
-    <a href="https://flipped-production-79b3.up.railway.app/api/download" class="btn primary hero-lift">▼ Download for Mac</a>
+    <a id="dl-btn" href="https://flipped-production-79b3.up.railway.app/api/download" class="btn primary hero-lift">▼ Download for Mac</a>
   </div>
   <div class="microcopy" style="margin-top:20px;">macOS 14+ · iPhone iOS 17+</div>
 
   <p id="phone-note" class="lede" style="display:none; max-width:440px; margin:28px auto 0; font-size:15px;">
-    📱 Reading this on your phone? Nothing to do here — we've emailed you the
-    link. Open that email on your Mac whenever you're ready. Everything waits.
+    📱 On your phone right now? One 10-second thing: find the email we just
+    sent ("Your Flipped download") and <strong>star it</strong> — it'll be
+    sitting on top when you open your Mac. We'll also send one reminder
+    tomorrow if setup hasn't happened. Everything waits.
   </p>
   <script>
-    // iPhone/iPad/Android buyers can't use a Mac DMG — tell them the thread
-    // continues in email instead of letting the download button dead-end.
-    if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+    // The 60 seconds after checkout are peak intent — don't spend them
+    // sending a Mac buyer to their inbox (2026-07-19 funnel: 41 paid →
+    // 6 email clicks).  Macs: auto-start the download right here, button
+    // stays as the manual fallback.  Phones: the DMG is a dead end — give
+    // one concrete action (star the email) + the nudge promise instead.
+    var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    if (isPhone) {
       document.getElementById('phone-note').style.display = 'block';
+    } else if (/Macintosh/.test(navigator.userAgent)) {
+      setTimeout(function () {
+        document.getElementById('auto-dl-status').style.display = 'block';
+        var f = document.createElement('iframe');
+        f.style.display = 'none';
+        f.src = document.getElementById('dl-btn').href;
+        document.body.appendChild(f);
+      }, 900);
     }
   </script>
 </section>
