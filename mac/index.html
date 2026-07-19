@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="js/meta-pixel.js?v=1"></script>
+  <title>Get set up — Flipped</title>
+  <meta name="description" content="Type useflipped.com/mac on your Mac and Flipped starts downloading. Setup takes a few minutes." />
+  <link rel="stylesheet" href="../styles.css?v=21" />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wordmark nav-size">FLIPPED</div>
+  <div class="nav-right">
+    <a href="../help.html" class="nav-link">HELP</a>
+  </div>
+</nav>
+
+<section class="section" style="text-align:center; max-width:620px;">
+  <div class="eyebrow" style="color:var(--success); margin-bottom:24px;">● YOU MADE IT</div>
+  <h1 class="h1" style="margin-bottom:20px;" id="mac-headline">Downloading Flipped…</h1>
+
+  <div id="auto-dl-status" class="microcopy" style="display:none; color:var(--success); margin-bottom:18px;">
+    ● CHECK YOUR DOWNLOADS FOLDER FOR FLIPPED.DMG
+  </div>
+
+  <div style="max-width:440px; margin:0 auto 28px; text-align:left;">
+    <div class="setup-step"><span class="setup-num">1</span><span>Open <strong>Flipped.dmg</strong> from Downloads and drag Flipped into <strong>Applications</strong>.</span></div>
+    <div class="setup-step"><span class="setup-num">2</span><span>Sign in with <strong>the email you used at checkout</strong> — we send a 6-digit code. No password.</span></div>
+    <div class="setup-step"><span class="setup-num">3</span><span>Plug in your iPhone with its cable and follow the steps. A few minutes total.</span></div>
+  </div>
+
+  <div style="display:inline-flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:center;">
+    <a id="dl-btn" href="https://flipped-production-79b3.up.railway.app/api/download" class="btn primary hero-lift">▼ Download manually</a>
+  </div>
+  <div class="microcopy" style="margin-top:20px;">macOS 14+ · iPhone iOS 17+</div>
+
+  <p id="phone-visitor" class="lede" style="display:none; max-width:440px; margin:28px auto 0; font-size:15px;">
+    📱 You're on your phone — this address is for your <strong>Mac</strong>.
+    Walk over and type <strong>useflipped.com/mac</strong> into any browser
+    there, and the download starts itself.
+  </p>
+
+  <p class="lede" style="max-width:440px; margin:28px auto 0; font-size:14px;">
+    Stuck? <a href="mailto:support@useflipped.com" style="color:var(--text,#fff);">support@useflipped.com</a> — a human answers.
+  </p>
+</section>
+
+<script>
+  // The typeable phone→Mac bridge (Netflix-TV pattern): a phone buyer is
+  // told "on your Mac, type useflipped.com/mac" — this page starts the
+  // download on arrival.  Phones that open it out of curiosity get
+  // pointed back at the Mac instead of a dead DMG.
+  var isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  if (isPhone) {
+    document.getElementById('phone-visitor').style.display = 'block';
+    document.getElementById('mac-headline').textContent = 'This one’s for your Mac.';
+  } else {
+    setTimeout(function () {
+      document.getElementById('auto-dl-status').style.display = 'block';
+      var f = document.createElement('iframe');
+      f.style.display = 'none';
+      f.src = document.getElementById('dl-btn').href;
+      document.body.appendChild(f);
+    }, 700);
+  }
+</script>
+
+<style>
+  .setup-step { display:flex; gap:12px; align-items:baseline; padding:10px 0;
+                border-bottom:1px solid rgba(255,255,255,.08); font-size:15px;
+                line-height:1.5; color:var(--muted,#9aa6b2); }
+  .setup-step strong { color:var(--text,#fff); }
+  .setup-num { font-family:var(--mono,monospace); font-size:12px; color:var(--text,#fff);
+               border:1px solid rgba(255,255,255,.25); border-radius:50%;
+               width:22px; height:22px; display:inline-flex; align-items:center;
+               justify-content:center; flex:none; }
+</style>
+
+<footer class="footer">
+  © 2026 FLIPPED ·
+  <a href="../privacy.html">PRIVACY</a> ·
+  <a href="../terms.html">TERMS</a> ·
+  <a href="../help.html">HELP</a> ·
+  <a href="mailto:support@useflipped.com">SUPPORT</a>
+</footer>
+
+</body>
+</html>
