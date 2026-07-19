@@ -42,22 +42,17 @@
   <div class="microcopy" style="margin-top:20px;">macOS 14+ · iPhone iOS 17+</div>
 
   <div id="phone-note" style="display:none; max-width:440px; margin:28px auto 0;">
-    <p class="lede" style="font-size:15px; margin:0 0 14px;">
-      📱 On your phone right now? <strong>Is your Mac nearby?</strong>
+    <p class="lede" style="font-size:16px; margin:0 0 10px;">
+      📬 <strong>Your download is in your email.</strong>
     </p>
-    <div style="border:1px solid rgba(255,255,255,.25); border-radius:12px; padding:18px 20px; margin-bottom:16px;">
-      <div class="microcopy" style="margin-bottom:8px;">ON YOUR MAC, TYPE</div>
-      <div style="font-family:var(--mono,monospace); font-size:20px; color:var(--text,#fff); letter-spacing:0.5px;">useflipped.com/mac</div>
-      <div class="microcopy" style="margin-top:8px;">THE DOWNLOAD STARTS ITSELF</div>
-    </div>
-    <p class="lede" style="font-size:14px; margin:0 0 12px;">
-      Not near it? Plant the link where your Mac will show it:
+    <p class="lede" style="font-size:15px; margin:0 0 22px;">
+      Open it on your Mac — 5 minutes, and your phone answers to you.
     </p>
-    <a id="sms-self" href="#" class="btn ghost" style="display:inline-block; margin-bottom:12px;">💬 Text it to yourself</a>
-    <p class="lede" style="font-size:13px; margin:0; color:var(--muted,#9aa6b2);">
-      It waits in Messages on your Mac with a blue badge — or
-      <strong style="color:var(--text,#fff);">star the email</strong> we just
-      sent. Five minutes there, and your phone answers to you.
+    <p class="lede" style="font-size:14px; margin:0; color:var(--muted,#9aa6b2);">
+      One thing worth knowing: the resolve you're feeling right now is
+      exactly what fades — that's the whole reason Flipped exists.
+      <strong style="color:var(--text,#fff);">Set up tonight.</strong>
+      Don't negotiate with tomorrow-you.
     </p>
   </div>
   <script>
@@ -70,16 +65,6 @@
       || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);  // iPadOS masquerades as a Mac
     if (isPhone) {
       document.getElementById('phone-note').style.display = 'block';
-      // iMessage is the phone→Mac bridge every Apple buyer already has:
-      // one tap texts the setup link to THEMSELVES, and it's waiting in
-      // Messages on the Mac with a blue badge.  sms: with only a body
-      // opens the compose sheet; the buyer picks their own thread.
-      var body = encodeURIComponent(
-        'Flipped setup — open this on your Mac: ' +
-        'https://flipped-production-79b3.up.railway.app/api/download'
-      );
-      document.getElementById('sms-self').href =
-        (/iPhone|iPad/.test(navigator.userAgent) ? 'sms:&body=' : 'sms:?body=') + body;
     } else if (/Macintosh/.test(navigator.userAgent)) {
       setTimeout(function () {
         document.getElementById('auto-dl-status').style.display = 'block';
