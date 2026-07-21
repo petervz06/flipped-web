@@ -25,7 +25,7 @@
 /* ─── PRODUCT WALKTHROUGH ────────────────────────────────────────── */
 .walkthrough {
   background: radial-gradient(ellipse at top, #0a0a0a, #000 70%);
-  padding: 96px 28px;
+  padding: 96px 28px 48px;
 }
 .walkthrough .section-head { margin-bottom: 56px; }
 
