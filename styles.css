@@ -13,12 +13,14 @@
   --border:    rgba(255, 255, 255, 0.08);
   --border-2:  rgba(255, 255, 255, 0.18);
 
-  /* Text */
+  /* Text — brightened 2026-07-26 (Pete: small lettering read too dark).
+     fg-3 was 0.4 = below WCAG AA for the small mono labels it decorates;
+     hierarchy preserved, every step just sits higher. */
   --fg:        #ffffff;
-  --fg-1:      rgba(255, 255, 255, 0.85);
-  --fg-2:      rgba(255, 255, 255, 0.6);
-  --fg-3:      rgba(255, 255, 255, 0.4);
-  --fg-4:      rgba(255, 255, 255, 0.25);
+  --fg-1:      rgba(255, 255, 255, 0.88);
+  --fg-2:      rgba(255, 255, 255, 0.7);
+  --fg-3:      rgba(255, 255, 255, 0.55);
+  --fg-4:      rgba(255, 255, 255, 0.4);
 
   /* Signal — used only in comparison table */
   --success:   #34c759;
@@ -144,7 +146,7 @@ a { color: inherit; text-decoration: none; }
 /* ─── TYPE SCALE ─────────────────────────────────────────────────── */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 3.5px;
   color: var(--fg-3);
   text-transform: uppercase;
@@ -184,7 +186,7 @@ a { color: inherit; text-decoration: none; }
 
 .microcopy {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2px;
   color: var(--fg-3);
   text-transform: uppercase;
@@ -247,7 +249,7 @@ a { color: inherit; text-decoration: none; }
   padding: 32px 28px;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 2px;
   color: var(--fg-3);
   text-transform: uppercase;
@@ -270,7 +272,7 @@ a { color: inherit; text-decoration: none; }
 .content-wrap .updated,
 .content-wrap .top-meta {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 2px;
   color: var(--fg-3);
   text-transform: uppercase;
@@ -278,7 +280,7 @@ a { color: inherit; text-decoration: none; }
 }
 .content-wrap h2 {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 3px;
   color: var(--fg-3);
   text-transform: uppercase;
