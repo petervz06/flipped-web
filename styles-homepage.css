@@ -648,7 +648,8 @@
   box-shadow: 0 34px 90px rgba(0,0,0,0.75), 0 6px 18px rgba(0,0,0,0.5);
   z-index: 3;
 }
-.real-iphone video { display: block; width: 100%; height: auto; }
+/* img = the animated-webp low-power fallback demo.js swaps in */
+.real-iphone video, .real-iphone img { display: block; width: 100%; height: auto; }
 
 @media (max-width: 860px) {
   .demo-stage .mac { margin-right: 0; }

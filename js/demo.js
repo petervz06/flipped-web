@@ -33,6 +33,10 @@
     pressUp2:       5.62,
     flipOff:        5.65    // apps materialize ~5.8
   };
+  var DUR = 9.5;            // exact clip length; the webp fallback is
+                            // 95 frames × 100ms = the same 9.5s by design
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function placeCursorOnButton() {
     var btnRect = btn.getBoundingClientRect();
@@ -72,9 +76,79 @@
     return 8;
   }
 
+  // Low-power fallback.  iOS (and MacBook-on-battery) Safari refuses even
+  // muted autoplay in Low Power Mode and paints a play glyph over the video
+  // — the one state this demo must never show.  Animated IMAGES are exempt
+  // from that policy, so on a vetoed play() we swap the <video> for an
+  // animated WebP of the same clip (95 frames × 100ms = the same 9.5s) and
+  // drive the phases off our own clock.
+  //
+  // The clock counts VISIBLE time only, and the swap waits for the stage to
+  // be on-screen: Safari starts an animated image at its first in-viewport
+  // paint and pauses it off-screen, so "insert while visible + freeze the
+  // clock while hidden" is what keeps our phases locked to the frames the
+  // browser is actually showing.  (Chromium animates off-screen images too,
+  // but Chromium doesn't block muted autoplay, so it only ever gets here
+  // via the ?forcefallback QA hook.)
+  var fallback = false;
+  var fbImg = null;     // decoded, awaiting a visible stage
+  var fbAccum = 0;      // seconds of visible animation so far
+  var fbResumeAt = 0;   // performance.now() at the last resume
+  var fbTimer = null;
+  function clockTime() {
+    if (!fallback) return video.currentTime;
+    var t = fbAccum + (active && fbResumeAt ? (performance.now() - fbResumeAt) / 1000 : 0);
+    return t % DUR;
+  }
+
+  function fbInsert() {
+    if (!fbImg || !video.parentNode) return;
+    video.parentNode.replaceChild(fbImg, video);
+    fbImg = null;
+    fbAccum = 0;
+    fbResumeAt = performance.now();
+    // rAF is throttled in exactly the low-power contexts that get us
+    // here; a coarse interval keeps the phases moving regardless.
+    if (!fbTimer) fbTimer = setInterval(function () { if (active) sync(); }, 200);
+  }
+
+  function engageFallback() {
+    if (fallback || reducedMotion) return;
+    fallback = true;  // set before the async decode: double-triggers are free
+    var img = new Image();
+    img.src = 'media/flip-cycle.webp?v=1';
+    var ready = function () {
+      fbImg = img;
+      if (active) fbInsert();  // stage already on-screen — swap now
+      // otherwise start() inserts it the first time the stage shows
+    };
+    var giveUp = function () { fallback = false; };  // webp unreachable —
+    // keep the video; the gesture listeners below can still rescue it.
+    if (img.decode) img.decode().then(ready, giveUp);
+    else { img.onload = ready; img.onerror = giveUp; }
+  }
+
+  function onBlockedPlay(err) {
+    // NotAllowedError = the browser wants a user gesture (Low Power Mode's
+    // signature).  Anything else (AbortError from a quick pause()) is no veto.
+    if (err && err.name === 'NotAllowedError') engageFallback();
+  }
+
+  var watchdog = null;
+  function armWatchdog() {
+    // play() can also stall without ever rejecting (Low Data Mode withholds
+    // the fetch).  paused is still true then — play() flips it synchronously
+    // on success — so paused after a grace period means blocked.
+    if (watchdog || fallback) return;
+    watchdog = setTimeout(function () {
+      watchdog = null;
+      if (active && !fallback && video.paused) engageFallback();
+    }, 1500);
+  }
+
   var rafId = null;
   var active = false;
-  function sync() { applyPhase(phaseFor(video.currentTime)); }
+  function sync() { applyPhase(phaseFor(clockTime())); }
   function tick() {
     sync();
     rafId = requestAnimationFrame(tick);
@@ -90,13 +164,26 @@
   function start() {
     if (active) return;
     active = true;
-    video.play().catch(function () {});
+    if (!fallback) {
+      video.play().catch(onBlockedPlay);
+      armWatchdog();
+    } else if (fbImg) {
+      fbInsert();            // deferred swap: first time the stage shows
+    } else {
+      fbResumeAt = performance.now();  // resume the visible-time clock
+      if (!fbTimer) fbTimer = setInterval(function () { if (active) sync(); }, 200);
+    }
     rafId = requestAnimationFrame(tick);
   }
   function stop() {
+    if (active && fallback && fbResumeAt) {
+      fbAccum += (performance.now() - fbResumeAt) / 1000;  // freeze the clock
+      fbResumeAt = 0;
+    }
     active = false;
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    video.pause();
+    if (fbTimer) { clearInterval(fbTimer); fbTimer = null; }
+    if (!fallback) video.pause();
   }
 
   if ('IntersectionObserver' in window) {
@@ -112,11 +199,21 @@
     start();
   }
 
-  // Autoplay fallback: first interaction unsticks a blocked video.
-  ['scroll', 'touchstart', 'click'].forEach(function (ev) {
+  // A real user gesture also unsticks a blocked <video>; keep trying on
+  // EVERY gesture until something animates (persistent, not once: the first
+  // gesture can land while the initial play() is still pending, and a
+  // scroll isn't a "user gesture" to Safari's autoplay policy at all).
+  ['touchend', 'click', 'scroll'].forEach(function (ev) {
     window.addEventListener(ev, function () {
-      if (rafId && video.paused) video.play().catch(function () {});
-    }, { once: true, passive: true });
+      if (active && !fallback && video.paused) video.play().catch(onBlockedPlay);
+    }, { passive: true });
+  });
+
+  // Returning to the tab re-checks a video that got stuck while hidden.
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && active && !fallback && video.paused) {
+      video.play().catch(onBlockedPlay);
+    }
   });
 
   window.addEventListener('resize', function () {
@@ -125,13 +222,18 @@
   });
 
   // Reduced motion: hold the flipped still — premise without animation.
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (reducedMotion) {
     stop();
     stage.classList.add('is-flipped');
     video.currentTime = 6;  // mid-hold: home screen with socials gone
   }
 
+  // ?forcefallback — QA hook: exercise the webp path without hunting down
+  // a Low Power Mode device.
+  if (/[?&]forcefallback/.test(location.search)) engageFallback();
+
   // Console debug handle: __flippedDemo.sync() applies the phase for the
-  // video's current position; start()/stop() drive the loop manually.
-  window.__flippedDemo = { start: start, stop: stop, sync: sync };
+  // video's current position; start()/stop() drive the loop manually;
+  // forceFallback() swaps to the webp path on demand.
+  window.__flippedDemo = { start: start, stop: stop, sync: sync, forceFallback: engageFallback };
 })();
