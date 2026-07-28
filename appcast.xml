@@ -6,6 +6,21 @@
     <description>Most recent Flipped updates.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.88</title>
+      <pubDate>Tue, 28 Jul 2026 22:02:53 +0000</pubDate>
+      <sparkle:version>1.0.88</sparkle:version>
+      <sparkle:shortVersionString>1.0.88</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Support can now fine-tune profiles per account —
+including which apps stay locked into every profile.
+If we haven't adjusted your account with you,
+nothing changes.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.88.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="Rafsr2WKWWBg1+cux1pw/na95VT1HeMwRGimWzycjE4wdpCgEGi5SGWgBIBH/zrEH0BEYCEMmQk5Jj9+rjXHAQ==" length="23499348" />
+    </item>
+    <item>
       <title>Version 1.0.87</title>
       <pubDate>Tue, 28 Jul 2026 21:22:20 +0000</pubDate>
       <sparkle:version>1.0.87</sparkle:version>
