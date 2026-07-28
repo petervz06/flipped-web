@@ -1633,7 +1633,7 @@ function renderSchedules() {
             <div class="list-row">
                 <div>
                     <div class="primary">${escapeHtml(row.name || 'Schedule')}</div>
-                    <span class="sub">${describeSchedule(row)}</span>
+                    <span class="sub">${row.profile_name ? `◐ ${escapeHtml(row.profile_name.toUpperCase())} · ` : ''}${describeSchedule(row)}</span>
                 </div>
                 <div style="display:flex; align-items:center;">
                     <button class="rowbtn ${row.enabled ? 'ok' : ''}"
