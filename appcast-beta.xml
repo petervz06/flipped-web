@@ -6,6 +6,26 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.87</title>
+      <pubDate>Tue, 28 Jul 2026 21:22:20 +0000</pubDate>
+      <sparkle:version>1.0.87</sparkle:version>
+      <sparkle:shortVersionString>1.0.87</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Every schedule now picks its own profile.
+
+Strict mornings, lighter afternoons — each schedule
+carries the profile you chose for it, and editing a
+profile updates every schedule that uses it.  Text
+across the whole app is brighter and easier to read.
+And when setup or a flip hits a wall, the app now
+reports exactly what happened so we can fix your
+case fast.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.87.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="3Ehqy10tA/5JPBo8FjRbdx3T+h/TT6k1j7TVKCLrsagOs4dkZ7rAxZwxjtHNplrJpLayCFRkPhepVveoN2ghDA==" length="23536385" />
+    </item>
+    <item>
       <title>Version 1.0.86</title>
       <pubDate>Wed, 15 Jul 2026 18:30:00 +0000</pubDate>
       <sparkle:version>1.0.86</sparkle:version>
