@@ -6,6 +6,27 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.89</title>
+      <pubDate>Wed, 29 Jul 2026 02:49:53 +0000</pubDate>
+      <sparkle:version>1.0.89</sparkle:version>
+      <sparkle:shortVersionString>1.0.89</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>Signing back in now works the way signing up does.
+
+If Flipped ever asks you to sign in again, enter your
+email and we'll send you a code — the same way you
+started.  The old screen asked for a password or a
+license key, which most accounts never had.
+
+Flipped is also far less likely to ask you to sign in
+at all: returning after a few days no longer risks
+ending your session by mistake.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.89.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="2qk4MB7SJxKJgT+ou7p3zshdRW/ptOvGCZLuoRTYFgVpzFSBRJhxoaMV7y0TsQCOh92ftXwhhjZ0dYkj6wNNAg==" length="23554720" />
+    </item>
+    <item>
       <title>Version 1.0.88</title>
       <pubDate>Tue, 28 Jul 2026 22:02:53 +0000</pubDate>
       <sparkle:version>1.0.88</sparkle:version>
