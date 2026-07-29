@@ -6,6 +6,27 @@
     <description>Pre-release Flipped updates.  Pete tests on his Mac before promoting to the public appcast.xml.  Run `scripts/promote-release.sh` from the flipped-web-work repo to move a release from beta to stable.</description>
     <language>en</language>
     <item>
+      <title>Version 1.0.92</title>
+      <pubDate>Wed, 29 Jul 2026 17:23:08 +0000</pubDate>
+      <sparkle:version>1.0.92</sparkle:version>
+      <sparkle:shortVersionString>1.0.92</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<pre>A calmer setup.
+
+If your Mac doesn't see your iPhone, Flipped now waits
+a full minute before saying so — it used to worry after
+eight seconds, while you were still plugging in.  And
+it leads with the fix that usually works: unplug, plug
+back in, and tap Trust on your phone.
+
+The opening screen is simpler too; what you need for
+setup now appears on the setup steps themselves.</pre>]]></description>
+      <enclosure
+        url="https://useflipped.com/downloads/Flipped-1.0.92.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="/Qocuk3bTbYxLt1riRaSmm2V1lXIY7+y47J/npRjJYb4fgNyKkWv4BDad0QBytX+BV2SqJ9jPUGe7os1hrsnCA==" length="23571843" />
+    </item>
+    <item>
       <title>Version 1.0.91</title>
       <pubDate>Wed, 29 Jul 2026 03:26:12 +0000</pubDate>
       <sparkle:version>1.0.91</sparkle:version>
