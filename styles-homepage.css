@@ -513,6 +513,23 @@
   max-width: 1000px;
   margin: 0 auto;
 }
+/* One price, one card (2026-07-30).  Kept as a modifier rather than
+   rewriting .tiers so the three-column ladder is one class away if the
+   subscription plans ever come back. */
+.tiers.single {
+  grid-template-columns: minmax(0, 400px);
+  justify-content: center;
+}
+.tiers.single .tier.featured { transform: none; }
+.tiers.single .tier { padding: 38px 32px; text-align: center; }
+.tiers.single .tier .guarantee {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  margin-top: 18px;
+}
 .tier {
   background: var(--bg-1);
   border: 1px solid var(--border);
