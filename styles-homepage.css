@@ -530,6 +530,57 @@
   text-transform: uppercase;
   margin-top: 18px;
 }
+/* Anchor: the price we genuinely charged until 2026-07-30.  An honest
+   reference point, not a fake MSRP — it must stay accurate or come out. */
+.tiers.single .tier .was {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--fg-4);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+.tiers.single .tier .launch-tag {
+  /* .tier is a flex column, so align-self keeps the pill hugging its text —
+     inline-block alone gets stretched to full width by the default stretch. */
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--fg);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin: 14px 0 20px;
+}
+/* Left-aligned inside a centred card — a centred checklist is harder to
+   scan, and this is the part doing the justifying. */
+.tiers.single .tier .includes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 26px;
+  text-align: left;
+}
+.tiers.single .tier .includes li {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 9px 0;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--fg-1);
+  border-bottom: 1px solid var(--border);
+}
+.tiers.single .tier .includes li:last-child { border-bottom: 0; }
+.tiers.single .tier .includes .mk {
+  flex: none;
+  margin-top: 1px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-3);
+}
 .tier {
   background: var(--bg-1);
   border: 1px solid var(--border);
