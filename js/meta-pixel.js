@@ -34,7 +34,11 @@
   fbq('track', 'PageView');
 
   // Shared with checkout.js (InitiateCheckout) and the Purchase block below.
-  window.FLIPPED_PLANS = { monthly: 8.99, annual: 79.99, lifetime: 149.99 };
+  // lifetime is the only plan on sale ($99). 149.99 is the struck-through anchor
+  // shown next to it, not a charge — reporting it inflated every Purchase by ~51%.
+  // annual is archived in Stripe and unpurchasable; monthly still exists but is
+  // not surfaced anywhere on the site.
+  window.FLIPPED_PLANS = { monthly: 8.99, lifetime: 99 };
 
   // Safe wrapper — callers never break the page if fbq failed to load.
   window.fbqTrack = function (event, params, opts) {
