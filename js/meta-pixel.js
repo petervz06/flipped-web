@@ -18,7 +18,19 @@
   t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
   (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-  fbq('init', PIXEL_ID);
+  // Manual advanced matching. checkout.js stashes the buyer's email before the
+  // Stripe redirect; passing it here lets Meta match events to a person instead
+  // of guessing from cookies alone. fbevents.js normalises + hashes this itself
+  // (SHA-256, in the browser) — the raw address never reaches Meta.
+  // Without it, Purchase lands on billing-success with no identifiers and a
+  // Stripe referrer, which is why its Event Match Quality reads 0.
+  var amEmail = null;
+  try { amEmail = localStorage.getItem('flipped_checkout_email'); } catch (e) {}
+  if (amEmail) {
+    fbq('init', PIXEL_ID, { em: String(amEmail).trim().toLowerCase() });
+  } else {
+    fbq('init', PIXEL_ID);
+  }
   fbq('track', 'PageView');
 
   // Shared with checkout.js (InitiateCheckout) and the Purchase block below.
