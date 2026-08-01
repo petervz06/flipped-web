@@ -742,3 +742,19 @@
   .demo-stage .mac-sidebar { display: none; }
   .demo-stage .mac { max-width: none; }
 }
+
+/* Distribution pause notice (2026-08-01).  Replaces the checkout buttons
+   while downloads are held.  Deliberately calm and low-drama — the backend
+   refuses the sale regardless (DISTRIBUTION_PAUSED); this is the part a
+   human reads.  Remove this block and revert the button markup to reopen. */
+.pause-notice {
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md, 10px);
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  text-align: left;
+}
+.pause-notice strong { color: var(--fg); font-weight: 600; display: block; margin-bottom: 4px; }
+.pause-notice a { color: var(--fg-1); }
