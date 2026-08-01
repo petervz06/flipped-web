@@ -2,78 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo preview — real iPhone footage (NOT LINKED)</title>
-  <link rel="stylesheet" href="styles.css?v=22" />
-  <style>
-    /* Preview-only page for Pete's eyeball — not linked from anywhere.
-       Variant A (picture-in-picture) + REAL iPhone footage in the bezel. */
-    .demo-stage-v2 {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px 0 40px;
-    }
-    .real-iphone {
-      width: 270px;
-      border-radius: 38px;
-      border: 10px solid #1c1c1e;
-      background: #000;
-      overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
-      margin: 0 auto;
-    }
-    .real-iphone video { display: block; width: 100%; height: auto; }
-    .demo-caption {
-      text-align: center; margin-top: 18px;
-      font-family: ui-monospace, Menlo, monospace;
-      font-size: 11px; letter-spacing: 2px; color: var(--fg-2, #999);
-    }
-    /* Preview page has no Mac window yet — phone stays centered at every
-       width.  (The PiP pairing arrives when the Mac side joins it.) */
-    .demo-stage-v2 { text-align: center; }
-  </style>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="refresh" content="0; url=/" />
+  <title>Flipped — Under maintenance</title>
+  <link rel="canonical" href="https://useflipped.com/" />
 </head>
-<body>
-
-<nav class="nav">
-  <div class="wordmark nav-size">FLIPPED</div>
-  <div class="nav-right"><span class="nav-link">DEMO PREVIEW — REAL FOOTAGE</span></div>
-</nav>
-
-<section class="walkthrough" style="padding-top:40px;">
-  <div class="section-head">
-    <div class="eyebrow">HOW IT WORKS</div>
-    <h2 class="h2">One tap on your Mac.<br>Apps disappear from your phone.</h2>
-    <p class="lede" style="margin-top:10px;">This is a real iPhone. Nothing staged, nothing mocked.</p>
-  </div>
-
-  <div class="demo-stage-v2">
-    <div class="real-iphone">
-      <video autoplay muted loop playsinline poster="" preload="metadata">
-        <source src="media/flip-cycle.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="demo-caption">REAL IPHONE · REAL APPS · FLIP AT 0:02 · UNFLIP AT 0:11</div>
-  </div>
-</section>
-
-<script>
-  // Belt-and-braces: some browsers defer muted autoplay until interaction
-  // or viewport entry — retry play() on both signals.
-  (function () {
-    var vid = document.querySelector('video');
-    function nudge() { if (vid.paused) vid.play().catch(function () {}); }
-    ['scroll', 'touchstart', 'click'].forEach(function (ev) {
-      window.addEventListener(ev, nudge, { once: true, passive: true });
-    });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) nudge();
-      }).observe(vid);
-    }
-  })();
-</script>
-
+<body style="margin:0;background:#000;color:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif;padding:40px;">
+  <p>Flipped is currently under maintenance. <a href="/" style="color:#fff;">Continue</a></p>
+  <script>window.location.replace('/');</script>
 </body>
 </html>
