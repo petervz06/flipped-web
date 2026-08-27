@@ -5,5 +5,14 @@
     <link>https://useflipped.com/appcast.xml</link>
     <description>Updates are temporarily paused.</description>
     <language>en</language>
+    <item>
+      <title>1.0.93</title>
+      <pubDate>Thu, 27 Aug 2026 02:43:28 +0000</pubDate>
+      <sparkle:version>1.0.93</sparkle:version>
+      <sparkle:shortVersionString>1.0.93</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description>Fixes the removal process. Removing Flipped now returns your iPhone straight to the Home Screen without prompting to restore or transfer anything, and without losing app data.</description>
+      <enclosure url="https://useflipped.com/downloads/Flipped-1.0.93.dmg" sparkle:version="1.0.93" sparkle:shortVersionString="1.0.93" sparkle:edSignature="jnmmHdAsgpVZTObQexE40CqSwiDj5srksgmhIWNEyc9RHA0AorhY6Jdd7G1bN5lKCRewx/lDIbhQBSfP3fzCCA==" length="23572097" type="application/octet-stream"/>
+    </item>
   </channel>
 </rss>
